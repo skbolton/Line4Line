@@ -1,4 +1,5 @@
-"use strict"
+require('dotenv').config({silent: true});
+
 const express          = require('express')
 const bodyParser       = require('body-parser')
 const app              = express()
@@ -10,7 +11,6 @@ const morgan           = require('morgan')
 const router           = require('./routes/routes')
 const User             = require('./models/user')
 const stories          = require('./controllers/storyController')
-const charles          = require('./secretsecrets')
 
 const port             = process.env.PORT || 8081
 
@@ -27,8 +27,8 @@ passport.deserializeUser(function (obj, done) {
 })
 
 passport.use(new FacebookStrategy({
-    clientID          : charles.appId,
-    clientSecret      : charles.appSecret,
+    clientID          : process.env.FB_KEY,
+    clientSecret      : process.env.FB_SECRET,
     callbackURL       : "/auth/facebook/return",
     passReqToCallback : true,
 
