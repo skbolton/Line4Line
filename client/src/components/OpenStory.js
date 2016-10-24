@@ -1,3 +1,5 @@
+//this component is really any story entry, whether it's completed or not
+
 import React from 'react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
 

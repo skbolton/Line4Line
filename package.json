@@ -15,7 +15,8 @@
   "scripts": {
     "postinstall": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/nodemon server/server.js --ignore client/",
+    "start": "node server/server.js", //--ignore client/ was here
+    "start:dev" "nodemon server/server.js"
     "webpack": "webpack",
     "dev": "webpack-dev-server --content-base dist"
   },
