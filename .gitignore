@@ -5,3 +5,4 @@ client/src/dummyData.js
 dist/styles.css
 ./server/db
 .env
+*.log
