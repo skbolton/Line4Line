@@ -12,7 +12,7 @@ const router           = require('./routes/routes')
 const User             = require('./models/user')
 const stories          = require('./controllers/storyController')
 
-const port             = process.env.PORT || 8081
+const port             = process.env.PORT || 3000
 
 var http = require('http').Server(app)
 var io = require('./socket.js').listen(http)

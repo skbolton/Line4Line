@@ -2,7 +2,7 @@ import React from 'react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 
-const OpenStory = (props) => {
+const StoryEntry = (props) => {
 
   const storyURL = `/stories/${props.story._id}`
 
@@ -27,4 +27,4 @@ const OpenStory = (props) => {
   )
 }
 
-export default OpenStory
+export default StoryEntry
