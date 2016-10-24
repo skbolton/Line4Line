@@ -27,7 +27,7 @@ passport.deserializeUser(function (obj, done) {
 })
 
 passport.use(new FacebookStrategy({
-    clientID          : process.env.FB_KEY,
+    clientID          : '1146101735475048',
     clientSecret      : process.env.FB_SECRET,
     callbackURL       : "/auth/facebook/return",
     passReqToCallback : true,
@@ -76,7 +76,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, '../dist')))
 app.use(session({
-  secret: charles.secret,
+  secret: 'cyndilauperisgod',
   resave: true,
   saveUninitialized: true
 }));
