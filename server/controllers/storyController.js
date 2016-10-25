@@ -15,12 +15,12 @@ module.exports = {
     User.findOne({_id: req.user._id})
     .then(user => {
       Story.findOne({_id: req.params.id}).then(story => {
-        if (story.users.indexOf(user._id) !== -1) {
+        if (story.authors.indexOf(user._id) !== -1) {
           return next()
         } else if (story.complete) {
           return res.status(404).send('Sorry mate- this story is already complete')
         } else {
-          story.update({ $push: {users: user._id}})
+          story.update({ $push: {authors: user._id}})
           .then(story => {
             console.log('updated')
             return next()
@@ -69,9 +69,9 @@ module.exports = {
       new Story({title: title, length: numberUsers, numberUsers: numberUsers }).save()
       .then((story) => {
         console.log('Story saved:', story)
-        user.update({ $push: {stories: story._id}})
+        user.update({ $push: {storiesCreated: story._id}})
         .then(answer => {
-          console.log('User story list updated:', answer)
+          console.log('User storiesCreated array updated:', answer)
           res.json({"redirect":`/#/stories/${story._id}`})
         })
         .catch(err => {
