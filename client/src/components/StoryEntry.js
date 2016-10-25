@@ -17,10 +17,10 @@ const StoryEntry = (props) => {
   }
 
   return (
-    <div className="openStoryWrap">
-      <div className="openStoryTitle">{props.story.title}</div>
-      <div className="openStoryUsers">{props.story.users.length}/{props.story.numberUsers}</div>
-      <div className='openStoryJoinWrap'>
+    <div className="storyEntryWrap">
+      <div className="storyEntryTitle">{props.story.title}</div>
+      <div className="storyEntryUsers">{props.story.users.length}/{props.story.numberUsers}</div>
+      <div className='storyEntryJoinWrap'>
         <button onClick={joinStory} className="standardButton blackButton">Join</button>
       </div>
     </div>
