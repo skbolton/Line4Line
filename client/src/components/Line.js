@@ -11,17 +11,6 @@ class Line extends React.Component {
       story: props.line.story,
       lock: props.lock
     }
-
-    var lineThis = this;
-    socket.on('lineSaved', function(line) {
-      console.log('imma little bitch: ', line)
-      lineThis.setState({
-        userId: line.userId,
-        text: line.text,
-        story: line.story
-      })
-      socket.emit('updateStoryWithNewLine', line)
-    })
   }
 
 
@@ -50,7 +39,6 @@ class Line extends React.Component {
     this.setState({
       text: e.target.value
     })
-
   }
 
 
