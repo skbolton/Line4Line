@@ -15,7 +15,7 @@
     "build:watch": "webpack --watch",
     "dev": "webpack-dev-server"
   },
-  "author": "TEAManticore",
+  "author": "Mavis Staples",
   "dependencies": {
     "axios": "^0.15.1",
     "body-parser": "^1.15.2",
