@@ -52,9 +52,13 @@ class Story extends React.Component {
         currentUserIndex: currentUserIndex,
         prevLineIndex: prevLineIndex
       })
+      return story._id;
+    })
+    .then(storyID => {
+      //we're connected, let's get messages from our test room
+      socket.emit('createRoom', `${storyID}`);
     })
 
-    socket.emit('createRoom', 'test room');
     //Do you know the salty slug?
     socket.emit('salty slug')
 
