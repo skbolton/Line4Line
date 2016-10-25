@@ -68,8 +68,15 @@ module.exports = {
     .then((user)=>{
       new Story({title: title, length: numberUsers, numberUsers: numberUsers }).save()
       .then((story) => {
-        console.log("Story saved: ", story)
-        res.json({"redirect":`/#/stories/${story._id}`})
+        console.log('Story saved:', story)
+        user.update({ $push: {stories: story._id}})
+        .then(answer => {
+          console.log('User story list updated:', answer)
+          res.json({"redirect":`/#/stories/${story._id}`})
+        })
+        .catch(err => {
+          return res.status(404).send('User story list not updated')
+        })
       })
       .catch((err) => {
         return res.status(404).send('Story already created!')
