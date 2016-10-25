@@ -52,13 +52,13 @@ class Lobby extends React.Component {
           { this.state.displayComplete ?
 
             this.state.completeStories.map((story, i) =>
-              <OpenStory story={story} key={i} />
+              <StoryEntry story={story} key={i} />
             )
 
             :
 
             this.state.openStories.map((story, i) =>
-              <OpenStory story={story} key={i} />
+              <StoryEntry story={story} key={i} />
             )
 
           }
