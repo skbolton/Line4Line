@@ -33,6 +33,7 @@ router.route('/logout').get((req,res) => {
 
 router.route('/auth/facebook').get(passport.authenticate('facebook'))
 
+// facebook will call this URL
 router.route('/auth/facebook/return').get(passport.authenticate('facebook', {
   failureRedirect: '/#/fail',
   successRedirect: '/#/',
