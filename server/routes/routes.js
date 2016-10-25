@@ -22,7 +22,7 @@ router.route('/user').get(isAuthed, users.get)
 
 router.route('/stories/:id').get(isAuthed, stories.joinStory, stories.getOneStory)
 
-router.route('/stories').post(isAuthed,stories.createStory)
+router.route('/stories').post(isAuthed, stories.createStory)
 
 router.route('/stories/:id').put(stories.createNewLine)
 
