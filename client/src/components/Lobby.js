@@ -1,5 +1,5 @@
 import React from 'react'
-import OpenStory from './OpenStory'
+import StoryEntry from './StoryEntry'
 import Accordion from './Accordion'
 
 
@@ -9,7 +9,7 @@ class Lobby extends React.Component {
     this.state = {
       allStories: [],
       openStories: [],
-      completeStories: [], 
+      completeStories: [],
       displayComplete: false
     }
   this.toggleDisplay = this.toggleDisplay.bind(this)
@@ -29,7 +29,7 @@ class Lobby extends React.Component {
         openStories: openStories,
         completeStories: completeStories
       })
-    })   
+    })
   }
 
   toggleDisplay () {
@@ -60,7 +60,7 @@ class Lobby extends React.Component {
             this.state.openStories.map((story, i) =>
               <OpenStory story={story} key={i} />
             )
-            
+
           }
 
         </div>

@@ -1,6 +1,6 @@
 import React from 'react'
-import Line from './line'
-import Help from '../helpers'
+import Line from './Line'
+// import Help from '../helpers'
 import io from 'socket.io-client'
 
 const socket = io()
