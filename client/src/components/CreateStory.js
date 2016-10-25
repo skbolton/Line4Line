@@ -7,6 +7,7 @@ const CreateStory = (props) => {
     const newStory = {}
     newStory.title = document.getElementById('createTitle').value
     newStory.numberUsers = document.getElementById('createNUsers').value
+    newStory.length = document.getElementById('linesPerUser').value * document.getElementById('createNUsers').value;
     $.ajax({
       type: 'POST',
       url:'/stories', 
@@ -30,13 +31,9 @@ const CreateStory = (props) => {
             <h3>Number of users</h3>
             <input className="createStoryInput createNumberInput" id="createNUsers" type="number" min="1" max="10" placeholder="5"/>
           </div>
-          <div className="containCreateLine">
-            <h3> Max number of lines in story</h3>
-            <input className="createStoryInput createLineInput" type="number" max="100"/>
-          </div>
           <div className="containCreateUserLines">
             <h3> Number of lines per user </h3>
-            <input className="createStoryInput createUserLinesInput" type="number" min="1" max="5" placeholder="1"/>
+            <input className="createStoryInput createUserLinesInput" id="linesPerUser" type="number" min="1" max="5" placeholder="1"/>
           </div>
         </div>
         <div className='createButtonWrap'>

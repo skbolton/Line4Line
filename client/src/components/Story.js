@@ -19,7 +19,8 @@ class Story extends React.Component {
       lines: [],
       currentUser: this.props.route.user,
       currentUserIndex: 0,
-      prevLineIndex: 0
+      prevLineIndex: 0,
+      linesPerUser: 0
     }
   }
 
@@ -38,7 +39,8 @@ class Story extends React.Component {
         length: story.length,
         numberUsers: story.numberUsers,
         currentLine: story.currentLine,
-        lines: story.lines
+        lines: story.lines,
+        linesPerUser: story.linesPerUser
       })
 
       //Find the current user's ID within the users array and retrieve the index

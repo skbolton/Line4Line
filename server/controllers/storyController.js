@@ -40,7 +40,7 @@ module.exports = {
             .then((line) => {
               story.update({ $push: { lines: line._id }, $inc: { currentLine: 1}})
               .then((data)=> {
-                if((story.lines.length + 1 ) === story.numberUsers) {
+                if((story.lines.length + 1 ) === story.length) {
                   story.update({complete: true})
                   .then(()=>{
                     resolve(line)
@@ -61,12 +61,13 @@ module.exports = {
     })
   },
   createStory: (req, res) => {
-    const title = req.body.title
-    const numberUsers = req.body.numberUsers * 1
+    const title = req.body.title;
+    const numberUsers = req.body.numberUsers * 1;
+    const length = req.body.length * 1;
 
     User.findOne({_id: req.user._id})
     .then((user)=>{
-      new Story({title: title, length: numberUsers, numberUsers: numberUsers }).save()
+      new Story({title: title, length: length, users: [], numberUsers: numberUsers }).save()
       .then((story) => {
         console.log('Story saved:', story)
         user.update({ $push: {storiesCreated: story._id}})
