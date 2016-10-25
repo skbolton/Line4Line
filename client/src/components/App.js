@@ -1,8 +1,8 @@
 import React from 'react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
-import Lobby from './lobby'
-import Story from './story'
-import Login from './login'
+import Lobby from './Lobby'
+import Story from './Story'
+import Login from './Login'
 import CreateStory from './CreateStory'
 import NavBar from './NavBar'
 
@@ -48,12 +48,12 @@ class App extends React.Component {
         {
         //if there is a current user, render the lobby/story with react router
         //else tell the user to login
-        this.state.currentUser ? 
+        this.state.currentUser ?
         <Router history={hashHistory}>
           <Route path='/' component={Lobby} />
           <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
-        </Router> 
-        : 
+        </Router>
+        :
         <div>Please Login</div>
         }
       </div>
