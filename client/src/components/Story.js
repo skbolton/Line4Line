@@ -28,7 +28,8 @@ class Story extends React.Component {
     //retrieve story data from server
     $.get(`/stories/${this.state.storyId}`)
     .then(story => {
-      console.log('Got story: ', story)
+      console.log('Got story: ', story);
+      console.log('Story ID: ', story._id);
       //set state with this data
       this.setState({
         title: story.title,
@@ -53,6 +54,7 @@ class Story extends React.Component {
       })
     })
 
+    socket.emit('createRoom', 'test room');
     //Do you know the salty slug?
     socket.emit('salty slug')
 
