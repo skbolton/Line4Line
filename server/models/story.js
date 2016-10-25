@@ -19,6 +19,7 @@ const storySchema = new Schema({
   currentLine: { type: Number, default: 0 },
   //list of lines in the story in order
   lines: [ {type: Schema.ObjectId, ref: 'Line'} ]
+
 })
 
 const Story = mongoose.model('Story', storySchema)

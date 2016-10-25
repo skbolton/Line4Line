@@ -41,7 +41,7 @@ module.exports = {
             .then((line) => {
               story.update({ $push: { lines: line._id }, $inc: { currentLine: 1}})
               .then((data)=> {
-                if((story.lines.length + 1 ) === story.numberUsers) {
+                if((story.lines.length + 1 ) === story.length) {
                   story.update({complete: true})
                   .then(()=>{
                     resolve(line)
@@ -62,14 +62,15 @@ module.exports = {
     })
   },
   createStory: (req, res) => {
-    console.log(req.body)
-    const title = req.body.title
-    const numberUsers = req.body.numberUsers * 1
+    const title = req.body.title;
+    const numberUsers = req.body.numberUsers * 1;
+    const length = req.body.length * 1;
 
     console.log(req.user)
     User.findOne({facebookId: req.user.facebookId})
     .then((user)=>{
-      new Story({title: title, length: numberUsers, users: [], numberUsers: numberUsers }).save()
+      console.log('hey GOT here');
+      new Story({title: title, length: length, users: [], numberUsers: numberUsers }).save()
       .then((story) => {
         console.log("Story saved: ", story)
         res.json({"redirect":`/#/stories/${story._id}`})
