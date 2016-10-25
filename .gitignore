@@ -3,6 +3,7 @@ node_modules
 client/src/dummyData.js
 ./server/db
 .env
+.env.bak
 *.log
 bundle.js
 *.map
