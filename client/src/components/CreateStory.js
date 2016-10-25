@@ -13,7 +13,6 @@ const CreateStory = (props) => {
       data: newStory, 
       dataType: 'json',
       success: function(res){
-        console.log('~~~',res)
         window.location = res.redirect
       }
     })

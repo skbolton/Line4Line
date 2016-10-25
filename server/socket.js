@@ -11,16 +11,19 @@ module.exports.listen = function(http){
       console.log('~~~~~~~~~~~~~Chuck is a salty slug~~~~~~~~~~~')
     })
 
+    //here's how we create a new room
+    client.on('createRoom', function(roomID) {
+      console.log('roomID: ', roomID);
+      client.join(roomID);
+    });
+
     client.on('updateStoryWithNewLine', function(line) {
-      console.log('new line on server side')
       stories.getOneStorySocketStyle(line.story).then(story => {
-        console.log('come on dude man bro dog: ', story)
         io.emit('updateStory', story)
       })
     })
 
     client.on('sendingLine', function(lineData) {
-      console.log('bang')
       stories.createNewLine(lineData).then(line => {
         io.emit('lineSaved', line)
       })
