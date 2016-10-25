@@ -8,3 +8,4 @@ client/src/dummyData.js
 *.map
 server/public/*.css
 server/public/bundle.js
+server/public/bundle.js.map
