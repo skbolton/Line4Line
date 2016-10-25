@@ -27,6 +27,28 @@
   width: 60px;
 }
 
+.createLineInput {
+  width: 60px;
+}
+
+.createUserLinesInput {
+  width: 60px;
+}
+
+.containCreateNumber {
+  width: 33%;
+  float: left;
+}
+.containCreateLine {
+  width: 33%;
+  float: left;
+}
+
+.containCreateUserLines{
+  width: 33%;
+  float: left;
+}
+
 .createButtonWrap {
   width: 30%;
   margin: 10px auto;
