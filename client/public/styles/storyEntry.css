@@ -1,4 +1,4 @@
-.openStoryWrap {
+.storyEntryWrap {
   background-color: white;
   color: black;
   border: solid 1px #d7d7d7;
@@ -8,19 +8,19 @@
   box-shadow: 3px 3px 0px #d7d7d7;
 }
 
-.openStoryTitle {
+.storyEntryTitle {
   font-size: 1.2em;
   display: inline-block;
   width: 55%;
 }
 
-.openStoryUsers {
+.storyEntryUsers {
   font-size: 1.2em;
   display: inline-block;
   width: 10%
 }
 
-.openStoryJoinWrap {
+.storyEntryJoinWrap {
   display: inline-block;
   text-align: right;
   width: 30%;
