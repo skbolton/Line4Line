@@ -14,7 +14,7 @@ module.exports.listen = function(http){
     //here's how we create a new room
     client.on('createRoom', function(roomID) {
       console.log('roomID: ', roomID);
-      socket.join(roomID);
+      client.join(roomID);
     });
 
     client.on('updateStoryWithNewLine', function(line) {
