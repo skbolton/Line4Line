@@ -55,7 +55,7 @@ const devConfig = {
 };
 
 const prodConfig = {
-  devtool: 'cheap-source-map',
+  devtool: 'source-maps',
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
       beautify: false,

@@ -34,7 +34,7 @@ class Story extends React.Component {
       //set state with this data
       this.setState({
         title: story.title,
-        users: story.users,
+        users: story.authors,
         complete: story.complete,
         length: story.length,
         numberUsers: story.numberUsers,
@@ -73,7 +73,7 @@ class Story extends React.Component {
     this.setState({
       lines: story.lines,
       currentLine: story.currentLine,
-      users: story.users,
+      users: story.authors,
       complete: story.complete
     })
   }

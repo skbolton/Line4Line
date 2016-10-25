@@ -1,22 +1,20 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 //call on the line model for an attribute further
-//in the model
-const Line = require('./line')
 
 const storySchema = new Schema({
   //title of the story
-  title: { type: String, required: true, unique: true },
+  title       : { type: String, required: true, unique: true },
   //list of user ids involved in this story
-  users: [ String ],
+  authors     : [{ type: Schema.ObjectId, ref: 'User' }],
   //tells whether the story is complete or not
-  complete: { type: Boolean, default: false },
+  complete    : { type: Boolean, default: false },
   //the max length of the story
-  length: Number,
+  length      : Number,
   //max number of users in the story
-  numberUsers: Number,
+  numberUsers : Number,
   //current line the story is on
-  currentLine: { type: Number, default: 0 },
+  currentLine : { type: Number, default: 0 },
   //list of lines in the story in order
   lines: [ {type: Schema.ObjectId, ref: 'Line'} ]
 

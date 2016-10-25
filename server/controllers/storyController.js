@@ -12,16 +12,15 @@ module.exports = {
   },
 
   joinStory: (req, res, next) => {
-    console.log(req.user)
-    User.findOne({facebookId: req.user.facebookId})
+    User.findOne({_id: req.user._id})
     .then(user => {
       Story.findOne({_id: req.params.id}).then(story => {
-        if(story.users.indexOf(user.facebookId) !== -1) {
+        if (story.authors.indexOf(user._id) !== -1) {
           return next()
-        } else if(story.complete) {
+        } else if (story.complete) {
           return res.status(404).send('Sorry mate- this story is already complete')
         } else {
-          story.update({ $push: {users: user.facebookId}})
+          story.update({ $push: {authors: user._id}})
           .then(story => {
             console.log('updated')
             return next()
@@ -35,9 +34,9 @@ module.exports = {
       Story.findOne({_id: lineData.story}) // Find the story that they are trying to add the line to
       .then((story) => {
         if(!story.complete){
-          User.findOne({facebookId: lineData.userId}) // Find current user
+          User.findOne({_id: lineData.userId}) // Find current user
           .then((user) => {
-            new Line({userId: user.facebookId, story: lineData.story, text: lineData.text}).save() // Create the new line and associate it with the user and story
+            new Line({userId: user._id, story: lineData.story, text: lineData.text}).save() // Create the new line and associate it with the user and story
             .then((line) => {
               story.update({ $push: { lines: line._id }, $inc: { currentLine: 1}})
               .then((data)=> {
@@ -66,14 +65,19 @@ module.exports = {
     const numberUsers = req.body.numberUsers * 1;
     const length = req.body.length * 1;
 
-    console.log(req.user)
-    User.findOne({facebookId: req.user.facebookId})
+    User.findOne({_id: req.user._id})
     .then((user)=>{
-      console.log('hey GOT here');
       new Story({title: title, length: length, users: [], numberUsers: numberUsers }).save()
       .then((story) => {
-        console.log("Story saved: ", story)
-        res.json({"redirect":`/#/stories/${story._id}`})
+        console.log('Story saved:', story)
+        user.update({ $push: {storiesCreated: story._id}})
+        .then(answer => {
+          console.log('User storiesCreated array updated:', answer)
+          res.json({"redirect":`/#/stories/${story._id}`})
+        })
+        .catch(err => {
+          return res.status(404).send('User story list not updated')
+        })
       })
       .catch((err) => {
         return res.status(404).send('Story already created!')
@@ -95,7 +99,6 @@ module.exports = {
           ))
           .then((data) => {
             story.lines = data
-            console.log(story)
             resolve(story)
           })
         } else {
@@ -108,7 +111,6 @@ module.exports = {
     })
   },
   getOneStory: (req, res) => {
-    console.log(req.params)
     Story.findOne({_id: req.params.id})
     .then((story) => {
       if(story.lines.length){
@@ -117,7 +119,6 @@ module.exports = {
         ))
         .then((data) => {
           story.lines = data
-          console.log(story)
           res.json(story)
         })
       } else {
