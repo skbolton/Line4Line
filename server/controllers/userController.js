@@ -4,6 +4,7 @@
 module.exports = {
   get: (req,res) => {
     const user = {
+      id: req.user._id,
       fid: req.user.facebookId,
       name: req.user.name,
       profileImage: req.user.profilePic
