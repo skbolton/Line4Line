@@ -16,8 +16,8 @@
     "postinstall": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./node_modules/.bin/nodemon server/server.js --ignore client/",
-    "webpack": "webpack",
-    "dev": "webpack-dev-server --content-base dist"
+    "build": "webpack",
+    "dev": "webpack-dev-server"
   },
   "author": "TEAManticore",
   "dependencies": {
@@ -45,7 +45,8 @@
     "socket.io-client": "^1.5.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "webpack-merge": "^0.15.0"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",

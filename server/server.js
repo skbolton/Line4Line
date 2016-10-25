@@ -74,7 +74,7 @@ app.use(function(req, res, next) {
 })
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.resolve(__dirname, '../dist')))
+app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(session({
   secret: 'cyndilauperisgod',
   resave: true,
