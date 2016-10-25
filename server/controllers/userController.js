@@ -1,69 +1,70 @@
-const db = require('../models/config')
-const User = require('../models/user')
+// const db = require('../models/config')
+// const User = require('../models/user')
 
 module.exports = {
-
   get: (req,res) => {
-  const user = {
-    id: req.user.facebookId,
-    name: req.user.name,
-    profileImage: req.user.profilePic
+    const user = {
+      id: req.user._id,
+      fid: req.user.facebookId,
+      name: req.user.name,
+      profileImage: req.user.profilePic
+    }
+    res.send(user)
   }
-  res.send(user)
-},
-
-  post: (req, res) => {
-    const username =  req.body.username
-    const password = req.body.password
-    User.findOne({username: username})
-    .then((user) => {
-      if(!user) {
-        var newUser = new User({
-          username: username,
-          password: password,
-          sessions: uuid.v4()
-        })
-        newUser.save()
-        .then((user) => {
-          res.cookie('sessionId', user.sessions)
-          res.redirect('/')
-        })
-      } else {
-        const err = new Error({error: 'This username is already taken'})
-        res.send(err)
-      }
-    })
-  },
-
-  verify: (req, res) => {
-    const username = req.body.username
-    const password = req.body.password
-
-    User.findOne({username: username})
-    .then((user) => {
-      if(user){
-        user.comparePassword(password, function(err, match) {
-          if (match) {
-            const session = uuid.v4()
-            user.sessions = session
-            user.save((data) => {
-              res.cookie('sessionId', session)
-              return res.redirect('/')
-            },(err) => {
-              return res.status(400).send('User could not be updated')
-            })
-          } else {
-            return res.status(404).send('Password incorrect');
-          }
-        });
-      } else {
-        return res.status(404).send('User not found')
-      }
-    })
-    .catch(function(err) {
-      console.log(err);
-      return res.status(500).send('idk lol');
-    });   
-  }
-
 };
+
+  // looks like none of the below is used
+
+  // post: (req, res) => {
+  //   const username =  req.body.username
+  //   const password = req.body.password
+  //   User.findOne({username: username})
+  //   .then((user) => {
+  //     if(!user) {
+  //       var newUser = new User({
+  //         username: username,
+  //         password: password,
+  //         sessions: uuid.v4()
+  //       })
+  //       newUser.save()
+  //       .then((user) => {
+  //         res.cookie('sessionId', user.sessions)
+  //         res.redirect('/')
+  //       })
+  //     } else {
+  //       const err = new Error({error: 'This username is already taken'})
+  //       res.send(err)
+  //     }
+  //   })
+  // },
+  //
+  // verify: (req, res) => {
+  //   const username = req.body.username
+  //   const password = req.body.password
+  //
+  //   User.findOne({username: username})
+  //   .then((user) => {
+  //     if(user){
+  //       user.comparePassword(password, function(err, match) {
+  //         if (match) {
+  //           const session = uuid.v4()
+  //           user.sessions = session
+  //           user.save((data) => {
+  //             res.cookie('sessionId', session)
+  //             return res.redirect('/')
+  //           },(err) => {
+  //             return res.status(400).send('User could not be updated')
+  //           })
+  //         } else {
+  //           return res.status(404).send('Password incorrect');
+  //         }
+  //       });
+  //     } else {
+  //       return res.status(404).send('User not found')
+  //     }
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //     return res.status(500).send('idk lol');
+  //   });
+  // }
