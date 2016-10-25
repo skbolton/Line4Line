@@ -61,19 +61,19 @@ module.exports = {
     })
   },
   createStory: (req, res) => {
-    const title = req.body.title;
-    const numberUsers = req.body.numberUsers * 1;
-    const length = req.body.length * 1;
+    const title = req.body.title
+    const numberUsers = req.body.numberUsers
+    const length = req.body.numberUsers//req.body.length
 
     User.findOne({_id: req.user._id})
     .then((user)=>{
-      new Story({title: title, length: length, users: [], numberUsers: numberUsers }).save()
+      new Story({ title, length, numberUsers }).save()
       .then((story) => {
         console.log('Story saved:', story)
-        user.update({ $push: {storiesCreated: story._id}})
+        user.update({ $push: { storiesCreated: story._id } })
         .then(answer => {
           console.log('User storiesCreated array updated:', answer)
-          res.json({"redirect":`/#/stories/${story._id}`})
+          res.json({ 'redirect': `/#/stories/${story._id}` })
         })
         .catch(err => {
           return res.status(404).send('User story list not updated')
