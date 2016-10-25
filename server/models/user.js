@@ -12,8 +12,8 @@ const userSchema = new Schema({
 
   token       : String,
 
-  stories     : [ String ]
-                // [{ type: Schema.ObjectId, ref: 'Story' }]
+  stories     : //[ String ]
+                 [{ type: Schema.ObjectId, ref: 'Story' }]
 })
 
 const User      = mongoose.model('User', userSchema)

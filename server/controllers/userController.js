@@ -1,10 +1,10 @@
-const db = require('../models/config')
-const User = require('../models/user')
+// const db = require('../models/config')
+// const User = require('../models/user')
 
 module.exports = {
   get: (req,res) => {
     const user = {
-      id: req.user.facebookId,
+      fid: req.user.facebookId,
       name: req.user.name,
       profileImage: req.user.profilePic
     }
