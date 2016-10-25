@@ -59,7 +59,6 @@ const prodConfig = {
       comments: false,
       compress: {
         warnings: false,
-        // drop_console: true
       },
       mangle: {
         except: ['$'],
