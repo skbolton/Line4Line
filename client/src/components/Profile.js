@@ -15,7 +15,7 @@ class Profile extends React.Component {
     $.get('/user/580fdc121b98a7e5e1814fe7')
     .then(info => {
       console.log('Got profile info:', info);
-      let stories = info.storiesCreated.map(story => {
+      const storyArr = info.storiesCreated.map(story => {
         return {
           link: story._id,
           title: story.title
@@ -24,7 +24,7 @@ class Profile extends React.Component {
       this.setState({
         photo: info.profilePic,
         name: info.name,
-        stories: stories
+        stories: storyArr
       })
     })
   }
@@ -32,8 +32,11 @@ class Profile extends React.Component {
   render () {
     return (
       <div>
-        <div className='lobby'>
+        <div className="lobby">
           <div className="lobbyLabels">
+            {this.state.name}
+            <img src={this.state.photo}>
+            </img>
           </div>
         </div>
       </div>

@@ -43,7 +43,7 @@ class Lobby extends React.Component {
     return (
       <div>
         <Accordion />
-        <div className='lobby'>
+        <div className="lobby">
           <div className="lobbyLabels">
             <h4 className="storyNames">Story Name</h4>
             <h4 className="numberOfUsers">Number of users</h4>
