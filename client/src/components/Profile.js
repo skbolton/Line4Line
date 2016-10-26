@@ -2,7 +2,7 @@ import React from 'react'
 
 let ProfileStoryEntry = (props) => (
   <div className="">
-    <div className="" onClick={() => { window.location = `/#/stories/${props.story.link}`; }}>{props.story.title}</div>
+    <div className="" onClick={() => { window.location = `/#/stories/${props.story.link}` }}>{props.story.title}</div>
   </div>
 );
 
@@ -20,7 +20,9 @@ class Profile extends React.Component {
 
   componentDidMount () {
     //get an array of all user info
-    $.get('/user/580fdc121b98a7e5e1814fe7')
+    let location = document.location.href
+    location = location.slice(-34, -10)
+    $.get(`/user/${location}`)
     .then(info => {
       console.log('Got profile info:', info);
       const storyArr = info.storiesCreated.map(story => {
