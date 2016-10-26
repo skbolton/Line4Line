@@ -9,7 +9,6 @@ const NavBar = (props) => {
       </div>
       <div className="headerLogButton">
         <Login
-          profilePage={props.profilePage}
           currentUser={props.currentUser}
         />
       </div>

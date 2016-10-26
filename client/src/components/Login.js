@@ -8,7 +8,7 @@ const Login = (props) => {
     if (!props.currentUser) {
       loginButton = <LoginButton loginWithFacebook={props.loginWithFacebook} />
     } else {
-      loginButton = <ProfileButton profilePage={props.profilePage} />
+      loginButton = <ProfileButton currentUser={props.currentUser} />
 
     }
   return (

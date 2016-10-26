@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProfileButton = (props) => {
   return (
-      <a onClick={props.profilePage} href="/profilePage" className="standardButton blackButton">
+      <a onClick={() => {window.location = `#/user/${props.currentUser.id}`}} className="standardButton blackButton">
       Profile Page </a>
   )
 }
