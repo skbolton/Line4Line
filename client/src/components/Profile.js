@@ -2,7 +2,7 @@ import React from 'react'
 
 let ProfileStoryEntry = (props) => (
   <div className="">
-    <div className="" onClick={() => { window.location = `/#/${props.story.link}`; }}>{props.story.title}</div>
+    <div className="" onClick={() => { window.location = `/#/stories/${props.story.link}`; }}>{props.story.title}</div>
   </div>
 );
 
@@ -42,6 +42,7 @@ class Profile extends React.Component {
       <div>
         <div className="lobby">
           <div className="lobbyLabels">
+          <a href="/logout">logout</a>
             {this.state.name}
             <img src={this.state.photo}></img>
             {this.state.stories.map((story, i) =>

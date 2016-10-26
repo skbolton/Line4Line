@@ -1,5 +1,5 @@
 import React from 'react'
-import Login from './Login'
+import NavButton from './NavButton'
 
 const NavBar = (props) => {
   return (
@@ -8,8 +8,7 @@ const NavBar = (props) => {
         <a href="/"><h1>Line After Line</h1></a>
       </div>
       <div className="headerLogButton">
-        <Login
-          profilePage={props.profilePage}
+        <NavButton
           currentUser={props.currentUser}
         />
       </div>

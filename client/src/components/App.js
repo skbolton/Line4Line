@@ -3,7 +3,7 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 import Lobby from './Lobby'
 import Profile from './Profile'
 import Story from './Story'
-import Login from './Login'
+// import NavButton from './NavButton' <-- doubt we need to import this here
 import CreateStory from './CreateStory'
 import NavBar from './NavBar'
 
@@ -14,8 +14,10 @@ class App extends React.Component {
     this.state = {
       currentUser: false
     }
-    //Bind this to logout so it can be passed down through multiple components
-    this.logout = this.logout.bind(this)
+    // Bind this to logout so it can be passed down through multiple components
+    // this.logout = this.logout.bind(this)
+    // ^ I don't think we need this any longer, as logout is just a route which
+    //   kills the session
   }
 
   componentDidMount () {
@@ -42,7 +44,6 @@ class App extends React.Component {
     return (
       <div>
         <NavBar
-          logout={this.logout}
           currentUser={this.state.currentUser}
         />
         {
