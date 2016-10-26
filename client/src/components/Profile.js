@@ -47,7 +47,12 @@ class Profile extends React.Component {
         <div className="lobby row" >
           <div className="row col-xs-6"  >
             <div className="userName"> {this.state.name}</div>
-            <img src={this.state.photo} className="userPhoto"></img>
+              <img src={this.state.photo} className="userPhoto"></img>
+              <div className="logoutButton">
+                <a href="/logout" className="standardButton blackButton">
+                  Logout
+                </a>
+              </div>
           </div>
           <div className="row col-xs-6"> 
             <div className="storyHeader"> 

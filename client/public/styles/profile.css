@@ -28,5 +28,7 @@
   position:relative;
 }
 
-.singleStory{
+.logoutButton{
+  padding-left: 100px;
+  padding-top: 30px;
 }
