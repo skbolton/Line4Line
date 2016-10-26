@@ -43,7 +43,7 @@ class Lobby extends React.Component {
         <div className="lobby">
           <div className="lobbyLabels">
             <h4 className="storyNames">Story Name</h4>
-            <h4 className="numberOfUsers">Number of users</h4>
+            <h4 className="numberOfUsers">Number of Users</h4>
             <h4 className="toggleDisplayLink"><a onClick={this.toggleDisplay}>{displayButtonText}</a></h4>
           </div>
           { this.state.displayComplete ?

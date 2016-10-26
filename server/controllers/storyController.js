@@ -16,14 +16,14 @@ module.exports = {
     .then(user => {
       Story.findById(req.params.id).then(story => {
         if (story.authors.indexOf(user._id) !== -1) {
-          return next()
+          return next();
         } else if (story.complete) {
-          return res.status(404).send('Sorry mate- this story is already complete')
+          return res.status(404).send('Sorry mate- this story is already complete');
         } else {
-          story.update({ $push: {authors: user._id}})
+          story.update({ $push: {authors: user._id} })
           .then(story => {
             console.log('updated')
-            return next()
+            return next();
           })
         }
       })
@@ -31,7 +31,7 @@ module.exports = {
   },
   createNewLine: (lineData) => {
     return new Promise(function(resolve, reject) {
-
+      console.log('lineData in createNewLine: ', lineData);
       Story.findById(lineData.story) // Find the story that they are trying to add the line to
       .then(story => {
         if(!story.complete){
@@ -39,8 +39,10 @@ module.exports = {
           .then(user => {
             new Line({userId: user._id, story: lineData.story, text: lineData.text}).save() // Create the new line and associate it with the user and story
             .then(line => {
-              story.update({ $push: { lines: line._id }, $inc: { currentLine: 1}})
+              console.log('line:', line);
+              story.update({ $push: { lines: line._id }, $inc: { currentLine: 1 }})
               .then(data => {
+                console.log('story:', story)
                 if((story.lines.length + 1 ) === story.length) {
                   story.update({complete: true})
                   .then(() => {
@@ -65,16 +67,14 @@ module.exports = {
   createStory: (req, res) => {
     const title = req.body.title
     const numberUsers = req.body.numberUsers
-    const length = req.body.numberUsers//req.body.length
+    const length = req.body.numberUsers
 
     User.findById(req.user._id)
     .then(user => {
       new Story({ title, length, numberUsers }).save()
       .then(story => {
-        console.log('Story saved:', story)
         user.update({ $push: { storiesCreated: story._id } })
         .then(answer => {
-          console.log('User storiesCreated array updated:', answer)
           res.json({ 'redirect': `/#/stories/${story._id}` })
         })
         .catch(err => {
