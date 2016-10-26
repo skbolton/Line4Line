@@ -5,6 +5,10 @@ client/src/dummyData.js
 .env
 .env.bak
 *.log
+<<<<<<< 913b79e2160d3a1a104b18641e44985e34aeed48
+=======
+server/public/bundle.js
+>>>>>>> Add bundle to .gitignore
 *.map
 server/public/*.css
 server/public/bundle.js
