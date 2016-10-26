@@ -51,8 +51,9 @@ class App extends React.Component {
         //else tell the user to login
         this.state.currentUser ?
         <Router history={hashHistory}>
-          <Route path='/' component={Profile} />
+          <Route path='/' component={Lobby} />
           <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
+          <Route path='/user/:id' component={Profile} />
         </Router>
         :
         <div>Please Login</div>

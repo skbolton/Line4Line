@@ -1,5 +1,13 @@
 import React from 'react'
 
+let ProfileStoryEntry = (props) => (
+  <div className="">
+    <div className="" onClick={() => { window.location = `/#/${props.story.link}`; }}>{props.story.title}</div>
+  </div>
+);
+
+let onClick = () => { console.log(this) }
+
 class Profile extends React.Component {
   constructor (props) {
     super(props)
@@ -35,8 +43,10 @@ class Profile extends React.Component {
         <div className="lobby">
           <div className="lobbyLabels">
             {this.state.name}
-            <img src={this.state.photo}>
-            </img>
+            <img src={this.state.photo}></img>
+            {this.state.stories.map((story, i) =>
+              <ProfileStoryEntry story={story} key={i} />
+            )}
           </div>
         </div>
       </div>
