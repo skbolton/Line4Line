@@ -29,45 +29,39 @@ module.exports = {
       })
     })
   },
+
+  // called via socket to add a line to a story
   createNewLine: (lineData) => {
-    return new Promise(function(resolve, reject) {
-      console.log('lineData in createNewLine: ', lineData);
-      Story.findById(lineData.story) // Find the story that they are trying to add the line to
-      .then(story => {
-        if(!story.complete){
-          User.findById(lineData.userId) // Find current user
-          .then(user => {
-            new Line({userId: user._id, story: lineData.story, text: lineData.text}).save() // Create the new line and associate it with the user and story
-            .then(line => {
-              console.log('line:', line);
-              story.update({ $push: { lines: line._id }, $inc: { currentLine: 1 }})
-              .then(data => {
-                console.log('story:', story)
-                if((story.lines.length + 1 ) === story.length) {
-                  story.update({complete: true})
-                  .then(() => {
-                    //send a promise that resolves to the entire story, not just the new line
-                    resolve(story)
-                  })
-                } else {
-                  resolve(story);
-                }
-              })
-            })
-            .catch(err => {
-              console.log(err)
-            })
-          })
-        } else {
-          res.status(400).send('Story already complete')
-        }
+    // when a line is created fetch both the story 
+    // and the user that the line belongs to
+    const storyProm = Story.findById(lineData.story);
+    const userProm = User.findById(lineData.userId);
+    return storyProm.then(story => {
+      return userProm
+    })
+    .then(user => {
+      // make a new line with user info
+      return new Line({
+        userId: user.userId,
+        text: lineData.text,
+        story: lineData.story
       })
+      .save()
+    })
+    .then(line => {
+      return story.update({ $push: { lines: line }})
+    })
+    .then(lineSaved => {
+      return story;
     })
   },
+
   createStory: (req, res) => {
     const title = req.body.title
     const numberUsers = req.body.numberUsers
-    const length = req.body.numberUsers
+    // capture length of the story, this is the number 
+    // of users multiplied by number of lines
+    const length = req.body.length
 
     User.findById(req.user._id)
     .then(user => {
