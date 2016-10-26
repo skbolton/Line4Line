@@ -15,7 +15,6 @@ module.exports = {
     User.findById(req.user._id)
     .then(user => {
       Story.findById(req.params.id).then(story => {
-        console.log('type of story.authors', Array.isArray(story.authors));
         if (story.authors.indexOf(user._id) !== -1) {
           return next()
         } else if (story.complete) {
@@ -95,6 +94,7 @@ module.exports = {
   // getOneStory socket style uses a directly passed id to 
   // fetch a story and its lines
   getOneStorySocketStyle: (id) => {
+    console.log('got to get one story socket style');
     Story.findById(id).populate('lines')
       .then(lines => {
         res.status(200).json(lines)

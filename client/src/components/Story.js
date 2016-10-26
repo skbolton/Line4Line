@@ -30,7 +30,6 @@ class Story extends React.Component {
     //retrieve story data from server
     $.get(`/stories/${this.state.storyId}`)
     .then(story => {
-      console.log('story: ', story);
       //set state with this data
       this.setState({
         title: story.title,
@@ -42,7 +41,6 @@ class Story extends React.Component {
         currentLine: story.currentLine,
         linesPerAuthor: story.linesPerUser,
       })
-      console.log('this.state.authors after mounted: ', this.state.authors);
       //Find the current user's ID within the users array and retrieve the index
       const currentAuthorIndex = this.state.authors.indexOf(this.state.currentAuthor.id)
 
@@ -66,14 +64,17 @@ class Story extends React.Component {
   }
 
   addLine(text) {
+    console.log('got to addLine');
     var lineData = {
       userId: this.state.authors[this.state.currentAuthorIndex],
       story: this.state.storyId,
       text: text
     }
+    debugger;
     this.state.socket.emit('sendingLine', lineData);
 
     this.state.socket.on('lineSaved', story => {
+      console.log('got to lineSaved')
       this.setState({
         userId: lineData.userId,
         text: lineData.text,
@@ -82,23 +83,8 @@ class Story extends React.Component {
     })
   }
 
-  addLine(lineData) {
-    console.log('line data in addLine: ', lineData);
-    socket.emit('sendingLine', lineData);
-
-    socket.on('lineSaved', story => {
-      console.log('story in line saved: ', story);
-      this.setState({
-        lines: story.lines,
-        currentLine: story.currentLine,
-        complete: story.complete
-      })
-      socket.emit('updateStoryWithNewLine', story);
-    })
-  }
-
   changeState(story){
-    console.log('STORY: ', story)
+    console.log('got through updatestory and changed story state to: ', story)
     this.setState({
       lines: story.lines,
       currentLine: story.currentLine,
@@ -124,7 +110,7 @@ class Story extends React.Component {
 
           {this.state.lines.map((line, i) =>
 
-            <Line line={line} lock={false} key={i} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
+            <Line line={line} lock={false} key={i} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
           )}
 
         </div>
@@ -135,7 +121,7 @@ class Story extends React.Component {
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
 
-          <Line line={currIncomplete} lock={false} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
+          <Line line={currIncomplete} lock={false} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
 
         </div>
       )
@@ -158,7 +144,7 @@ class Story extends React.Component {
           <div>
 
             <Line line={prevLine} lock={false} />
-            <Line line={currIncomplete} lock={false} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
+            <Line line={currIncomplete} lock={false} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
           </div>
 
         </div>
