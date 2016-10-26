@@ -1,6 +1,7 @@
 import React from 'react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
 import Lobby from './Lobby'
+import Profile from './Profile'
 import Story from './Story'
 import Login from './Login'
 import CreateStory from './CreateStory'
@@ -51,6 +52,7 @@ class App extends React.Component {
         <Router history={hashHistory}>
           <Route path='/' component={Lobby} />
           <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
+          <Route path='/user/:id' component={Profile} />
         </Router>
         :
         <div> </div>
