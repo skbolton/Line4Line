@@ -12,7 +12,7 @@ class Profile extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      photo: 'http://i.imgur.com/xt8MjZ5.jpg',
+      photo: 'http://i.imgur.com/Gved5aq.jpg',
       name: 'Robert Davenport',
       stories: []
     }
