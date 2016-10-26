@@ -111,7 +111,14 @@ module.exports = {
     })
   },
   getOneStory: (req, res) => {
-    Story.findById(req.params.id).populate('lines')
+    Story.findById(req.params.id).populate({
+      path: 'lines',
+      model: 'Line',
+      populate: {
+        path: 'userId',
+        model: 'User'
+      }
+    })
     .then(lines => {
       res.json(lines)
     })
