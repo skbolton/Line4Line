@@ -17,15 +17,18 @@ module.exports.listen = function(http){
       client.join(roomID);
     });
 
-    client.on('updateStoryWithNewLine', function(line) {
-      stories.getOneStorySocketStyle(line.story).then(story => {
+    client.on('updateStoryWithNewLine', (story) => {
+      stories.getOneStorySocketStyle(story).then(story => {
         io.emit('updateStory', story)
       })
     })
 
     client.on('sendingLine', function(lineData) {
-      stories.createNewLine(lineData).then(line => {
-        io.emit('lineSaved', line)
+      console.log('lineData: ', lineData);
+      stories.createNewLine(lineData).then(story => {
+        console.log('story after new line created:', story);
+        //send the story, not the line
+        io.emit('lineSaved', story);
       })
     })
 
