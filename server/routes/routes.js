@@ -20,6 +20,8 @@ router.route('/stories').get(stories.getAllStories)
 
 router.route('/user').get(isAuthed, users.get)
 
+router.route('/user/:id').get(isAuthed, users.userProfile)
+
 router.route('/stories/:id').get(isAuthed, stories.joinStory, stories.getOneStory)
 
 router.route('/stories').post(isAuthed, stories.createStory)

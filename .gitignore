@@ -5,6 +5,7 @@ client/src/dummyData.js
 .env
 .env.bak
 *.log
-bundle.js
 *.map
 server/public/*.css
+server/public/bundle.js
+server/public/bundle.js.map
