@@ -13,19 +13,16 @@ module.exports.listen = function(http){
 
     //here's how we create a new room
     client.on('createRoom', function(roomID) {
-      console.log('roomID: ', roomID);
       client.join(roomID);
     });
 
     client.on('updateStoryWithNewLine', (story) => {
-      console.log('update story new line story: ', story);
       stories.getOneStorySocketStyle(story._id).then(story => {
         io.emit('updateStory', story)
       })
     })
 
     client.on('sendingLine', function(lineData) {
-      console.log('lineData: ', lineData);
       stories.createNewLine(lineData).then(story => {
         //send the story, not the line
         io.emit('lineSaved', story);

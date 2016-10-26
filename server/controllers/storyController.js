@@ -94,7 +94,6 @@ module.exports = {
   // getOneStory socket style uses a directly passed id to 
   // fetch a story and its lines
   getOneStorySocketStyle: (id, callback) => {
-    console.log('get one story socket style id:', id);
     return new Promise((resolve, reject) => {
       Story.findById(id).populate('lines')
         .then(lines => {

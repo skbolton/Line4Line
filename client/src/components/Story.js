@@ -75,8 +75,6 @@ class Story extends React.Component {
     this.state.socket.emit('sendingLine', lineData);
 
     this.state.socket.on('lineSaved', story => {
-      console.log('got to lineSaved')
-      console.log('story in linesaved: ', story)
       this.setState({
         userId: lineData.userId,
         text: lineData.text,
@@ -86,7 +84,6 @@ class Story extends React.Component {
   }
 
   changeState(story){
-    console.log('got through updatestory and changed story state to: ', story)
     this.setState({
       lines: story.lines,
       currentLine: story.currentLine,
