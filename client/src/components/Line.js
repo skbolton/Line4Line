@@ -7,12 +7,12 @@ class Line extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      userId: this.props.line.userId,
-      text: this.props.line.text,
-      story: this.props.line.story,
-      lock: this.props.lock
-      // addLine: props.addLine,
-      // userPhoto: props.userphoto 
+      userId: props.line.userId,
+      text: props.line.text,
+      story: props.line.story,
+      lock: props.lock,
+      addLine: props.addLine,
+      userPhoto: props.userphoto 
     }
   }
 
