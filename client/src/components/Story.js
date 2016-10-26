@@ -1,6 +1,5 @@
 import React from 'react'
 import Line from './Line'
-// import Help from '../helpers'
 import io from 'socket.io-client'
 
 const socket = io();
@@ -41,6 +40,7 @@ class Story extends React.Component {
         currentLine: story.currentLine,
         linesPerAuthor: story.linesPerUser,
       })
+      console.log('story state: ', this.state);
       //Find the current user's ID within the users array and retrieve the index
       const currentAuthorIndex = this.state.authors.indexOf(this.state.currentAuthor.id)
 
@@ -49,7 +49,7 @@ class Story extends React.Component {
       const prevLineIndex = (this.state.currentAuthorIndex ? this.state.currentAuthorIndex - 1 : this.state.currentAuthorIndex)
 
       this.setState({
-        currentIndex: currentAuthorIndex,
+        currentAuthorIndex: currentAuthorIndex,
         prevLineIndex: prevLineIndex
       })
       return story._id;
@@ -65,7 +65,6 @@ class Story extends React.Component {
 
   addLine(lineData) {
     event.preventDefault();
-    console.log('got to addLine');
     var lineData = {
       userId: this.state.authors[this.state.currentAuthorIndex],
       story: this.state.storyId,
@@ -77,7 +76,7 @@ class Story extends React.Component {
     this.state.socket.on('lineSaved', story => {
       this.setState({
         userId: lineData.userId,
-        text: lineData.text,
+        text: lineData.text
       })
       this.state.socket.emit('updateStoryWithNewLine', story);
     })
