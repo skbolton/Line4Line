@@ -9,7 +9,6 @@ const NavButton = (props) => {
       navButton = <NavLoginButton loginWithFacebook={props.loginWithFacebook} />
     } else {
       navButton = <NavProfileButton currentUser={props.currentUser} />
-
     }
   return (
     <div>
