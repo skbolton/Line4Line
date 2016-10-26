@@ -106,7 +106,7 @@ class Story extends React.Component {
           <h2 className="title">{ this.state.title }</h2>
 
           {this.state.lines.map((line, i) =>
-            <Line line={line} lock={true} key={i} username={this.state.currentUser.name} userphoto={this.state.currentUser.profileImage}/>
+            <Line line={line} lock={true} key={i} username={this.state.currentUser.name} userphoto={this.state.currentUser.profileImage} addLine={this.addLine}/>
           )}
 
         </div>
@@ -117,7 +117,7 @@ class Story extends React.Component {
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
 
-          <Line line={currIncomplete} lock={false} username={this.state.currentUser.name} userphoto={this.state.currentUser.profileImage}/>
+          <Line line={currIncomplete} lock={false} username={this.state.currentUser.name} userphoto={this.state.currentUser.profileImage} addLine={this.addLine}/>
 
         </div>
       )
@@ -139,7 +139,7 @@ class Story extends React.Component {
 
           <div>
             <Line line={prevLine} lock={true} />
-            <Line line={currIncomplete} lock={false} username={this.state.currentUser.name} userphoto={this.state.currentUser.profileImage}/>
+            <Line line={currIncomplete} lock={false} username={this.state.currentUser.name} userphoto={this.state.currentUser.profileImage} addLine={this.addLine}/>
           </div>
 
         </div>

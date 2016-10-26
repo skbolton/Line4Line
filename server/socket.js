@@ -26,7 +26,6 @@ module.exports.listen = function(http){
     client.on('sendingLine', function(lineData) {
       console.log('lineData: ', lineData);
       stories.createNewLine(lineData).then(story => {
-        console.log('story after new line created:', story);
         //send the story, not the line
         io.emit('lineSaved', story);
       })
