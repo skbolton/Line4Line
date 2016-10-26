@@ -9,7 +9,7 @@ const NavBar = (props) => {
       </div>
       <div className="headerLogButton">
         <Login
-          logout={props.logout}
+          profilePage={props.profilePage}
           currentUser={props.currentUser}
         />
       </div>
