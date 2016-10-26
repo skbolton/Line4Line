@@ -53,7 +53,7 @@ class App extends React.Component {
         <Router history={hashHistory}>
           <Route path='/' component={Lobby} />
           <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
-          <Route path='/user/:id' component={Profile} test={'hey'} />
+          <Route path='/user/:id' component={Profile} />
         </Router>
         :
         <div> </div>
