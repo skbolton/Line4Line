@@ -9,5 +9,13 @@
 <body>
   <div id="app"></div>
   <script src='bundle.js'></script>
+  <script src="https://cdn.jsdelivr.net/konami.js/1.4.2/konami.min.js" integrity="sha256-QzuA0knt323RbHKoNsIVyti9Y41Isbg8h7IdVSN9xR0=" crossorigin="anonymous"></script>
+  <script>
+  $(document).ready(function() {
+      var e = new Konami(function() {
+          $("body").css("background", "url('./cyndi.gif') repeat");
+      });
+  })
+  </script>
 </body>
 </html>
