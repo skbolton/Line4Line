@@ -39,9 +39,11 @@ module.exports = {
           .then(user => {
             new Line({userId: user._id, story: lineData.story, text: lineData.text}).save() // Create the new line and associate it with the user and story
             .then(line => {
+              console.log('line:', line);
               story.update({ $push: { lines: line._id }, $inc: { currentLine: 1 }})
               .then(data => {
-                if((story.lines.length + 1 ) === story.lengthOfStory) {
+                console.log('story:', story)
+                if((story.lines.length + 1 ) === story.length) {
                   story.update({complete: true})
                   .then(() => {
                     //send a promise that resolves to the entire story, not just the new line

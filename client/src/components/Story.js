@@ -40,7 +40,6 @@ class Story extends React.Component {
         currentLine: story.currentLine,
         linesPerAuthor: story.linesPerUser,
       })
-      console.log('story state: ', this.state);
       //Find the current user's ID within the users array and retrieve the index
       const currentAuthorIndex = this.state.authors.indexOf(this.state.currentAuthor.id)
 
