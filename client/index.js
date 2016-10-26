@@ -10,6 +10,7 @@ require('./public/styles/signup.css')
 require('./public/styles/createStory.css')
 require('./public/styles/accordion.css')
 require('./public/styles/navbar.css')
+require('./public/styles/profile.css')
 
 ReactDOM.render(
   <App />,
