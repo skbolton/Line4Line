@@ -111,19 +111,9 @@ module.exports = {
     })
   },
   getOneStory: (req, res) => {
-    Story.findById(req.params.id)
-    .then(story => {
-      if(story.lines.length){
-        Promise.all(story.lines.map(lineid =>
-          Line.findById(lineid)
-        ))
-        .then(data => {
-          story.lines = data
-          res.json(story)
-        })
-      } else {
-        res.json(story)
-      }
+    Story.findById(req.params.id).populate('lines')
+    .then(lines => {
+      res.json(lines)
     })
     .catch(err => {
       console.log('Could not find story with that id')
