@@ -1,8 +1,5 @@
 import React from 'react'
 import io from 'socket.io-client'
-// import Story from './Story';
-
-const socket = io()
 
 class Line extends React.Component {
  
