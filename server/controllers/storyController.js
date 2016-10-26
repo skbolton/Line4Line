@@ -6,15 +6,15 @@ const User = require('../models/user')
 module.exports = {
   getAllStories: (req, res) => {
     Story.find({})
-    .then((stories) => {
+    .then(stories => {
       res.json(stories)
     })
   },
 
   joinStory: (req, res, next) => {
-    User.findOne({_id: req.user._id})
+    User.findById(req.user._id)
     .then(user => {
-      Story.findOne({_id: req.params.id}).then(story => {
+      Story.findById(req.params.id).then(story => {
         if (story.authors.indexOf(user._id) !== -1) {
           return next()
         } else if (story.complete) {
@@ -31,18 +31,18 @@ module.exports = {
   },
   createNewLine: (lineData) => {
     return new Promise(function(resolve, reject) {
-      Story.findOne({_id: lineData.story}) // Find the story that they are trying to add the line to
-      .then((story) => {
+      Story.findById(lineData.story) // Find the story that they are trying to add the line to
+      .then(story => {
         if(!story.complete){
-          User.findOne({_id: lineData.userId}) // Find current user
-          .then((user) => {
+          User.findById(lineData.userId) // Find current user
+          .then(user => {
             new Line({userId: user._id, story: lineData.story, text: lineData.text}).save() // Create the new line and associate it with the user and story
-            .then((line) => {
+            .then(line => {
               story.update({ $push: { lines: line._id }, $inc: { currentLine: 1}})
-              .then((data)=> {
+              .then(data => {
                 if((story.lines.length + 1 ) === story.length) {
                   story.update({complete: true})
-                  .then(()=>{
+                  .then(() => {
                     resolve(line)
                   })
                 } else {
@@ -50,7 +50,7 @@ module.exports = {
                 }
               })
             })
-            .catch((err) => {
+            .catch(err => {
               console.log(err)
             })
           })
@@ -65,10 +65,10 @@ module.exports = {
     const numberUsers = req.body.numberUsers
     const length = req.body.numberUsers//req.body.length
 
-    User.findOne({_id: req.user._id})
-    .then((user)=>{
+    User.findById(req.user._id)
+    .then(user => {
       new Story({ title, length, numberUsers }).save()
-      .then((story) => {
+      .then(story => {
         console.log('Story saved:', story)
         user.update({ $push: { storiesCreated: story._id } })
         .then(answer => {
@@ -79,11 +79,11 @@ module.exports = {
           return res.status(404).send('User story list not updated')
         })
       })
-      .catch((err) => {
+      .catch(err => {
         return res.status(404).send('Story already created!')
       })
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('Could not find user with that session')
       return res.status(404).send('User not found')
     })
@@ -91,13 +91,13 @@ module.exports = {
   },
   getOneStorySocketStyle: (id) => {
     return new Promise((resolve, reject) => {
-      Story.findOne({_id: id})
-      .then((story) => {
+      Story.findById(id)
+      .then(story => {
         if(story.lines.length){
           Promise.all(story.lines.map(lineid =>
-            Line.findOne({_id: lineid})
+            Line.findById(lineid)
           ))
-          .then((data) => {
+          .then(data => {
             story.lines = data
             resolve(story)
           })
@@ -111,13 +111,13 @@ module.exports = {
     })
   },
   getOneStory: (req, res) => {
-    Story.findOne({_id: req.params.id})
-    .then((story) => {
+    Story.findById(req.params.id)
+    .then(story => {
       if(story.lines.length){
         Promise.all(story.lines.map(lineid =>
-          Line.findOne({_id: lineid})
+          Line.findById(lineid)
         ))
-        .then((data) => {
+        .then(data => {
           story.lines = data
           res.json(story)
         })
@@ -125,7 +125,7 @@ module.exports = {
         res.json(story)
       }
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('Could not find story with that id')
       return res.status(404).send('Story not found')
     })

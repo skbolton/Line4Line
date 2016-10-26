@@ -1,8 +1,7 @@
-// const db = require('../models/config')
-// const User = require('../models/user')
+const User = require('../models/user')
 
 module.exports = {
-  get: (req,res) => {
+  get: (req, res) => {
     const user = {
       id: req.user._id,
       fid: req.user.facebookId,
@@ -10,7 +9,18 @@ module.exports = {
       profileImage: req.user.profilePic
     }
     res.send(user)
+  },
+
+  userProfile: (req, res) => {
+    User.findById(req.params.id).populate('storiesCreated')
+    .then(profile => {
+      res.json(profile)
+    })
+    .catch(err => {
+      res.send(`ERROR GETTING USER PROFILE: ${err}`)
+    })
   }
+
 };
 
   // looks like none of the below is used
