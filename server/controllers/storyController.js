@@ -105,7 +105,7 @@ module.exports = {
           console.log('bungalo res bowls')
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Could not find story with that id')
       })
     })
