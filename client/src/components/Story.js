@@ -106,46 +106,64 @@ class Story extends React.Component {
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-
           {this.state.lines.map((line, i) =>
-
-            <Line line={line} lock={true} key={i} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
+            <Line 
+              line={line} 
+              lock={true} 
+              key={i} 
+              userId={this.state.currentAuthor.id} 
+              username={this.state.currentAuthor.name} 
+              userphoto={this.state.currentAuthor.profileImage} 
+              addLine={this.addLine.bind(this)}
+            />
           )}
-
         </div>
       )
+
     } else if (this.state.currentLine === 0 && this.state.currentAuthorIndex === 0) {
     //If the current user is the creator of the story and has not written a line yet
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-
-          <Line line={currIncomplete} lock={false} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
-
+          <Line 
+            line={currIncomplete} 
+            lock={false} 
+            userId={this.state.currentAuthor.id} 
+            username={this.state.currentAuthor.name} 
+            userphoto={this.state.currentAuthor.profileImage} 
+            addLine={this.addLine.bind(this)}
+          />
         </div>
       )
+
     } else if (this.state.currentLine !== this.state.currentAuthorIndex) {
     //If the current user is not the creator and has not written their line and it is not their turn
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-
           <h3>Not your turn!</h3>
-
         </div>
       )
+
     } else if (this.state.currentLine === this.state.currentAuthorIndex) {
     //If the current user is not the creator and it is their turn to write
        return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-
           <div>
-
-            <Line line={prevLine} lock={true} />
-            <Line line={currIncomplete} lock={false} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
+            <Line 
+              line={prevLine} 
+              lock={true} 
+            />
+            <Line 
+              line={currIncomplete} 
+              lock={false} 
+              userId={this.state.currentAuthor.id} 
+              username={this.state.currentAuthor.name} 
+              userphoto={this.state.currentAuthor.profileImage} 
+              addLine={this.addLine.bind(this)}
+            />
           </div>
-
         </div>
       )
     }
