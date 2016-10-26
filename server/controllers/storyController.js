@@ -33,20 +33,21 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       Story.findOne({_id: lineData.story}) // Find the story that they are trying to add the line to
       .then((story) => {
-        if(!story.complete){
+        if(!story.complete) {
           User.findOne({_id: lineData.userId}) // Find current user
           .then((user) => {
             new Line({userId: user._id, story: lineData.story, text: lineData.text}).save() // Create the new line and associate it with the user and story
             .then((line) => {
               story.update({ $push: { lines: line._id }, $inc: { currentLine: 1}})
-              .then((data)=> {
+              .then((data) => {
                 if((story.lines.length + 1 ) === story.length) {
                   story.update({complete: true})
-                  .then(()=>{
-                    resolve(line)
+                  .then(() => {
+                    //send a promise that resolves to the entire story, not just the new line
+                    resolve(story);
                   })
                 } else {
-                  resolve(line)
+                  resolve(story);
                 }
               })
             })
