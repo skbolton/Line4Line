@@ -1,37 +1,25 @@
 import React from 'react'
 import io from 'socket.io-client'
-const socket = io()
+// import Story from './Story';
+// const socket = io()
 
 class Line extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      userId: props.line.userId,
-      text: props.line.text,
-      story: props.line.story,
-      lock: props.lock
+      userId: this.props.line.userId,
+      text: this.props.line.text,
+      story: this.props.line.story,
+      lock: this.props.lock
+      // addLine: props.addLine,
+      // userPhoto: props.userphoto 
     }
-
-    var lineThis = this;
-    socket.on('lineSaved', function(line) {
-      console.log('imma little bitch: ', line)
-      lineThis.setState({
-        userId: line.userId,
-        text: line.text,
-        story: line.story
-      })
-      socket.emit('updateStoryWithNewLine', line)
-    })
   }
 
-
-
-
-  handleSubmit(e){
-    e.preventDefault()
-    //lock in text value
+  handleSubmit(e) {
+    e.preventDefault();
     this.setState({
-      lock: true,
+      lock: true
     })
 
     var lineData = {
@@ -39,22 +27,17 @@ class Line extends React.Component {
       text: this.state.text,
       story: this.state.story
     }
-    console.log(lineData)
-    //send text to server via helpers
-    socket.emit('sendingLine', lineData)
+    this.props.addLine(lineData);
   }
 
-  // observe change to input field as user types
-  handleChange(e){
-    e.preventDefault()
+  handleChange(e) {
+    e.preventDefault();
     this.setState({
       text: e.target.value
     })
-
   }
 
-
-  render(){
+  render() {
     return (
       <div className="lineContainer">
       {
@@ -62,14 +45,13 @@ class Line extends React.Component {
           //if user hasn't submitted text, render form
           <form ref="form" onSubmit={this.handleSubmit.bind(this)} className="lineForm">
           <img className="userLine" src={this.props.userphoto} />
-            <input name="input" value={this.state.text} onChange={(e) => this.handleChange(e)} className="lineInput" type="text" placeholder="..." />
+            <input name="input" value={this.state.text} onChange={(e) => this.handleChange.bind(e)} className="lineInput" type="text" placeholder="..." />
           </form> :
           //if user has already submitted text, render text as div
           <div className="lineForm">
             <div className="userLine">user</div>
             <div className="lineInput">{this.state.text}</div>
           </div>
-
       }
       </div>
     )
