@@ -63,19 +63,20 @@ class Story extends React.Component {
 
   }
 
-  addLine(text) {
+  addLine(lineData) {
     event.preventDefault();
     console.log('got to addLine');
     var lineData = {
       userId: this.state.authors[this.state.currentAuthorIndex],
       story: this.state.storyId,
-      text: text
+      text: lineData.text
     }
 
     this.state.socket.emit('sendingLine', lineData);
 
     this.state.socket.on('lineSaved', story => {
       console.log('got to lineSaved')
+      console.log('story in linesaved: ', story)
       this.setState({
         userId: lineData.userId,
         text: lineData.text,
@@ -111,7 +112,7 @@ class Story extends React.Component {
 
           {this.state.lines.map((line, i) =>
 
-            <Line line={line} lock={false} key={i} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
+            <Line line={line} lock={true} key={i} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
           )}
 
         </div>
@@ -144,7 +145,7 @@ class Story extends React.Component {
 
           <div>
 
-            <Line line={prevLine} lock={false} />
+            <Line line={prevLine} lock={true} />
             <Line line={currIncomplete} lock={false} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
           </div>
 

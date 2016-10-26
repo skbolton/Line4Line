@@ -18,8 +18,8 @@ module.exports.listen = function(http){
     });
 
     client.on('updateStoryWithNewLine', (story) => {
-      console.log('got to update story with new line');
-      stories.getOneStorySocketStyle(story).then(story => {
+      console.log('update story new line story: ', story);
+      stories.getOneStorySocketStyle(story._id).then(story => {
         io.emit('updateStory', story)
       })
     })

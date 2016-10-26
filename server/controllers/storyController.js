@@ -93,15 +93,17 @@ module.exports = {
   },
   // getOneStory socket style uses a directly passed id to 
   // fetch a story and its lines
-  getOneStorySocketStyle: (id) => {
-    console.log('got to get one story socket style');
-    Story.findById(id).populate('lines')
-      .then(lines => {
-        res.status(200).json(lines)
-      })
-      .catch(err => {
-        return res.status(400).send('Story not found');
-      })
+  getOneStorySocketStyle: (id, callback) => {
+    console.log('get one story socket style id:', id);
+    return new Promise((resolve, reject) => {
+      Story.findById(id).populate('lines')
+        .then(lines => {
+          resolve(lines)
+        })
+        .catch(err => {
+          return res.status(400).send('Story not found');
+        })
+    })
   },
   // get one story is a story fetcher that works off url 
   // requests not sockets.

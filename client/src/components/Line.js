@@ -5,30 +5,16 @@ import io from 'socket.io-client'
 const socket = io()
 
 class Line extends React.Component {
-  // handleSubmit(e) {
-  //   e.preventDefault();
-  //   this.setState({
-  //     lock: true
-  //   })
-
-  //   var lineThis = this;
-  //   var lineData = {
-  //     userId: this.state.userId,
-  //     text: this.state.text,
-  //     story: this.state.story
-  //   }
-  //   this.props.addLine.bind(lineThis, lineData);
-  // }
-  formHandler(text) {
-    console.log('event: ', event)
+ 
+  formHandler(event) {
     event.preventDefault();
     console.log('got to formHandler')
-    // var lineData = {
-    //   userId: this.props.userId,
-    //   text: this.input.value,
-    //   story: this.props.story
-    // }
-    this.props.addLine(text);
+    var lineData = {
+      // userId: this.props.userId,
+      text: this.input.value,
+      // story: this.props.story
+    }
+    this.props.addLine(lineData);
   }
 
 
