@@ -15,6 +15,7 @@ module.exports = {
     User.findById(req.user._id)
     .then(user => {
       Story.findById(req.params.id).then(story => {
+        console.log('type of story.authors', Array.isArray(story.authors));
         if (story.authors.indexOf(user._id) !== -1) {
           return next()
         } else if (story.complete) {
