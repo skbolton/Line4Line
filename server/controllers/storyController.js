@@ -31,6 +31,7 @@ module.exports = {
   },
   createNewLine: (lineData) => {
     return new Promise(function(resolve, reject) {
+
       Story.findById(lineData.story) // Find the story that they are trying to add the line to
       .then(story => {
         if(!story.complete){
@@ -43,10 +44,11 @@ module.exports = {
                 if((story.lines.length + 1 ) === story.length) {
                   story.update({complete: true})
                   .then(() => {
-                    resolve(line)
+                    //send a promise that resolves to the entire story, not just the new line
+                    resolve(story)
                   })
                 } else {
-                  resolve(line)
+                  resolve(story);
                 }
               })
             })
@@ -89,27 +91,21 @@ module.exports = {
     })
 
   },
-  getOneStorySocketStyle: (id) => {
+  // getOneStory socket style uses a directly passed id to 
+  // fetch a story and its lines
+  getOneStorySocketStyle: (id, callback) => {
     return new Promise((resolve, reject) => {
-      Story.findById(id)
-      .then(story => {
-        if(story.lines.length){
-          Promise.all(story.lines.map(lineid =>
-            Line.findById(lineid)
-          ))
-          .then(data => {
-            story.lines = data
-            resolve(story)
-          })
-        } else {
-          console.log('bungalo res bowls')
-        }
-      })
-      .catch(err => {
-        console.log('Could not find story with that id')
-      })
+      Story.findById(id).populate('lines')
+        .then(lines => {
+          resolve(lines)
+        })
+        .catch(err => {
+          return res.status(400).send('Story not found');
+        })
     })
   },
+  // get one story is a story fetcher that works off url 
+  // requests not sockets.
   getOneStory: (req, res) => {
     Story.findById(req.params.id).populate({
       path: 'lines',
