@@ -1,6 +1,5 @@
 import React from 'react'
 import io from 'socket.io-client'
-// import Story from './Story';
 
 const socket = io()
 
@@ -10,13 +9,10 @@ class Line extends React.Component {
     event.preventDefault();
     console.log('got to formHandler')
     var lineData = {
-      // userId: this.props.userId,
       text: this.input.value,
-      // story: this.props.story
     }
     this.props.addLine(lineData);
   }
-
 
   render() {
     return (
