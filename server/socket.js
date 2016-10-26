@@ -18,14 +18,14 @@ module.exports.listen = function(http){
 
     client.on('updateStoryWithNewLine', (story) => {
       stories.getOneStorySocketStyle(story._id).then(story => {
-        io.emit('updateStory', story)
+        io.in(story._id).emit('updateStory', story)
       })
     })
 
     client.on('sendingLine', function(lineData) {
       stories.createNewLine(lineData).then(story => {
         //send the story, not the line
-        io.emit('lineSaved', story);
+        io.in(story._id).emit('lineSaved', story);
       })
     })
 
