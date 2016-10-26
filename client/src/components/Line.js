@@ -8,7 +8,7 @@ class Line extends React.Component {
  
   formHandler(event) {
     event.preventDefault();
-    console.log('got to formHandler')
+    console.log('line props:', this.props)
     var lineData = {
       // userId: this.props.userId,
       text: this.input.value,
@@ -30,8 +30,8 @@ class Line extends React.Component {
           </form> :
           //if user has already submitted text, render text as div
           <div className="lineForm">
-            <div className="userLine">user</div>
-            <div className="lineInput">{this.state.text}</div>
+            <img className="userLine" src={this.props.userphoto} />
+            <div className="lineInput">{this.props.line.text}</div>
           </div>
       }
       </div>
