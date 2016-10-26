@@ -54,7 +54,7 @@ class App extends React.Component {
           <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
         </Router>
         :
-        <div>Please Login</div>
+        <div> </div>
         }
       </div>
     )
