@@ -58,9 +58,7 @@ class Story extends React.Component {
       //we're connected, let's get messages from our test room
       this.state.socket.emit('createRoom', `${storyID}`);
     })
-
-    this.state.socket.on('updateStory', this.changeState.bind(this))
-
+    this.state.socket.on('updateStory', this.changeState.bind(this));
   }
 
   addLine(lineData) {
