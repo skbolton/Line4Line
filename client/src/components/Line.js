@@ -20,6 +20,7 @@ class Line extends React.Component {
   //   this.props.addLine.bind(lineThis, lineData);
   // }
   formHandler(text) {
+    console.log('event: ', event)
     event.preventDefault();
     console.log('got to formHandler')
     // var lineData = {

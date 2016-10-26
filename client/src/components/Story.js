@@ -64,13 +64,14 @@ class Story extends React.Component {
   }
 
   addLine(text) {
+    event.preventDefault();
     console.log('got to addLine');
     var lineData = {
       userId: this.state.authors[this.state.currentAuthorIndex],
       story: this.state.storyId,
       text: text
     }
-    debugger;
+
     this.state.socket.emit('sendingLine', lineData);
 
     this.state.socket.on('lineSaved', story => {
