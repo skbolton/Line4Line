@@ -19,11 +19,8 @@ class Lobby extends React.Component {
     //get an array of all the stories from the db that need more users
     $.get('/stories')
     .then(stories => {
-      console.log('Got stories: ', stories);
       let completeStories = stories.filter(story => story.complete)
-      console.log('comstor: ',completeStories)
       let openStories = stories.filter(story => story.length > story.lines.length)
-      console.log('openstor: ', openStories)
       this.setState({
         allStories: stories,
         openStories: openStories,
