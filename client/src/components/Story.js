@@ -63,7 +63,6 @@ class Story extends React.Component {
 
   addLine(lineData) {
     event.preventDefault();
-    console.log('got to addLine');
     var lineData = {
       userId: this.state.authors[this.state.currentAuthorIndex],
       story: this.state.storyId,

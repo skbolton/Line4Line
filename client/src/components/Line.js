@@ -7,7 +7,6 @@ class Line extends React.Component {
  
   formHandler(event) {
     event.preventDefault();
-    console.log('got to formHandler')
     var lineData = {
       text: this.input.value,
     }
