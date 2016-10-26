@@ -61,11 +61,23 @@ class Story extends React.Component {
       socket.emit('createRoom', `${storyID}`);
     })
 
-    //Do you know the salty slug?
-    socket.emit('salty slug')
-
     socket.on('updateStory', this.changeState.bind(this))
 
+  }
+
+  addLine(lineData) {
+    console.log('line data in addLine: ', lineData);
+    socket.emit('sendingLine', lineData);
+
+    socket.on('lineSaved', story => {
+      console.log('story in line saved: ', story);
+      this.setState({
+        lines: story.lines,
+        currentLine: story.currentLine,
+        complete: story.complete
+      })
+      socket.emit('updateStoryWithNewLine', story);
+    })
   }
 
   changeState(story){
