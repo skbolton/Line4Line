@@ -9,7 +9,9 @@ const lineSchema = new Schema({
   //the text in the line
   text   : { type: String, required: true },
   //refference to the story document
-  story  : {type: Schema.ObjectId, ref: 'Story'}
+  story  : {type: Schema.ObjectId, ref: 'Story'},
+
+  authorPic: String
 })
 
 const Line = mongoose.model('Line', lineSchema)

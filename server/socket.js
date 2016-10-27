@@ -27,6 +27,7 @@ module.exports.listen = function(http){
     });
 
     client.on('populateLines', function(storyId) {
+      console.log('got to socket populate lines');
       stories.populateLines(storyId)
       .then(story => {
         io.in(story._id).emit('linesPopulated', story)

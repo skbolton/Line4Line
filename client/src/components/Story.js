@@ -64,7 +64,8 @@ class Story extends React.Component {
     var lineData = {
       userId: this.state.authors[this.state.currentAuthorIndex],
       story: this.state.storyId,
-      text: lineData.text
+      text: lineData.text,
+      authorPic: this.state.currentAuthor.profileImage
     }
 
     this.state.socket.emit('sendingLine', lineData);
@@ -85,8 +86,10 @@ class Story extends React.Component {
   }
 
   populateLines(storyId) {
+    console.log('got to populate lines');
     this.state.socket.emit('populateLines', storyId);
     this.state.socket.on('linesPopulated', story => {
+      console.log('story.lines in populateLines: ', story.lines)
       return new Promise((res, rej) => {
         res(story.lines);
       })
@@ -103,20 +106,20 @@ class Story extends React.Component {
     var currComplete = this.state.lines[this.state.currentAuthorIndex]
 
     if (this.state.lines.length === this.state.lengthOfStory) {
-      this.populateLines(this.state.storyId)
-      .then(lines => {
+      // this.populateLines(this.state.storyId)
+      // .then(lines => {
     //If the story is complete
         return (
           <div className="storyContainer" >
             <h2 className="title">{ this.state.title }</h2>
 
             {lines.map((line, i) =>
-              <Line line={line} lock={true} key={i} userId={line.userId} text={line.text} />
+              <Line line={line} lock={true} key={i} userId={line.userId} text={line.text} authorPic={line.authorPic} />
             )}
-            
+
           </div>
         )
-      })
+      // })
     } else if (this.state.currentLine === 0 && this.state.currentAuthorIndex === 0) {
     //If the current user is the creator of the story and has not written a line yet
       return (

@@ -119,9 +119,13 @@ module.exports = {
   },
 
   populateLines: (storyId) => {
-    Story.findById(storyId).populate('lines')
-    .exec((err, story) => {
-      return story;
+    console.log('got to controller populate lines')
+    return new Promise((res, rej) => {
+      Story.findById(storyId).populate('lines')
+      .exec((err, story) => {
+        console.log('story in populate lines controller: ', story)
+        res(story);
+      })
     })
   }
 };
