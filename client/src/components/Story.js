@@ -29,23 +29,8 @@ class Story extends React.Component {
       this.setState({
         title: story.title,
         authors: story.authors,
-        numOfAuthors: story.numberUsers,
-        complete: story.complete,
-        lengthOfStory: story.length,
-        lines: story.lines,
-        currentLine: story.lines.length,
-        linesPerAuthor: story.linesPerUser,
-      })
-      //Find the current user's ID within the users array and retrieve the index
-      const currentAuthorIndex = this.state.authors.indexOf(this.state.currentAuthor.id)
-
-      //If the current user's index is 0, set the prevLineIndex to 0 as well. This will
-      //prevent the app from trying to render a line with an index of -1.
-      const prevLineIndex = (this.state.currentAuthorIndex ? this.state.currentAuthorIndex - 1 : this.state.currentAuthorIndex)
-
-      this.setState({
-        currentAuthorIndex: currentAuthorIndex,
-        prevLineIndex: prevLineIndex
+        length: story.length,
+        lines: story.lines
       })
       return story._id;
     })
@@ -62,9 +47,7 @@ class Story extends React.Component {
       story: this.state.storyId,
       text: lineData.text
     }
-
     this.state.socket.emit('sendingLine', lineData);
-
     this.state.socket.on('lineSaved', story => {
       this.changeState(story);
     })
@@ -79,13 +62,6 @@ class Story extends React.Component {
     })
     console.log('this.state: ', this.state)
   }
-
-  // populateLines(story) {
-  //   this.state.socket.emit('populateLines', story);
-  //   this.state.socket.on('linesPopulated', result => {
-  //     this.renderLines(result);
-  //   });
-  // }
 
   //The code below is not DRY but it works. I am ashamed of myself for writing it.
   render () {
