@@ -22,16 +22,18 @@ module.exports = {
         } else if (story.complete) {
           return res.status(404).send('Sorry mate- this story is already complete');
         } else {
-          if(user.storiesContributedTo.indexOf(story._id) !== -1 ){
-            return next();
-          }
+            if(user.storiesContributedTo.indexOf(story._id) !== -1 ){
+              return next();
+            }
           user.update({ $push: {storiesContributedTo: story._id}})
-          story.update({ $push: {authors: user._id} })
-          .then(story => {
-            console.log('updated')
-            return next();
-          })
-        }
+            .then(answer => {
+              story.update({ $push: {authors: user._id} })
+              .then(story => {
+                console.log('updated')
+                return next();
+              })
+            })
+          }
       })
     })
   },
