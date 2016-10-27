@@ -39,26 +39,24 @@ class Lobby extends React.Component {
     return (
       <div className="container lobby">
         <div className="row theButtons">
-          <div className="col-xs-6 newStoryButton">
+          <div className="col-xs-offset-3 col-xs-6 newStoryButton">
             <a className="btn btn-info btn-lg" data-toggle="collapse" data-target="#newStory">
               <span className="glyphicon glyphicon-pencil"></span> Create Story</a>
           </div>
-          <div className="col-xs-6 completeToggleButton">
+          <div className="col-xs-3 completeToggleButton">
             <a className="btn btn-info btn-lg" onClick={this.toggleDisplay}>
               <span className="glyphicon glyphicon-check"></span> {displayButtonText}</a>
           </div>
         </div>
-        <div className="row">
-          <div id="newStory" className="col-xs-offset-1 collapse">
-            <CreateStory />
-          </div>
+        <div id="newStory" className="collapse row">
+          <CreateStory />
         </div>
-        <div className="lobbyLabels row">
-          <div className="col-xs-7">
-            Story Name
-          </div>
-          <div className="col-xs-2">
-            Authors
+        <div className="row">
+          <div className="col-sm-9">
+            <div className="row">
+              <div className="col-xs-10 storyHeader">Story Name</div>
+              <div className="col-xs-2 authorsHeader">Authors</div>
+            </div>
           </div>
         </div>
         { this.state.displayComplete ?

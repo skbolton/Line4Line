@@ -34,7 +34,7 @@ passport.use(new FacebookStrategy({
 
   },
   function(req, token, refreshToken, profile, done) {
-    console.log('refreshToken:',refreshToken)
+    console.log('refreshToken:', refreshToken)
     let query = {
       'facebookId': profile.id
     };
