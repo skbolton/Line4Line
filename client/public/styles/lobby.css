@@ -1,6 +1,10 @@
 .lobby {
   text-align: left;
-  padding: 5px;
+  padding-top: 20px;
+}
+
+.accordion {
+  text-align: center;
 }
 
 .lobbyLabels {

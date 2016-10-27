@@ -1,7 +1,6 @@
 import React from 'react'
 import StoryEntry from './StoryEntry'
-import Accordion from './Accordion'
-
+import CreateStory from './CreateStory'
 
 class Lobby extends React.Component {
   constructor (props) {
@@ -39,28 +38,34 @@ class Lobby extends React.Component {
     var displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
     return (
       <div className="container">
-        <Accordion />
-        <div className="lobby">
-          <div className="lobbyLabels">
-            <h4 className="storyNames">Story Name</h4>
-            <h4 className="numberOfUsers">Number of Users</h4>
-            <h4 className="toggleDisplayLink"><a onClick={this.toggleDisplay}>{displayButtonText}</a></h4>
+        <div className="lobby row">
+          <div className="col-xs-12 accordion">
+            <a className="btn btn-info btn-lg" data-toggle="collapse" data-target="#newStory">
+              <span className="glyphicon glyphicon-pencil"></span> Create Story</a>
+                <div id="newStory" className="collapse">
+                  <CreateStory />
+                </div>
           </div>
-          { this.state.displayComplete ?
+            <div className="lobbyLabels row">
+              <h4 className="storyNames">Story Name</h4>
+              <h4 className="numberOfUsers">Number of Users</h4>
+              <h4 className="toggleDisplayLink"><a onClick={this.toggleDisplay}>{displayButtonText}</a></h4>
+            </div>
+            { this.state.displayComplete ?
 
-            this.state.completeStories.map((story, i) =>
-              <StoryEntry story={story} key={i} />
-            )
+              this.state.completeStories.map((story, i) =>
+                <StoryEntry story={story} key={i} />
+              )
 
-            :
+              :
 
-            this.state.openStories.map((story, i) =>
-              <StoryEntry story={story} key={i} />
-            )
+              this.state.openStories.map((story, i) =>
+                <StoryEntry story={story} key={i} />
+              )
 
-          }
+            }
 
-        </div>
+          </div>
       </div>
     )
   }

@@ -6,8 +6,6 @@ let ProfileStoryEntry = (props) => (
    </div>
 );
 
-let onClick = () => { console.log(this) }
-
 class Profile extends React.Component {
   constructor (props) {
     super(props)
@@ -20,9 +18,7 @@ class Profile extends React.Component {
 
   componentDidMount () {
     //get an array of all user info
-    let location = document.location.href
-    location = location.slice(-34, -10)
-    $.get(`/user/${location}`)
+    $.get(`/user/${this.props.params.id}`)
     .then(info => {
       console.log('Got profile info:', info);
       const storyArr = info.storiesCreated.map(story => {

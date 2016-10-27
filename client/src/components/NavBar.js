@@ -6,7 +6,7 @@ class NavBar extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentView: 'lobby',
+      currentView: 'welcome',
     }
   }
 
@@ -20,10 +20,10 @@ class NavBar extends React.Component {
     return (
       <div className="navbarWrap container-fluid">
         <div className="row">
-          <div className="navBarLogo col-sm-6">
-            <a onClick={() => {window.location = `/#`}}><h1>Line After Line</h1></a>
+          <div className="navBarLogo col-sm-offset-1 col-sm-5">
+            <a onClick={() => {this.setView('lobby'); window.location = `/#`}}>Line After Line</a>
           </div>
-          <div className="navBarButton col-sm-6">
+          <div className="navBarButton col-sm-5">
             <NavButton
               currentUser={this.props.currentUser} currentView={this.state.currentView} setView={this.setView.bind(this)}
             />
