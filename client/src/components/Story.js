@@ -101,8 +101,8 @@ class Story extends React.Component {
             this.state.lines.map((line, i) => {
               console.log('line: ', line);
               let author = this.state.authors[authorIdx];
-              <Line 
-                line={line} 
+              <Line
+                text={line.text} 
                 lock={true} 
                 key={i} 
                 userId={author.userId} 
