@@ -51,13 +51,7 @@ module.exports = {
         )
       })
       .then(story => {
-        console.log('story before complete: ', story);
-        if (story.lines.length === story.length){
-          story.update({complete: true})
-          resolve(story);
-        } else {
-          resolve(story);
-        }
+        resolve(story);
       })
     })
   },

@@ -93,7 +93,7 @@ class Story extends React.Component {
     //A complete line that the current user wrote.
     var currComplete = this.state.lines[this.state.currentAuthorIndex]
 
-    if (this.state.complete) {
+    if (this.state.lines.length === this.state.lengthOfStory) {
     //If the story is complete
       return (
         <div className="storyContainer" >
