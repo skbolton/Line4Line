@@ -5,11 +5,11 @@ const Schema = mongoose.Schema
 const lineSchema = new Schema({
   //required attribute to assign the id to a user
   //a line must belong to only one user
-  userId : {type: Schema.ObjectId, ref: 'User'},
+  userId : [{type: Schema.Types.ObjectId, ref: 'User'}],
   //the text in the line
   text   : { type: String, required: true },
   //refference to the story document
-  story  : {type: Schema.ObjectId, ref: 'Story'}
+  story  : [{type: Schema.Types.ObjectId, ref: 'Story'}]
 })
 
 const Line = mongoose.model('Line', lineSchema)
