@@ -31,15 +31,15 @@ class App extends React.Component {
       })
     })
     .catch(err => {
-      console.log('App.js - No user is signed in: ', err)
+      console.log('App.js - No user is signed in:', err)
     })
   }
 
-  logout () {
-    this.setState({
-      currentUser: false
-    })
-  }
+  // changeView(view) {
+  //   this.setState({
+  //     currentView: view
+  //   })
+  // }
 
   render () {
     return (

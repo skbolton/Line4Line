@@ -3,18 +3,39 @@ import NavLoginButton from './NavLoginButton'
 import NavHomeButton from './NavHomeButton'
 import NavProfileButton from './NavProfileButton'
 
-const NavButton = (props) => {
-  let navButton
-    if (!props.currentUser) {
-      navButton = <NavLoginButton loginWithFacebook={props.loginWithFacebook} />
-    } else {
-      navButton = <NavProfileButton currentUser={props.currentUser} />
+class NavButton extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      currentView: 'lobby',
     }
-  return (
-    <div>
-      {navButton}
-    </div>
-  )
+  }
+
+  setView(view) {
+    this.setState({
+      currentView: view
+    })
+  }
+
+
+  render () {
+
+    let navButton
+      if (!this.props.currentUser) {
+        navButton = <NavLoginButton />
+      } else if (this.props.currentUser && this.state.currentView === 'lobby') {
+        navButton = <NavProfileButton setView={this.setView.bind(this)} currentUser={this.props.currentUser} />
+      } else if (this.state.currentView === 'profile') {
+        navButton = <NavHomeButton setView={this.setView.bind(this)} />
+      }
+
+    return (
+      <div>
+        {navButton}
+      </div>
+    )
+  }
 }
 
 export default NavButton

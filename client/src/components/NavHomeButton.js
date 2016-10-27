@@ -2,7 +2,7 @@ import React from 'react'
 
 const NavHomeButton = (props) => {
   return (
-    <a href="/" className="standardButton blackButton">
+    <a onClick={() => {props.setView('lobby'); window.location = `/#`}} className="standardButton blackButton">
       Home
     </a>
   )
