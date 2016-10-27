@@ -121,7 +121,6 @@ class Story extends React.Component {
         </div>
       )
     } else {
-      var lines 
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
