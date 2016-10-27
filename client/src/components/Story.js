@@ -88,10 +88,6 @@ class Story extends React.Component {
   render () {
     //The previous line
     var prevLine = this.state.lines[this.state.lines.length - 2]
-    // //Creats an incomplete line with the current user's ID and the story's ID
-    // var currIncomplete = {userId: this.state.currentAuthor.id, text: '', story: this.state.storyId}
-    // //A complete line that the current user wrote.
-    // var currComplete = this.state.lines[this.state.currentAuthorIndex]
 
     //If the story is complete
     if (this.state.lines.length === this.state.length) {
@@ -101,6 +97,7 @@ class Story extends React.Component {
           <h2 className="title">{ this.state.title }</h2>
           {
             this.state.lines.map((line, i) => {
+              console.log('line: ', line);
               let author = authors[authorIdx];
               <Line 
                 line={line} 
@@ -124,14 +121,16 @@ class Story extends React.Component {
         </div>
       )
     } else {
+      var lines 
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-            <Line line={this.state.lines[prevLine].text} lock={true}/>
+            <Line line={prevLine.text} lock={true}/>
             <Line 
               lock={false} 
               userId={this.state.loggedInUser} 
               userphoto={this.state.loggedInUser.profileImage}
+              addLine={this.addLine.bind(this)}
             />
         </div>
       )      
