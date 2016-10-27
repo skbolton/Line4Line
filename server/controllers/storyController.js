@@ -118,7 +118,10 @@ module.exports = {
     })
   },
 
-  populateLines: (story) => {
-
+  populateLines: (storyId) => {
+    Story.findById(storyId).populate('lines')
+    .exec((err, story) => {
+      return story;
+    })
   }
 };

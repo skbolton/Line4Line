@@ -26,10 +26,10 @@ module.exports.listen = function(http){
       })
     });
 
-    client.on('populateLines', function(story) {
-      stories.populateLines(story)
-      .then(result => {
-        io.in(story._id).emit('linesPopulated', result)
+    client.on('populateLines', function(storyId) {
+      stories.populateLines(storyId)
+      .then(story => {
+        io.in(story._id).emit('linesPopulated', story)
       })
     })
   })
