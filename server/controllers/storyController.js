@@ -39,7 +39,7 @@ module.exports = {
       .then(line => {
         return Story.findOneAndUpdate(
           {_id: line.story },
-          { $push: { lines: line._id }, $set: { authorOnDeck: } },
+          { $push: { lines: line._id } },
           { new: true }
         )
         .populate('authors')
@@ -58,10 +58,11 @@ module.exports = {
     // capture total length of the story, this is the number 
     // of users multiplied by number of lines
     const length = req.body.length;
+    const linesPerAuthor = req.body.linesPerAuthor;
 
     User.findById(req.user._id)
     .then(user => {
-      new Story({ title, length, numberOfAuthors }).save()
+      new Story({ title, length, numberOfAuthors, linesPerAuthor }).save()
       .then(story => {
         user.update({ $push: { storiesCreated: story._id } })
         .then(answer => {

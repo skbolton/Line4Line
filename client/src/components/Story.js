@@ -17,7 +17,7 @@ class Story extends React.Component {
       numberOfAuthors: 0,
       //will be set to number of lines per author upon mounting
       linesPerAuthor: 0,
-      loggedInUser: this.props.route.user.id,
+      loggedInUser: this.props.route.user,
       authorOnDeck: undefined,
       socket: socket
     }
@@ -28,6 +28,7 @@ class Story extends React.Component {
     //retrieve story data from server
     $.get(`/stories/${this.state.storyId}`)
     .then(story => {
+      console.log('story upon mounting: ', story);
       //set state with this data
       this.setState({
         title: story.title,
@@ -46,10 +47,11 @@ class Story extends React.Component {
       //we're connected, let's get messages from our test room
       this.state.socket.emit('createRoom', `${storyID}`);
     })
+      console.log('calling findCurrentAuthor: ', this.findCurrentAuthor())
   }
 
   findCurrentAuthor() {
-    const { numberOfAuthors, linesPerAuthor } = this.state
+    const { numberOfAuthors, linesPerAuthor } = this.state;
     const length = this.state.lines.length;
     if (length > numberOfAuthors) {
       return this.state.authors[Math.ceil(length / linesPerAuthor) - 1];
@@ -61,7 +63,7 @@ class Story extends React.Component {
   addLine(lineData) {
     event.preventDefault();
     var lineData = {
-      userId: this.state.loggedInUser,
+      userId: this.state.loggedInUser.id,
       story: this.state.storyId,
       text: lineData.text
     }
@@ -84,11 +86,11 @@ class Story extends React.Component {
 
   render () {
     //The previous line
-    var prevLine = this.state.lines[this.state.prevLineIndex]
-    //Creats an incomplete line with the current user's ID and the story's ID
-    var currIncomplete = {userId: this.state.currentAuthor.id, text: '', story: this.state.storyId}
-    //A complete line that the current user wrote.
-    var currComplete = this.state.lines[this.state.currentAuthorIndex]
+    var prevLine = this.state.lines[this.state.lines.length - 2]
+    // //Creats an incomplete line with the current user's ID and the story's ID
+    // var currIncomplete = {userId: this.state.currentAuthor.id, text: '', story: this.state.storyId}
+    // //A complete line that the current user wrote.
+    // var currComplete = this.state.lines[this.state.currentAuthorIndex]
 
     //If the story is complete
     if (this.state.lines.length === this.state.length) {
@@ -113,39 +115,25 @@ class Story extends React.Component {
 
         </div>
       )
-    } else if (this.state.currentLine === 0 && this.state.currentAuthorIndex === 0) {
-    //If the current user is the creator of the story and has not written a line yet
+    } else if (this.state.authorOnDeck !== this.state.loggedInUser) {
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-
-          <Line line={currIncomplete} lock={false} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
-
+          Not your turn!
         </div>
       )
-    } else if (this.state.currentLine !== this.state.currentAuthorIndex) {
-    //If the current user is not the creator and has not written their line and it is not their turn
+    } else {
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-
-          <h3>Not your turn!</h3>
-
+            <Line line={this.state.lines[prevLine].text} lock={true}/>
+            <Line 
+              lock={false} 
+              userId={this.state.loggedInUser} 
+              userphoto={this.state.loggedInUser.profileImage}
+            />
         </div>
-      )
-    } else if (this.state.currentLine === this.state.currentAuthorIndex) {
-    //If the current user is not the creator and it is their turn to write
-       return (
-        <div className="storyContainer" >
-          <h2 className="title">{ this.state.title }</h2>
-
-          <div>
-            <Line line={prevLine} lock={true} />
-            <Line line={currIncomplete} lock={false} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
-          </div>
-
-        </div>
-      )
+      )      
     }
   }
 }
