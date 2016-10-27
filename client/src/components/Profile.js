@@ -43,7 +43,7 @@ class Profile extends React.Component {
               <div className="userName"> {this.state.name}</div>
                 <img src={this.state.photo} className="userPhoto"></img>
                 <div className="logoutButton">
-                  <a href="/logout" className="standardButton blackButton">
+                  <a href="/logout" className="btn btn-default btn-lg">
                     Logout
                   </a>
                 </div>

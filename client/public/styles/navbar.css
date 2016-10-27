@@ -7,12 +7,26 @@
 }
 
 .navBarLogo {
-  display: inline-block;
   text-align: left;
   font-size: 3.6em;
+  padding-top: 5px;
 }
 
 .navBarButton {
-  display: inline-block;
+  padding-top: 18px;
   text-align: right;
+}
+
+@media only screen and (max-width: 767px) {
+  .navbarWrap {
+    height: 130px;
+  }
+  .navBarLogo {
+    text-align: center;
+    font-size: 3.6em;
+  }
+  .navBarButton {
+    padding-top: 0px;
+    text-align: center;
+  }
 }

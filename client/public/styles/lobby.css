@@ -7,25 +7,16 @@
   text-align: center;
 }
 
-.lobbyLabels {
-  padding: 0px 15px 0px 15px;
-}
-
 .storyNames {
-  display: inline-block;
-  width: 50%;
 }
 
-.numberOfUsers {
-  display: inline-block;
-  width: 20%;
+.numberOfAuthors {
 }
 
-.toggleDisplayLink{
-  text-align: right;
-  display: inline-block;
-  width: 25%;
+.toggleDisplayButton{
+  text-align: center;
 }
+
 a:hover {
   color: #999 !important;
 }

@@ -17,11 +17,12 @@ const StoryEntry = (props) => {
   }
 
   return (
-    <div className="storyEntryWrap">
-      <div className="storyEntryTitle">{props.story.title}</div>
-      <div className="storyEntryUsers">{props.story.authors.length}/{props.story.numberUsers}</div>
-      <div className='storyEntryJoinWrap'>
-        <button onClick={joinStory} className="standardButton blackButton">Join</button>
+    <div className="storyEntryWrap row">
+      <div className="col-xs-offset-1 col-xs-6 storyEntryTitle">{props.story.title}</div>
+      <div className="col-xs-2 storyEntryAuthors">{props.story.authors.length}/{props.story.numberUsers}</div>
+      <div className="col-xs-2 storyEntryJoin">
+        <a className="btn btn-info btn-lg" onClick={joinStory}>
+          Join</a>
       </div>
     </div>
   )

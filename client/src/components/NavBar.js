@@ -20,10 +20,10 @@ class NavBar extends React.Component {
     return (
       <div className="navbarWrap container-fluid">
         <div className="row">
-          <div className="navBarLogo col-sm-offset-1 col-sm-5">
+          <div className="navBarLogo col-sm-offset-1 col-sm-8">
             <a onClick={() => {this.setView('lobby'); window.location = `/#`}}>Line After Line</a>
           </div>
-          <div className="navBarButton col-sm-5">
+          <div className="navBarButton col-sm-2">
             <NavButton
               currentUser={this.props.currentUser} currentView={this.state.currentView} setView={this.setView.bind(this)}
             />

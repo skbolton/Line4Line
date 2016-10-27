@@ -35,7 +35,7 @@ class Lobby extends React.Component {
   }
 
   render () {
-    var displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
+    let displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
     return (
       <div className="container">
         <div className="lobby row">
@@ -47,9 +47,17 @@ class Lobby extends React.Component {
                 </div>
           </div>
             <div className="lobbyLabels row">
-              <h4 className="storyNames">Story Name</h4>
-              <h4 className="numberOfUsers">Number of Users</h4>
-              <h4 className="toggleDisplayLink"><a onClick={this.toggleDisplay}>{displayButtonText}</a></h4>
+              <div className="col-xs-offset-1 col-xs-6">
+                <h4 className="storyNames">Story Name</h4>
+              </div>
+              <div className="col-xs-2">
+                <h4 className="numberOfAuthors">Authors</h4>
+              </div>
+              <div className="col-xs-2">
+                <h4 className="toggleDisplayButton">
+                  <a className="btn btn-info" onClick={this.toggleDisplay}>
+                    {displayButtonText}</a></h4>
+              </div>
             </div>
             { this.state.displayComplete ?
 
