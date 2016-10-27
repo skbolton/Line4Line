@@ -116,5 +116,9 @@ module.exports = {
       console.log('Could not find story with that id')
       return res.status(404).send('Story not found')
     })
+  },
+
+  populateLines: (story) => {
+
   }
 };

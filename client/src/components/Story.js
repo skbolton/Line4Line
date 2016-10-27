@@ -84,6 +84,13 @@ class Story extends React.Component {
     console.log('this.state: ', this.state)
   }
 
+  populateLines(story) {
+    this.state.socket.emit('populateLines', story);
+    this.state.socket.on('linesPopulated', result => {
+      this.renderLines(result);
+    });
+  }
+
   //The code below is not DRY but it works. I am ashamed of myself for writing it.
   render () {
     //The previous line
@@ -101,7 +108,7 @@ class Story extends React.Component {
 
           {this.state.lines.map((line, i) =>
 
-            <Line line={line} lock={true} key={i} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
+            <Line line={line} lock={true} key={i} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage}/>
           )}
 
         </div>

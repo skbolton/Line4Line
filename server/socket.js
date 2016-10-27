@@ -24,6 +24,13 @@ module.exports.listen = function(http){
         console.log('final story: ', story);
         io.in(story._id).emit('lineSaved', story);
       })
+    });
+
+    client.on('populateLines', function(story) {
+      stories.populateLines(story)
+      .then(result => {
+        io.in(story._id).emit('linesPopulated', result)
+      })
     })
   })
 }
