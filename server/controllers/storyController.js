@@ -33,24 +33,20 @@ module.exports = {
   // called via socket to add a line to a story
   createNewLine: (lineData) => {
     return new Promise ((resolve, reject) => {
-      User.findOne({ _id: lineData.userId})
-      .then(user => {
-        console.log('user:', user);
         // make a new line with user info
-        return Line.create({
-          userId: user.userId,
-          text: lineData.text,
-          story: lineData.story
-        })
-      })
+        const { userId, text, story } = lineData;
+      return Line.create({ userId, text, story })
       .then(line => {
         return Story.findOneAndUpdate(
           {_id: line.story },
           { $push: { lines: line._id } },
           { new: true }
         )
+        .populate('authors')
+        .exec()
       })
       .then(story => {
+        console.log('story in createnewline: ', story);
         resolve(story);
       })
     })
@@ -110,6 +106,7 @@ module.exports = {
       }
     })
     .then(lines => {
+      console.log('lines in get one story: ', lines)
       res.json(lines)
     })
     .catch(err => {
@@ -118,7 +115,7 @@ module.exports = {
     })
   },
 
-  populateLines: (story) => {
+  // populateLines: (story) => {
 
-  }
+  // }
 };

@@ -12,7 +12,7 @@ const userSchema = new Schema({
 
   token          : String,
 
-  storiesCreated : [{ type: Schema.ObjectId, ref: 'Story' }]
+  storiesCreated : [{ type: Schema.Types.ObjectId, ref: 'Story' }]
 })
 
 const User      = mongoose.model('User', userSchema)

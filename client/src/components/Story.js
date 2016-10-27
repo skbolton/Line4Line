@@ -84,12 +84,12 @@ class Story extends React.Component {
     console.log('this.state: ', this.state)
   }
 
-  populateLines(story) {
-    this.state.socket.emit('populateLines', story);
-    this.state.socket.on('linesPopulated', result => {
-      this.renderLines(result);
-    });
-  }
+  // populateLines(story) {
+  //   this.state.socket.emit('populateLines', story);
+  //   this.state.socket.on('linesPopulated', result => {
+  //     this.renderLines(result);
+  //   });
+  // }
 
   //The code below is not DRY but it works. I am ashamed of myself for writing it.
   render () {
