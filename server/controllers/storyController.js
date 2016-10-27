@@ -15,11 +15,17 @@ module.exports = {
     User.findById(req.user._id)
     .then(user => {
       Story.findById(req.params.id).then(story => {
+        console.log('story here = ', story);
+        console.log('user here = ', user);
         if (story.authors.indexOf(user._id) !== -1) {
           return next();
         } else if (story.complete) {
           return res.status(404).send('Sorry mate- this story is already complete');
         } else {
+          if(user.storiesContributedTo.indexOf(story._id) !== -1 ){
+            return next();
+          }
+          user.update({ $push: {storiesContributedTo: story._id}})
           story.update({ $push: {authors: user._id} })
           .then(story => {
             console.log('updated')
@@ -31,7 +37,6 @@ module.exports = {
   },
   createNewLine: (lineData) => {
     return new Promise(function(resolve, reject) {
-      console.log('lineData in createNewLine: ', lineData);
       Story.findById(lineData.story) // Find the story that they are trying to add the line to
       .then(story => {
         if(!story.complete){
@@ -73,7 +78,7 @@ module.exports = {
     .then(user => {
       new Story({ title, length, numberUsers }).save()
       .then(story => {
-        user.update({ $push: { storiesCreated: story._id } })
+        user.update({ $push: { storiesCreated: story._id} })
         .then(answer => {
           res.json({ 'redirect': `/#/stories/${story._id}` })
         })

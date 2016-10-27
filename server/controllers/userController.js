@@ -12,7 +12,7 @@ module.exports = {
   },
 
   userProfile: (req, res) => {
-    User.findById(req.params.id).populate('storiesCreated')
+    User.findById(req.params.id).populate('storiesCreated storiesContributedTo')
     .then(profile => {
       res.json(profile)
     })
