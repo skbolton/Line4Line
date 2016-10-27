@@ -87,8 +87,8 @@ class Story extends React.Component {
 
   render () {
     // this gives back an object
-    var prevLine = this.state.lines.length - 2 > 0 
-      ? this.state.lines[this.state.lines.length - 2]
+    var prevLine = this.state.lines.length - 1 >= 0 
+      ? this.state.lines[this.state.lines.length - 1]
       : this.state.lines[0]
 
     //If the story is complete
@@ -127,10 +127,10 @@ class Story extends React.Component {
       if (prevLine) {
         lines = (
           <div>
-            <Line line={prevLine.text} lock={true}/>
+            <Line text={prevLine.text} lock={true}/>
             <Line 
               lock={false} 
-              userId={this.state.loggedInUser} 
+              userId={this.state.loggedInUser.id} 
               userphoto={this.state.loggedInUser.profileImage}
               addLine={this.addLine.bind(this)}
             />
@@ -140,7 +140,7 @@ class Story extends React.Component {
         lines = (
           <Line 
             lock={false} 
-            userId={this.state.loggedInUser} 
+            userId={this.state.loggedInUser.id} 
             userphoto={this.state.loggedInUser.profileImage}
             addLine={this.addLine.bind(this)}
           />
