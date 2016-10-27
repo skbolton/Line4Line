@@ -5,7 +5,7 @@ const NavBar = (props) => {
   return (
     <div className="navbarWrap">
       <div className="headerLogo">
-        <a href="/"><h1>Line After Line</h1></a>
+        <a onClick={() => {window.location = `/#`}}><h1>Line After Line</h1></a>
       </div>
       <div className="headerLogButton">
         <NavButton

@@ -26,6 +26,7 @@ body {
   color: black;
   background-color: white;
   border: 3px solid black;
+  cursor: pointer;
 }
 
 .whiteButton {
@@ -38,6 +39,7 @@ body {
   color: white;
   background-color: black;
   border: 3px solid white;
+  cursor: pointer;
 }
 
 .facebookButton {
