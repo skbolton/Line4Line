@@ -13,8 +13,10 @@
 
 .newStoryButton {
   padding-right: 5px;
+  text-align: right;
 }
 
 .completeToggleButton {
   padding-left: 5px;
+  text-align: left;
 }

@@ -39,11 +39,11 @@ class Lobby extends React.Component {
     return (
       <div className="container lobby">
         <div className="row theButtons">
-          <div className="col-xs-offset-3 col-xs-6 newStoryButton">
+           <div className="newStoryButton">
             <a className="btn btn-info btn-lg" data-toggle="collapse" data-target="#newStory">
               <span className="glyphicon glyphicon-pencil"></span> Create Story</a>
           </div>
-          <div className="col-xs-3 completeToggleButton">
+          <div className="completeToggleButton">
             <a className="btn btn-info btn-lg" onClick={this.toggleDisplay}>
               <span className="glyphicon glyphicon-check"></span> {displayButtonText}</a>
           </div>

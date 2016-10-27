@@ -8,3 +8,11 @@
   border: solid 1px #d7d7d7;
   box-shadow: 3px 3px 0px #d7d7d7;
 }
+
+.numberInput {
+  width: 50px;
+}
+
+.createButtonRow {
+  padding-top: 10px;
+}

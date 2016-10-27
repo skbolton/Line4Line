@@ -29,16 +29,24 @@ const CreateStory = (props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6">
-            <h3>Number of authors</h3>
-            <input className="form-control" id="createNUsers" type="number" min="2" max="10" placeholder="#" required="required" />
+        <div className="col-sm-6 numberInputContainer">
+          <div className="row">
+            <div className="col-xs-12">
+              <h3>Number of authors</h3>
+            </div>
+              <center><input className="form-control numberInput" id="createNUsers" type="number" min="2" max="10" placeholder="#" required="required" /></center>
+            </div>
           </div>
-          <div className="col-sm-6">
-            <h3>Number of lines each</h3>
-            <input className="form-control" id="linesPerUser" type="number" min="1" max="5" placeholder="#" required="required" />
+          <div className="col-sm-6 numberInputContainer">
+            <div className="row">
+              <div className="col-xs-12">
+                <h3>Number of lines each</h3>
+              </div>
+                <center><input className="form-control numberInput" id="linesPerUser" type="number" min="1" max="5" placeholder="#" required="required" /></center>
+            </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row createButtonRow">
           <div className="col-sm-offset-1 col-sm-10">
             <button className="btn btn-info btn-lg btn-block" type="submit" value="Create">
               Create</button>
