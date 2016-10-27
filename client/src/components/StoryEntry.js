@@ -22,7 +22,7 @@ const StoryEntry = (props) => {
         <div className="row">
           <div className="col-xs-10 storyEntryTitle">{props.story.title}</div>
           <div className="col-xs-2 storyEntryAuthors">{props.story.authors.length}
-          <span className="storyEntryAuthorsSlash">/</span>{props.story.numberUsers}</div>
+          <span className="storyEntryAuthorsSlash">/</span>{props.story.numberOfAuthors}</div>
         </div>
       </div>
       <div className="col-sm-3 storyEntryJoin">
