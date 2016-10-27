@@ -27,7 +27,7 @@ class Line extends React.Component {
           //if user has already submitted text, render text as div
           <div className="lineForm">
             <img className="userLine" src={this.props.userphoto} />
-            <div className="lineInput">{this.props.line.text}</div>
+            <div className="lineInput">{this.props.text}</div>
           </div>
       }
       </div>

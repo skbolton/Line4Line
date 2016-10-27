@@ -39,6 +39,8 @@ class Story extends React.Component {
         length: story.length,
         //array of line ids
         lines: story.lines,
+      })
+      this.setState({
         authorOnDeck: this.findCurrentAuthor()
       })
       return story._id;
@@ -47,7 +49,6 @@ class Story extends React.Component {
       //we're connected, let's get messages from our test room
       this.state.socket.emit('createRoom', `${storyID}`);
     })
-      console.log('calling findCurrentAuthor: ', this.findCurrentAuthor())
   }
 
   findCurrentAuthor() {
@@ -115,7 +116,7 @@ class Story extends React.Component {
 
         </div>
       )
-    } else if (this.state.authorOnDeck !== this.state.loggedInUser) {
+    } else if (this.state.authorOnDeck !== this.state.loggedInUser.id) {
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
