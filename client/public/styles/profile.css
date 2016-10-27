@@ -1,5 +1,4 @@
 .userName {
-  padding-left: 40px;
   padding-top: 15px;
   padding-bottom: 15px;
   font-size: 40px;
@@ -9,26 +8,23 @@
 .userPhoto {
   width: 300px;
   height: auto;
-  padding-left: 30px;
 }
 
 .storyHeader {
   font-weight: bold;
   font-size: 40px;
   padding-top: 15px;
-  text-align: center;
   padding-bottom: 25px;
 }
 
 
 .storyLists {
   font-size: 25px;
-  padding-left: 30px;
   margin-bottom: 20px;
-  position:relative;
+  position: relative;
+  /*text-overflow: ellipsis;*/
 }
 
 .logoutButton{
-  padding-left: 100px;
   padding-top: 30px;
 }

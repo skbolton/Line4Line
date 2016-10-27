@@ -38,7 +38,7 @@ class Lobby extends React.Component {
   render () {
     var displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
     return (
-      <div>
+      <div className="container">
         <Accordion />
         <div className="lobby">
           <div className="lobbyLabels">

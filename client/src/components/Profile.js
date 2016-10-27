@@ -41,9 +41,9 @@ class Profile extends React.Component {
 
   render () {
       return (
-        <div>
-          <div className="lobby row" >
-            <div className="row col-xs-6">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-6">
               <div className="userName"> {this.state.name}</div>
                 <img src={this.state.photo} className="userPhoto"></img>
                 <div className="logoutButton">
@@ -52,7 +52,7 @@ class Profile extends React.Component {
                   </a>
                 </div>
             </div>
-            <div className="row col-xs-6">
+            <div className="col-sm-6">
               <div className="storyHeader">
                 Your stories
               </div>
