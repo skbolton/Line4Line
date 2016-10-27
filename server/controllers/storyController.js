@@ -33,13 +33,13 @@ module.exports = {
   // called via socket to add a line to a story
   createNewLine: (lineData) => {
     return new Promise ((resolve, reject) => {
-        // make a new line with user info
-        const { userId, text, story } = lineData;
+      // make a new line with user info
+      const { userId, text, story } = lineData;
       return Line.create({ userId, text, story })
       .then(line => {
         return Story.findOneAndUpdate(
           {_id: line.story },
-          { $push: { lines: line._id } },
+          { $push: { lines: line._id }, $set: { authorOnDeck: } },
           { new: true }
         )
         .populate('authors')
@@ -53,15 +53,15 @@ module.exports = {
   },
 
   createStory: (req, res) => {
-    const title = req.body.title
-    const numberUsers = req.body.numberUsers
-    // capture length of the story, this is the number 
+    const title = req.body.title;
+    const numberOfAuthors = req.body.numberOfAuthors;
+    // capture total length of the story, this is the number 
     // of users multiplied by number of lines
-    const length = req.body.length
+    const length = req.body.length;
 
     User.findById(req.user._id)
     .then(user => {
-      new Story({ title, length, numberUsers }).save()
+      new Story({ title, length, numberOfAuthors }).save()
       .then(story => {
         user.update({ $push: { storiesCreated: story._id } })
         .then(answer => {
@@ -113,9 +113,6 @@ module.exports = {
       console.log('Could not find story with that id')
       return res.status(404).send('Story not found')
     })
-  },
+  }
 
-  // populateLines: (story) => {
-
-  // }
 };

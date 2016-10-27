@@ -13,9 +13,12 @@ class Story extends React.Component {
       authors: [],
       lines: [],
       length: 0,
+      //will be set to total number of authors upon mounting
+      numberOfAuthors: 0,
+      //will be set to number of lines per author upon mounting
       linesPerAuthor: 0,
-      loggedInUser: this.props.route.user,
-      authorOnDeck: 0
+      loggedInUser: this.props.route.user.id,
+      authorOnDeck: undefined,
       socket: socket
     }
   }
@@ -28,9 +31,14 @@ class Story extends React.Component {
       //set state with this data
       this.setState({
         title: story.title,
+        //array of author ids
         authors: story.authors,
+        numberOfAuthors: story.numberOfAuthors,
+        linesPerAuthor: story.linesPerAuthor,
         length: story.length,
-        lines: story.lines
+        //array of line ids
+        lines: story.lines,
+        authorOnDeck: this.findCurrentAuthor()
       })
       return story._id;
     })
@@ -40,10 +48,20 @@ class Story extends React.Component {
     })
   }
 
+  findCurrentAuthor() {
+    const { numberOfAuthors, linesPerAuthor } = this.state
+    const length = this.state.lines.length;
+    if (length > numberOfAuthors) {
+      return this.state.authors[Math.ceil(length / linesPerAuthor) - 1];
+    } else {
+      return this.state.authors[length];
+    }
+  }
+
   addLine(lineData) {
     event.preventDefault();
     var lineData = {
-      userId: this.state.authors[this.state.currentAuthorIndex],
+      userId: this.state.loggedInUser,
       story: this.state.storyId,
       text: lineData.text
     }
@@ -56,14 +74,14 @@ class Story extends React.Component {
   changeState(story) {
     this.setState({
       lines: story.lines,
-      currentLine: story.lines.length,
-      authors: story.authors,
-      complete: story.complete
+      authors: story.authors
+    })
+    this.setState({
+      authorOnDeck: this.findCurrentAuthor()
     })
     console.log('this.state: ', this.state)
   }
 
-  //The code below is not DRY but it works. I am ashamed of myself for writing it.
   render () {
     //The previous line
     var prevLine = this.state.lines[this.state.prevLineIndex]
@@ -72,8 +90,8 @@ class Story extends React.Component {
     //A complete line that the current user wrote.
     var currComplete = this.state.lines[this.state.currentAuthorIndex]
 
-    if (this.state.lines.length === this.state.lengthOfStory) {
     //If the story is complete
+    if (this.state.lines.length === this.state.length) {
       let authorIdx = 0;
       return (
         <div className="storyContainer" >
