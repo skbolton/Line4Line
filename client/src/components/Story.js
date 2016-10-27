@@ -11,15 +11,11 @@ class Story extends React.Component {
       storyId: this.props.params.id,
       title: '',
       authors: [],
-      numOfAuthors: 0,
-      complete: false,
-      lengthOfStory: 0,
       lines: [],
-      currentLine: null,
-      prevLineIndex: 0,
+      length: 0,
       linesPerAuthor: 0,
-      currentAuthor: this.props.route.user,
-      currentAuthorIndex: 0,
+      loggedInUser: this.props.route.user,
+      authorOnDeck: 0
       socket: socket
     }
   }
@@ -102,14 +98,24 @@ class Story extends React.Component {
 
     if (this.state.lines.length === this.state.lengthOfStory) {
     //If the story is complete
+      let authorIdx = 0;
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-
-          {this.state.lines.map((line, i) =>
-
-            <Line line={line} lock={true} key={i} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage}/>
-          )}
+          {
+            this.state.lines.map((line, i) => {
+              let author = authors[authorIdx];
+              <Line 
+                line={line} 
+                lock={true} 
+                key={i} 
+                userId={author.userId} 
+                userphoto={author.userphoto}
+                text={line.text}
+              />
+              authorIdx = authorIdx === authors.length - 1 ? 0 : authorIdx += 1;
+            })
+          }
 
         </div>
       )
