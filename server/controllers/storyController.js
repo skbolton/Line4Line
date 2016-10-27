@@ -26,10 +26,12 @@ module.exports = {
             return next();
           }
           user.update({ $push: {storiesContributedTo: story._id}})
-          story.update({ $push: {authors: user._id} })
-          .then(story => {
-            console.log('updated')
-            return next();
+          .then(answer => {
+            story.update({ $push: {authors: user._id} })
+            .then(story => {
+              console.log('updated')
+              return next();
+            })
           })
         }
       })
@@ -61,34 +63,27 @@ module.exports = {
   createStory: (req, res) => {
     const title = req.body.title;
     const numberOfAuthors = req.body.numberOfAuthors;
-    // capture total length of the story, this is the number 
+    // capture total length of the story, this is the number
     // of users multiplied by number of lines
     const length = req.body.length;
     const linesPerAuthor = req.body.linesPerAuthor;
 
-    User.findById(req.user._id)
-    .then(user => {
-      new Story({ title, length, numberOfAuthors, linesPerAuthor }).save()
-      .then(story => {
-        user.update({ $push: { storiesCreated: story._id} })
-        .then(answer => {
-          res.json({ 'redirect': `/#/stories/${story._id}` })
-        })
-        .catch(err => {
-          return res.status(404).send('User story list not updated')
-        })
+    new Story({ title, length, numberOfAuthors, linesPerAuthor }).save()
+    .then(story => {
+      User.findByIdAndUpdate(req.user._id, { $push: { storiesCreated: story._id} })
+      .then(answer => {
+        res.json({ 'redirect': `/#/stories/${story._id}` })
       })
       .catch(err => {
-        return res.status(404).send('Story already created!')
+        return res.status(404).send('User story list not updated')
       })
     })
     .catch(err => {
-      console.log('Could not find user with that session')
-      return res.status(404).send('User not found')
+      return res.status(404).send('Story already created!')
     })
 
   },
-  // getOneStory socket style uses a directly passed id to 
+  // getOneStory socket style uses a directly passed id to
   // fetch a story and its lines
   getOneStorySocketStyle: (id, callback) => {
     return new Promise((resolve, reject) => {
@@ -101,7 +96,7 @@ module.exports = {
         })
     })
   },
-  // get one story is a story fetcher that works off url 
+  // get one story is a story fetcher that works off url
   // requests not sockets.
   getOneStory: (req, res) => {
     Story.findById(req.params.id).populate({
