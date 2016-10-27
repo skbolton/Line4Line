@@ -1,41 +1,25 @@
 import React from 'react'
-import NavLoginButton from './NavLoginButton'
-import NavHomeButton from './NavHomeButton'
-import NavProfileButton from './NavProfileButton'
 
-class NavButton extends React.Component {
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      currentView: 'lobby',
+const NavButton = (props) => {
+  let navButton
+    if (!props.currentUser) {
+      navButton = <a href="/auth/facebook" className="standardButton facebookButton">
+        Login with Facebook
+      </a>
+    } else if (props.currentUser && props.currentView === 'lobby') {
+      navButton = <a onClick={() => {props.setView('profile'); window.location = `/#/user/${props.currentUser.id}`}} className="btn btn-info btn-lg">
+        <span className="glyphicon glyphicon-user"></span> Profile
+      </a>
+    } else if (props.currentView === 'profile') {
+      navButton = <a onClick={() => {props.setView('lobby'); window.location = `/#`}} className="btn btn-info btn-lg">
+        <span className="glyphicon glyphicon-home"></span> Home
+      </a>
     }
-  }
-
-  setView(view) {
-    this.setState({
-      currentView: view
-    })
-  }
-
-
-  render () {
-
-    let navButton
-      if (!this.props.currentUser) {
-        navButton = <NavLoginButton />
-      } else if (this.props.currentUser && this.state.currentView === 'lobby') {
-        navButton = <NavProfileButton setView={this.setView.bind(this)} currentUser={this.props.currentUser} />
-      } else if (this.state.currentView === 'profile') {
-        navButton = <NavHomeButton setView={this.setView.bind(this)} />
-      }
-
-    return (
-      <div>
-        {navButton}
-      </div>
-    )
-  }
+  return (
+    <div>
+      {navButton}
+    </div>
+  )
 }
 
 export default NavButton
