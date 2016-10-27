@@ -37,7 +37,7 @@ class Story extends React.Component {
         complete: story.complete,
         lengthOfStory: story.length,
         lines: story.lines,
-        currentLine: story.currentLine,
+        currentLine: story.lines.length,
         linesPerAuthor: story.linesPerUser,
       })
       //Find the current user's ID within the users array and retrieve the index
@@ -57,9 +57,6 @@ class Story extends React.Component {
       //we're connected, let's get messages from our test room
       this.state.socket.emit('createRoom', `${storyID}`);
     })
-
-    this.state.socket.on('updateStory', this.changeState.bind(this))
-
   }
 
   addLine(lineData) {
@@ -73,21 +70,18 @@ class Story extends React.Component {
     this.state.socket.emit('sendingLine', lineData);
 
     this.state.socket.on('lineSaved', story => {
-      this.setState({
-        userId: lineData.userId,
-        text: lineData.text
-      })
-      this.state.socket.emit('updateStoryWithNewLine', story);
+      this.changeState(story);
     })
   }
 
-  changeState(story){
+  changeState(story) {
     this.setState({
       lines: story.lines,
-      currentLine: story.currentLine,
+      currentLine: story.lines.length,
       authors: story.authors,
       complete: story.complete
     })
+    console.log('this.state: ', this.state)
   }
 
   //The code below is not DRY but it works. I am ashamed of myself for writing it.
@@ -139,7 +133,6 @@ class Story extends React.Component {
           <h2 className="title">{ this.state.title }</h2>
 
           <div>
-
             <Line line={prevLine} lock={true} />
             <Line line={currIncomplete} lock={false} userId={this.state.currentAuthor.id} username={this.state.currentAuthor.name} userphoto={this.state.currentAuthor.profileImage} addLine={this.addLine.bind(this)}/>
           </div>

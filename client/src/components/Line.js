@@ -5,7 +5,6 @@ class Line extends React.Component {
  
   formHandler(event) {
     event.preventDefault();
-    console.log('line props:', this.props)
     var lineData = {
       // userId: this.props.userId,
       text: this.input.value,

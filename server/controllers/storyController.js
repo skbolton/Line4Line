@@ -32,27 +32,33 @@ module.exports = {
 
   // called via socket to add a line to a story
   createNewLine: (lineData) => {
-    // when a line is created fetch both the story 
-    // and the user that the line belongs to
-    const storyProm = Story.findById(lineData.story);
-    const userProm = User.findById(lineData.userId);
-    return storyProm.then(story => {
-      return userProm
-    })
-    .then(user => {
-      // make a new line with user info
-      return new Line({
-        userId: user.userId,
-        text: lineData.text,
-        story: lineData.story
+    return new Promise ((resolve, reject) => {
+      User.findOne({ _id: lineData.userId})
+      .then(user => {
+        console.log('user:', user);
+        // make a new line with user info
+        return Line.create({
+          userId: user.userId,
+          text: lineData.text,
+          story: lineData.story
+        })
       })
-      .save()
-    })
-    .then(line => {
-      return story.update({ $push: { lines: line }})
-    })
-    .then(lineSaved => {
-      return story;
+      .then(line => {
+        return Story.findOneAndUpdate(
+          {_id: line.story },
+          { $push: { lines: line._id } },
+          { new: true }
+        )
+      })
+      .then(story => {
+        console.log('story before complete: ', story);
+        if (story.lines.length === story.length){
+          story.update({complete: true})
+          resolve(story);
+        } else {
+          resolve(story);
+        }
+      })
     })
   },
 

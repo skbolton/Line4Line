@@ -19,12 +19,11 @@ module.exports.listen = function(http){
     // when the client sends a line up the socket
     // attempt to save it to the story
     client.on('sendingLine', function(lineData) {
-      stories.createNewLine(lineData).then(story => {
-        console.log(story)
-        //send the story, not the line
+      stories.createNewLine(lineData)
+      .then(story => {
+        console.log('final story: ', story);
         io.in(story._id).emit('lineSaved', story);
       })
     })
-
   })
 }
