@@ -86,8 +86,10 @@ class Story extends React.Component {
   }
 
   render () {
-    //The previous line
-    var prevLine = this.state.lines[this.state.lines.length - 2];
+    // this gives back an object
+    var prevLine = this.state.lines.length - 2 > 0 
+      ? this.state.lines[this.state.lines.length - 2]
+      : this.state.lines[0]
 
     //If the story is complete
     if (this.state.lines.length === this.state.length) {
@@ -98,7 +100,7 @@ class Story extends React.Component {
           {
             this.state.lines.map((line, i) => {
               console.log('line: ', line);
-              let author = authors[authorIdx];
+              let author = this.state.authors[authorIdx];
               <Line 
                 line={line} 
                 lock={true} 
@@ -144,7 +146,6 @@ class Story extends React.Component {
           />
         )
       }
-      
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
