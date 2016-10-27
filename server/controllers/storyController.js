@@ -81,21 +81,8 @@ module.exports = {
     .catch(err => {
       return res.status(404).send('Story already created!')
     })
+  },
 
-  },
-  // getOneStory socket style uses a directly passed id to
-  // fetch a story and its lines
-  getOneStorySocketStyle: (id, callback) => {
-    return new Promise((resolve, reject) => {
-      Story.findById(id).populate('lines')
-        .then(lines => {
-          resolve(lines)
-        })
-        .catch(err => {
-          return res.status(400).send('Story not found');
-        })
-    })
-  },
   // get one story is a story fetcher that works off url
   // requests not sockets.
   getOneStory: (req, res) => {

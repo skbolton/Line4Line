@@ -93,31 +93,34 @@ class Story extends React.Component {
     if (this.state.lines.length === this.state.length) {
       let authorIdx = 0;
       return (
-        <div className="storyContainer" >
-          <h2 className="title">{ this.state.title }</h2>
+        <div className="storyContainer row">
+          <div className="col-xs-offset-1 col-xs-10">
+            <h2 className="title">{ this.state.title }</h2>
           {
             this.state.lines.map((line, i) => {
               console.log('line: ', line);
               let author = authors[authorIdx];
-              <Line 
-                line={line} 
-                lock={true} 
-                key={i} 
-                userId={author.userId} 
+              <Line
+                line={line}
+                lock={true}
+                key={i}
+                userId={author.userId}
                 userphoto={author.userphoto}
                 text={line.text}
               />
               authorIdx = authorIdx === authors.length - 1 ? 0 : authorIdx += 1;
             })
           }
-
+          </div>
         </div>
       )
     } else if (this.state.authorOnDeck !== this.state.loggedInUser.id) {
       return (
-        <div className="storyContainer" >
-          <h2 className="title">{ this.state.title }</h2>
-          Not your turn!
+        <div className="storyContainer row">
+          <div className="col-xs-offset-1 col-xs-10">
+            <h2 className="title">{ this.state.title }</h2>
+            Not your turn!
+          </div>
         </div>
       )
     } else {
@@ -126,9 +129,9 @@ class Story extends React.Component {
         lines = (
           <div>
             <Line line={prevLine.text} lock={true}/>
-            <Line 
-              lock={false} 
-              userId={this.state.loggedInUser} 
+            <Line
+              lock={false}
+              userId={this.state.loggedInUser}
               userphoto={this.state.loggedInUser.profileImage}
               addLine={this.addLine.bind(this)}
             />
@@ -136,21 +139,23 @@ class Story extends React.Component {
         )
       } else {
         lines = (
-          <Line 
-            lock={false} 
-            userId={this.state.loggedInUser} 
+          <Line
+            lock={false}
+            userId={this.state.loggedInUser}
             userphoto={this.state.loggedInUser.profileImage}
             addLine={this.addLine.bind(this)}
           />
         )
       }
-      
+
       return (
-        <div className="storyContainer" >
-          <h2 className="title">{ this.state.title }</h2>
-            { lines }
+        <div className="storyContainer row">
+          <div className="col-xs-offset-1 col-xs-10">
+            <h2 className="title">{ this.state.title }</h2>
+              { lines }
+            </div>
         </div>
-      )      
+      )
     }
   }
 }

@@ -1,7 +1,4 @@
 .lineContainer{
-  display: table;
-  margin: 0px auto;
-  width: 70%;
 }
 
 .userLine{
@@ -17,18 +14,13 @@
 }
 
 .lineInput{
-  float: left;
-  width: 80%;
   height: 50px;
   margin: 10px auto;
   padding: 10px;
   border: none;
-  border-bottom: solid 5px white;
-  transition: border 0.3s;
-  font-size: 18px;
-  font-weight: 800;
-  background-color: black;
-  color: white;
+  border-bottom: dashed 1px;
+  font-size: 2em;
+  width: 100%;
 }
 
 .lineInput::placeholder {
@@ -36,8 +28,14 @@
   font-weight: 400;
 }
 
-.lineInput:focus,
- .lineInput.focus {
-  border-bottom: solid 5px white;
-  outline: none;
+@media only screen and (max-width: 767px) {
+  .lineInput{
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .lineInput{
+    width: 80%;
+  }
 }
