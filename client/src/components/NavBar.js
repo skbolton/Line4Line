@@ -1,19 +1,37 @@
 import React from 'react'
 import NavButton from './NavButton'
 
-const NavBar = (props) => {
-  return (
-    <div className="navbarWrap">
-      <div className="headerLogo">
-        <a onClick={() => {window.location = `/#`}}><h1>Line After Line</h1></a>
+class NavBar extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      currentView: 'welcome',
+    }
+  }
+
+  setView(view) {
+    this.setState({
+      currentView: view
+    })
+  }
+
+  render () {
+    return (
+      <div className="navbarWrap container-fluid">
+        <div className="row">
+          <div className="navBarLogo col-sm-offset-1 col-sm-8">
+            <a onClick={() => {this.setView('lobby'); window.location = `/#`}}>Line After Line</a>
+          </div>
+          <div className="navBarButton col-sm-2">
+            <NavButton
+              currentUser={this.props.currentUser} currentView={this.state.currentView} setView={this.setView.bind(this)}
+            />
+          </div>
+        </div>
       </div>
-      <div className="headerLogButton">
-        <NavButton
-          currentUser={props.currentUser}
-        />
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default NavBar

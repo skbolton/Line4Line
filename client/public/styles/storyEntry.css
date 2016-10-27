@@ -1,28 +1,29 @@
 .storyEntryWrap {
-  background-color: white;
-  color: black;
+  padding: 12px 0 10px 0;
+  margin: 10px 0;
+  background-color: #fff;
   border: solid 1px #d7d7d7;
   border-radius: 5px;
-  margin: 10px;
-  padding: 10px;
   box-shadow: 3px 3px 0px #d7d7d7;
 }
 
 .storyEntryTitle {
   font-size: 1.2em;
-  display: inline-block;
-  width: 55%;
 }
 
-.storyEntryUsers {
+.storyEntryAuthors {
   font-size: 1.2em;
-  display: inline-block;
-  width: 10%
 }
 
-.storyEntryJoinWrap {
-  display: inline-block;
-  text-align: right;
-  width: 30%;
-  padding-left: 5%;
+.storyEntryAuthorsSlash {
+  color: grey;
+}
+
+.storyEntryJoin {
+}
+
+@media only screen and (max-width: 767px) {
+  .storyEntryJoin {
+    margin: 10px 5px 5px 5px;
+  }
 }

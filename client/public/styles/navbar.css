@@ -1,45 +1,32 @@
 .navbarWrap {
-  color: white;
   height: 80px;
-  margin-bottom: 15px;
-  background-color: black;
+  margin: 0;
+  padding: 0;
+  background-color: #6CAFCC;
   box-shadow: 3px 3px 0px #d7d7d7;
 }
 
-.headerLogo {
-  display: inline-block;
-  width: 45%;
+.navBarLogo {
   text-align: left;
+  font-size: 3.6em;
+  padding-top: 5px;
 }
 
-.headerLogButton {
-  display: inline-block;
-  width: 45%;
+.navBarButton {
+  padding-top: 18px;
   text-align: right;
-  margin-bottom: 5px;
 }
 
-/*.profileButton {
-  display: inline-block;
-  width: 45%;
-  text-align: right;
-  margin-bottom: 5px;
-}*/
-
-a:link {
-  text-decoration: none;
-  color: white;
-}
-a:visited {
-  text-decoration: none;
-  color: white;
-}
-a:hover {
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
-}
-a:active {
-  text-decoration: none;
-  color: white;
+@media only screen and (max-width: 767px) {
+  .navbarWrap {
+    height: 130px;
+  }
+  .navBarLogo {
+    text-align: center;
+    font-size: 3.6em;
+  }
+  .navBarButton {
+    padding-top: 0px;
+    text-align: center;
+  }
 }

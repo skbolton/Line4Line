@@ -1,7 +1,6 @@
 import React from 'react'
 import StoryEntry from './StoryEntry'
-import Accordion from './Accordion'
-
+import CreateStory from './CreateStory'
 
 class Lobby extends React.Component {
   constructor (props) {
@@ -36,31 +35,43 @@ class Lobby extends React.Component {
   }
 
   render () {
-    var displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
+    let displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
     return (
-      <div>
-        <Accordion />
-        <div className="lobby">
-          <div className="lobbyLabels">
-            <h4 className="storyNames">Story Name</h4>
-            <h4 className="numberOfUsers">Number of Users</h4>
-            <h4 className="toggleDisplayLink"><a onClick={this.toggleDisplay}>{displayButtonText}</a></h4>
+      <div className="container lobby">
+        <div className="row theButtons">
+          <div className="col-xs-offset-3 col-xs-6 newStoryButton">
+            <a className="btn btn-info btn-lg" data-toggle="collapse" data-target="#newStory">
+              <span className="glyphicon glyphicon-pencil"></span> Create Story</a>
           </div>
-          { this.state.displayComplete ?
-
-            this.state.completeStories.map((story, i) =>
-              <StoryEntry story={story} key={i} />
-            )
-
-            :
-
-            this.state.openStories.map((story, i) =>
-              <StoryEntry story={story} key={i} />
-            )
-
-          }
-
+          <div className="col-xs-3 completeToggleButton">
+            <a className="btn btn-info btn-lg" onClick={this.toggleDisplay}>
+              <span className="glyphicon glyphicon-check"></span> {displayButtonText}</a>
+          </div>
         </div>
+        <div id="newStory" className="collapse row">
+          <CreateStory />
+        </div>
+        <div className="row">
+          <div className="col-sm-9">
+            <div className="row">
+              <div className="col-xs-10 storyHeader">Story Name</div>
+              <div className="col-xs-2 authorsHeader">Authors</div>
+            </div>
+          </div>
+        </div>
+        { this.state.displayComplete ?
+
+          this.state.completeStories.map((story, i) =>
+            <StoryEntry story={story} key={i} />
+          )
+
+          :
+
+          this.state.openStories.map((story, i) =>
+            <StoryEntry story={story} key={i} />
+          )
+
+        }
       </div>
     )
   }

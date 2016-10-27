@@ -6,6 +6,7 @@ import Story from './Story'
 // import NavButton from './NavButton' <-- doubt we need to import this here
 import CreateStory from './CreateStory'
 import NavBar from './NavBar'
+import Welcome from './Welcome'
 
 
 class App extends React.Component {
@@ -30,19 +31,19 @@ class App extends React.Component {
       })
     })
     .catch(err => {
-      console.log('App.js - No user is signed in: ', err)
+      console.log('App.js - No user is signed in:', err)
     })
   }
 
-  logout () {
-    this.setState({
-      currentUser: false
-    })
-  }
+  // changeView(view) {
+  //   this.setState({
+  //     currentView: view
+  //   })
+  // }
 
   render () {
     return (
-      <div>
+      <div className="">
         <NavBar
           currentUser={this.state.currentUser}
         />
@@ -56,7 +57,7 @@ class App extends React.Component {
           <Route path='/user/:id' component={Profile} />
         </Router>
         :
-        <div> </div>
+        <Welcome />
         }
       </div>
     )

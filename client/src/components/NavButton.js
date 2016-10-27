@@ -1,14 +1,19 @@
 import React from 'react'
-import NavLoginButton from './NavLoginButton'
-import NavHomeButton from './NavHomeButton'
-import NavProfileButton from './NavProfileButton'
 
 const NavButton = (props) => {
   let navButton
     if (!props.currentUser) {
-      navButton = <NavLoginButton loginWithFacebook={props.loginWithFacebook} />
-    } else {
-      navButton = <NavProfileButton currentUser={props.currentUser} />
+      navButton = <a href="/auth/facebook" className="btn btn-primary btn-lg">
+        <i className="fa fa-facebook-square"></i> Login with Facebook
+      </a>
+    } else if (props.currentView === 'lobby' || props.currentView === 'welcome') {
+      navButton = <a onClick={() => {props.setView('profile'); window.location = `/#/user/${props.currentUser.id}`}} className="btn btn-info btn-lg">
+        <span className="glyphicon glyphicon-user"></span> Profile
+      </a>
+    } else if (props.currentView === 'profile') {
+      navButton = <a onClick={() => {props.setView('lobby'); window.location = `/#`}} className="btn btn-info btn-lg">
+        <span className="glyphicon glyphicon-home"></span> Lobby
+      </a>
     }
   return (
     <div>
