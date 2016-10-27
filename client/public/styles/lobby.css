@@ -7,16 +7,10 @@
   text-align: center;
 }
 
-.storyNames {
+.newStoryButton {
+  padding-right: 5px;
 }
 
-.numberOfAuthors {
-}
-
-.toggleDisplayButton{
-  text-align: center;
-}
-
-a:hover {
-  color: #999 !important;
+.completeToggleButton {
+  padding-left: 5px;
 }
