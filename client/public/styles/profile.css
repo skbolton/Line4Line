@@ -25,6 +25,10 @@
   /*text-overflow: ellipsis;*/
 }
 
+.storyLists:hover {
+  cursor: pointer;
+}
+
 .logoutButton{
   padding-top: 30px;
 }

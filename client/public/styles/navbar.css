@@ -10,6 +10,7 @@
   display: inline-block;
   width: 45%;
   text-align: left;
+  color: white !important;
 }
 
 .headerLogButton {
@@ -28,7 +29,7 @@
 
 a:link {
   text-decoration: none;
-  color: white !important;
+  color: white;
 }
 a:visited {
   text-decoration: none;
