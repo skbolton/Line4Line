@@ -7,16 +7,14 @@
   text-align: center;
 }
 
-.authorsHeader {
+.newStoryButton {
   text-align: center;
 }
 
-.newStoryButton {
-  padding-right: 5px;
-  text-align: right;
+.completeToggleButton {
+  text-align: center;
 }
 
-.completeToggleButton {
-  padding-left: 5px;
-  text-align: left;
+.tableHeaderRow {
+  padding-top: 15px;
 }
