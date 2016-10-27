@@ -16,18 +16,21 @@ module.exports.listen = function(http){
       client.join(roomID);
     });
 
-    client.on('updateStoryWithNewLine', (story) => {
-      stories.getOneStorySocketStyle(story._id).then(story => {
-        io.in(story._id).emit('updateStory', story)
-      })
-    })
-
+    // when the client sends a line up the socket
+    // attempt to save it to the story
     client.on('sendingLine', function(lineData) {
-      stories.createNewLine(lineData).then(story => {
-        //send the story, not the line
+      stories.createNewLine(lineData)
+      .then(story => {
+        console.log('final story: ', story);
         io.in(story._id).emit('lineSaved', story);
       })
-    })
+    });
 
+    client.on('populateLines', function(story) {
+      stories.populateLines(story)
+      .then(result => {
+        io.in(story._id).emit('linesPopulated', result)
+      })
+    })
   })
 }

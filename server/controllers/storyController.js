@@ -35,44 +35,35 @@ module.exports = {
       })
     })
   },
+
+  // called via socket to add a line to a story
   createNewLine: (lineData) => {
-    return new Promise(function(resolve, reject) {
-      Story.findById(lineData.story) // Find the story that they are trying to add the line to
+    return new Promise ((resolve, reject) => {
+        // make a new line with user info
+        const { userId, text, story } = lineData;
+      return Line.create({ userId, text, story })
+      .then(line => {
+        return Story.findOneAndUpdate(
+          {_id: line.story },
+          { $push: { lines: line._id } },
+          { new: true }
+        )
+        .populate('authors')
+        .exec()
+      })
       .then(story => {
-        if(!story.complete){
-          User.findById(lineData.userId) // Find current user
-          .then(user => {
-            new Line({userId: user._id, story: lineData.story, text: lineData.text}).save() // Create the new line and associate it with the user and story
-            .then(line => {
-              console.log('line:', line);
-              story.update({ $push: { lines: line._id }, $inc: { currentLine: 1 }})
-              .then(data => {
-                console.log('story:', story)
-                if((story.lines.length + 1 ) === story.length) {
-                  story.update({complete: true})
-                  .then(() => {
-                    //send a promise that resolves to the entire story, not just the new line
-                    resolve(story)
-                  })
-                } else {
-                  resolve(story);
-                }
-              })
-            })
-            .catch(err => {
-              console.log(err)
-            })
-          })
-        } else {
-          res.status(400).send('Story already complete')
-        }
+        console.log('story in createnewline: ', story);
+        resolve(story);
       })
     })
   },
+
   createStory: (req, res) => {
     const title = req.body.title
     const numberUsers = req.body.numberUsers
-    const length = req.body.numberUsers
+    // capture length of the story, this is the number 
+    // of users multiplied by number of lines
+    const length = req.body.length
 
     User.findById(req.user._id)
     .then(user => {
@@ -121,11 +112,16 @@ module.exports = {
       }
     })
     .then(lines => {
+      console.log('lines in get one story: ', lines)
       res.json(lines)
     })
     .catch(err => {
       console.log('Could not find story with that id')
       return res.status(404).send('Story not found')
     })
-  }
+  },
+
+  // populateLines: (story) => {
+
+  // }
 };
