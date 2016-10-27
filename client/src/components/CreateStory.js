@@ -6,7 +6,8 @@ const CreateStory = (props) => {
     e.preventDefault()
     const newStory = {}
     newStory.title = document.getElementById('createTitle').value
-    newStory.numberUsers = document.getElementById('createNUsers').value
+    newStory.numberOfAuthors = document.getElementById('createNUsers').value;
+    newStory.linesPerAuthor = document.getElementById('linesPerUser').value;
     newStory.length = document.getElementById('linesPerUser').value * document.getElementById('createNUsers').value;
     $.ajax({
       type: 'POST',
