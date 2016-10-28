@@ -51,13 +51,15 @@ class Story extends React.Component {
   }
 
   findCurrentAuthor() {
-    const { numberOfAuthors, linesPerAuthor } = this.state;
+    const { linesPerAuthor, numberOfAuthors } = this.state;
     const length = this.state.lines.length;
     const authorLength = this.state.authors.length;
+
     if (length < numberOfAuthors) {
       return this.state.authors[length];
     }
     var prevAuthId = this.state.lines[this.state.lines.length - 1].userId[0]
+    console.log('prevAuthId: ', prevAuthId);
     var authIdx; 
     for (var i=0; i<authorLength; i++) {
       if (this.state.authors[i]._id === prevAuthId) {
@@ -65,7 +67,7 @@ class Story extends React.Component {
         break;
       }
     }
-    var nextAuthIdx = authIdx + 1 > this.state.authorLength ? 0 : authIdx + 1;
+    var nextAuthIdx = authIdx + 1 >= authorLength ? 0 : authIdx + 1;
     return this.state.authors[nextAuthIdx];
   }
 
