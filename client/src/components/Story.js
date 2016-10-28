@@ -115,7 +115,7 @@ class Story extends React.Component {
             lock={true} 
             key={idx} 
             userId={author._id} 
-            userphoto={author.proflePic}
+            userphoto={author.profilePic}
             text={line.text}
           />
         )
