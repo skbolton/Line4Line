@@ -6,7 +6,7 @@ const NavButton = (props) => {
       navButton = <a href="/auth" className="btn btn-primary btn-lg">
         <i className="fa fa-facebook-square"></i> Login with Facebook
       </a>
-    } else if (props.currentView === 'lobby' || props.currentView === 'welcome') {
+    } else if (props.currentView === 'lobby' || props.currentView === 'welcome' || props.currentView === 'FinishedStories') {
       navButton = <a onClick={() => {props.setView('profile'); window.location = `/#/user/${props.currentUser.id}`}} className="btn btn-info btn-lg">
         <span className="glyphicon glyphicon-user"></span> Profile
       </a>

@@ -6,6 +6,7 @@ import Story from './Story'
 import CreateStory from './CreateStory'
 import NavBar from './NavBar'
 import Welcome from './Welcome'
+import FinishedStories from './FinishedStories'
 
 
 class App extends React.Component {
@@ -50,6 +51,7 @@ class App extends React.Component {
           <Route path='/' component={Lobby} />
           <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
           <Route path='/user/:id' component={Profile} />
+          <Route path='/stories/finished' component={FinishedStories} />
         </Router>
         :
         <Welcome />
