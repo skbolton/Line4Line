@@ -41,29 +41,29 @@ module.exports = {
   },
 
   // called via socket to add a line to a story
+
   createNewLine: (lineData) => {
     return new Promise ((resolve, reject) => {
       // make a new line with user info
       const { userId, text, story } = lineData;
-      return Line.create({ userId, text, story })
+      Line.create({ userId, text, story })
       .then(line => {
         Story.findById(line.story).then(currentStory => {
-          let finished;
-          if (currentStory.length === currentStory.lines + 1) {
+          let finished = false;
+          if (currentStory.length <= currentStory.lines.length + 1) {
             finished = true;
           }
+          Story.findByIdAndUpdate(
+            currentStory._id,
+            { $push: { lines: line._id }, finished },
+            { new: true }
+          )
+          .populate('authors')
+          .then(response => {
+            console.log(`\n\nStory resolved from createNewLine:\n${response}\n\n`);
+            resolve(response);
+          })
         })
-        return Story.findOneAndUpdate(
-          {_id: line.story },
-          { $push: { lines: line._id } },
-          { new: true }
-        )
-        .populate('authors')
-        .exec()
-      })
-      .then(story => {
-        console.log('story in createnewline: ', story);
-        resolve(story);
       })
     })
   },
@@ -103,7 +103,7 @@ module.exports = {
       }
     })
     .then(lines => {
-      console.log('lines in get one story: ', lines)
+      console.log(`\n\nLines resolved from getOneStory:\n${lines}\n\n`);
       res.json(lines)
     })
     .catch(err => {
