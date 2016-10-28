@@ -17,6 +17,11 @@
   text-align: right;
 }
 
+.finishedStoryButton {
+  padding-top: 18px;
+  
+}
+
 @media only screen and (max-width: 767px) {
   .navbarWrap {
     height: 130px;
