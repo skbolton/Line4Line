@@ -52,16 +52,21 @@ class Story extends React.Component {
 
   findCurrentAuthor() {
     const { numberOfAuthors, linesPerAuthor } = this.state;
-    const length = this.state.lines.length; //2
-    if (length >= numberOfAuthors) {  // 2 > 2
-      return this.state.authors[Math.ceil(length / linesPerAuthor) - 1];
-    } else {
-      if (!this.state.authors[length - 1]) {
-        return this.state.authors[0];
-      } else {
-        return this.state.authors[length];
+    const length = this.state.lines.length;
+    const authorLength = this.state.authors.length;
+    if (length < numberOfAuthors) {
+      return this.state.authors[length];
+    }
+    var prevAuthId = this.state.lines[this.state.lines.length - 1].userId[0]
+    var authIdx; 
+    for (var i=0; i<authorLength; i++) {
+      if (this.state.authors[i]._id === prevAuthId) {
+        authIdx = i;
+        break;
       }
     }
+    var nextAuthIdx = authIdx + 1 > this.state.authorLength ? 0 : authIdx + 1;
+    return this.state.authors[nextAuthIdx];
   }
 
   addLine(lineData) {
