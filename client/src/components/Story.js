@@ -103,26 +103,28 @@ class Story extends React.Component {
     const { loggedInUser, authorOnDeck, authors } = this.state;
     // if the story is done
     if (this.state.lines.length === this.state.length) {
-      let authorIdx = 0;
+      let authorIdx = -1;
+      const lines = this.state.lines.map((line, idx) => {
+        authorIdx++;
+        if (authorIdx >= this.state.authors.length) {
+          authorIdx = 0
+        }
+        let author = this.state.authors[authorIdx]
+        return (
+          <Line
+            lock={true} 
+            key={idx} 
+            userId={author._id} 
+            userphoto={author.proflePic}
+            text={line.text}
+          />
+        )
+      })
+
       return (
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
-          {
-            this.state.lines.map((line, i) => {
-              let author = authors[authorIdx];
-              <Line
-                lock={true} 
-                key={i} 
-                userId={author.userId} 
-                userphoto={author.userphoto}
-                text={line.text}
-              />
-              authorIdx = authorIdx === authors.length - 1 
-                ? 0 
-                : authorIdx += 1;
-            })
-          }
-
+          { lines }
         </div>
       )
       // if the authorOnDeck is not defined or their id doesn't match
