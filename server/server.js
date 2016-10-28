@@ -17,8 +17,8 @@ const port             = process.env.PORT || 3000
 var http = require('http').Server(app)
 var io = require('./socket.js').listen(http)
 
+
 passport.serializeUser(function (user, done) {
-  console.log(user)
   done(null, user)
 })
 
@@ -34,18 +34,15 @@ passport.use(new FacebookStrategy({
 
   },
   function(req, token, refreshToken, profile, done) {
-    console.log('refreshToken:',refreshToken)
     let query = {
       'facebookId': profile.id
     };
 
   User.findOne(query).then(user => {
     if (user) {
-      console.log('User found')
       done(null, user)
 
     } else {
-      console.log('User not found - adding to DB')
       let newUser = {}
       newUser.facebookId = profile.id
       newUser.name = profile.displayName
