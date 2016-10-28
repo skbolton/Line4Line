@@ -11,6 +11,9 @@ module.exports = {
     })
   },
 
+  // this function is a middleware to make sure user is added
+  // to the authors array in a story, this function is called
+  // when a user
   joinStory: (req, res, next) => {
     console.log('req.user._id: ', req.user._id);
     User.findById(req.user._id)
@@ -30,7 +33,9 @@ module.exports = {
     })
   },
 
-  // called via socket to add a line to a story
+  // saves a new line through a socket connection and then returns
+  // a fully populated story so that the socket can update 
+  // the clients story state
   createNewLine: (lineData) => {
     return new Promise ((resolve, reject) => {
       // make a new line with user info
@@ -42,16 +47,16 @@ module.exports = {
           { $push: { lines: line._id } },
           { new: true }
         )
-        // .populate('authors')
-        // .exec()
+        .populate('authors lines')
       })
       .then(story => {
-        console.log('story in createnewline: ', story);
         resolve(story);
       })
     })
   },
 
+  // called from lobby to create a new story, will redirect them
+  // to their story
   createStory: (req, res) => {
     const title = req.body.title;
     const numberOfAuthors = req.body.numberOfAuthors;
@@ -66,6 +71,7 @@ module.exports = {
       .then(story => {
         user.update({ $push: { storiesCreated: story._id } })
         .then(answer => {
+          console.log(user)
           res.json({ 'redirect': `/#/stories/${story._id}` })
         })
         .catch(err => {
@@ -95,24 +101,20 @@ module.exports = {
         })
     })
   },
-  // get one story is a story fetcher that works off url 
-  // requests not sockets.
+  // called anytime a component mounts and needs data for a particular story
+  // populate the authors and lines to give the component the complete info
+  // in the story
   getOneStory: (req, res) => {
-    Story.findById(req.params.id).populate({
-      path: 'lines',
-      model: 'Line',
-      populate: {
-        path: 'userId',
-        model: 'User'
-      }
-    })
-    .then(lines => {
-      res.json(lines)
-    })
-    .catch(err => {
-      console.log('Could not find story with that id')
-      return res.status(404).send('Story not found')
-    })
+    Story.findById(req.params.id)
+      .populate('authors lines')
+      .then(lines => {
+        console.log('lines on mount ', lines)
+        res.json(lines)
+      })
+      .catch(err => {
+        console.log('Could not find story with that id')
+        return res.status(404).send('Story not found')
+      })
   }
 
 };
