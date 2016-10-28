@@ -15,25 +15,27 @@ module.exports = {
     User.findById(req.user._id)
     .then(user => {
       Story.findById(req.params.id).then(story => {
-        console.log('story here = ', story);
-        console.log('user here = ', user);
+        // console.log('story here = ', story);
+        // console.log('user here = ', user);
         if (story.authors.indexOf(user._id) !== -1) {
           return next();
         } else if (story.complete) {
           return res.status(404).send('Sorry mate- this story is already complete');
-        } else {
-          if(user.storiesContributedTo.indexOf(story._id) !== -1 ){
+        } else if (user.storiesContributedTo.indexOf(story._id) !== -1 ){
             return next();
           }
-          user.update({ $push: {storiesContributedTo: story._id}})
+          story.update({ $push: {authors: user._id} })
           .then(answer => {
-            story.update({ $push: {authors: user._id} })
-            .then(story => {
-              console.log('updated')
-              return next();
-            })
+            if (user.storiesCreated.indexOf(story._id) !== -1) {
+              return next()
+            } else {
+              user.update({ $push: {storiesContributedTo: story._id}})
+              .then(answer => {
+                console.log('updated')
+                return next();
+              })
+            }
           })
-        }
       })
     })
   },
