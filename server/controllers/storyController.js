@@ -78,7 +78,7 @@ module.exports = {
             { $push: { lines: line._id }, finished },
             { new: true }
           )
-          .populate('authors')
+          .populate('authors lines')
           .then(response => {
             console.log(`\n\nStory resolved from createNewLine:\n${response}\n\n`);
             resolve(response);
