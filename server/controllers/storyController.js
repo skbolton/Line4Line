@@ -15,23 +15,28 @@ module.exports = {
     User.findById(req.user._id)
     .then(user => {
       Story.findById(req.params.id).then(story => {
-        console.log('story here = ', story);
-        console.log('user here = ', user);
+        // console.log('story here = ', story);
+        // console.log('user here = ', user);
         if (story.authors.indexOf(user._id) !== -1) {
           return next();
         } else if (story.complete) {
           return res.status(404).send('Sorry mate- this story is already complete');
-        } else {
-          if(user.storiesContributedTo.indexOf(story._id) !== -1 ){
+        } else if (user.storiesContributedTo.indexOf(story._id) !== -1 ){
             return next();
           }
-          user.update({ $push: {storiesContributedTo: story._id}})
+
           story.update({ $push: {authors: user._id} })
-          .then(story => {
-            console.log('updated')
-            return next();
+          .then(answer => {
+            if (user.storiesCreated.indexOf(story._id) !== -1) {
+              return next()
+            } else {
+              user.update({ $push: {storiesContributedTo: story._id}})
+              .then(answer => {
+                console.log('updated')
+                return next();
+              })
+            }
           })
-        }
       })
     })
   },
@@ -61,47 +66,27 @@ module.exports = {
   createStory: (req, res) => {
     const title = req.body.title;
     const numberOfAuthors = req.body.numberOfAuthors;
-    // capture total length of the story, this is the number 
+    // capture total length of the story, this is the number
     // of users multiplied by number of lines
     const length = req.body.length;
     const linesPerAuthor = req.body.linesPerAuthor;
 
-    User.findById(req.user._id)
-    .then(user => {
-      new Story({ title, length, numberOfAuthors, linesPerAuthor }).save()
-      .then(story => {
-        user.update({ $push: { storiesCreated: story._id} })
-        .then(answer => {
-          res.json({ 'redirect': `/#/stories/${story._id}` })
-        })
-        .catch(err => {
-          return res.status(404).send('User story list not updated')
-        })
+    new Story({ title, length, numberOfAuthors, linesPerAuthor }).save()
+    .then(story => {
+      User.findByIdAndUpdate(req.user._id, { $push: { storiesCreated: story._id} })
+      .then(answer => {
+        res.json({ 'redirect': `/#/stories/${story._id}` })
       })
       .catch(err => {
-        return res.status(404).send('Story already created!')
+        return res.status(404).send('User story list not updated')
       })
     })
     .catch(err => {
-      console.log('Could not find user with that session')
-      return res.status(404).send('User not found')
+      return res.status(404).send('Story already created!')
     })
+  },
 
-  },
-  // getOneStory socket style uses a directly passed id to 
-  // fetch a story and its lines
-  getOneStorySocketStyle: (id, callback) => {
-    return new Promise((resolve, reject) => {
-      Story.findById(id).populate('lines')
-        .then(lines => {
-          resolve(lines)
-        })
-        .catch(err => {
-          return res.status(400).send('Story not found');
-        })
-    })
-  },
-  // get one story is a story fetcher that works off url 
+  // get one story is a story fetcher that works off url
   // requests not sockets.
   getOneStory: (req, res) => {
     Story.findById(req.params.id).populate({

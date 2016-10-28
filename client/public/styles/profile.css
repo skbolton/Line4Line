@@ -12,14 +12,14 @@
 
 .storyHeader {
   font-weight: bold;
-  font-size: 40px;
+  font-size: 25px;
   padding-top: 15px;
   padding-bottom: 25px;
 }
 
 
 .storyLists {
-  font-size: 25px;
+  font-size: 20px;
   margin-bottom: 20px;
   position: relative;
   /*text-overflow: ellipsis;*/
@@ -31,4 +31,9 @@
 
 .logoutButton{
   padding-top: 30px;
+}
+
+
+.singleStory{
+
 }
