@@ -24,11 +24,15 @@ router.route('/user/:id').get(isAuthed, users.userProfile)
 
 router.route('/stories/:id').get(isAuthed, stories.joinStory, stories.getOneStory)
 
+router.route('/stories/finished').get(isAuthed, stories.getFinishedStories)
+
+router.route('/stories/finished/:id').get(isAuthed, stories.getOneStory)
+
 router.route('/stories').post(isAuthed, stories.createStory)
 
 router.route('/stories/:id').put(stories.createNewLine)
 
-router.route('/logout').get((req,res) => {
+router.route('/logout').get((req, res) => {
   req.logout()
   res.redirect('/')
 })
@@ -38,7 +42,7 @@ router.route('/auth/facebook').get(passport.authenticate('facebook'))
 // facebook will call this URL
 router.route('/auth/facebook/return').get(passport.authenticate('facebook', {
   failureRedirect: '/#/fail',
-  successRedirect: '/#/',
+  successRedirect: '/#',
 }))
 
 module.exports = router
