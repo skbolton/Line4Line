@@ -12,17 +12,17 @@ module.exports = {
   },
 
   joinStory: (req, res, next) => {
+    console.log('req.user._id: ', req.user._id);
     User.findById(req.user._id)
     .then(user => {
       Story.findById(req.params.id).then(story => {
         if (story.authors.indexOf(user._id) !== -1) {
           return next();
-        } else if (story.complete) {
+        } else if (story.lines.length === story.length) {
           return res.status(404).send('Sorry mate- this story is already complete');
         } else {
           story.update({ $push: {authors: user._id} })
           .then(story => {
-            console.log('updated')
             return next();
           })
         }
@@ -42,8 +42,8 @@ module.exports = {
           { $push: { lines: line._id } },
           { new: true }
         )
-        .populate('authors')
-        .exec()
+        // .populate('authors')
+        // .exec()
       })
       .then(story => {
         console.log('story in createnewline: ', story);
@@ -107,7 +107,6 @@ module.exports = {
       }
     })
     .then(lines => {
-      console.log('lines in get one story: ', lines)
       res.json(lines)
     })
     .catch(err => {

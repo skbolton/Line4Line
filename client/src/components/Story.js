@@ -43,6 +43,7 @@ class Story extends React.Component {
       this.setState({
         authorOnDeck: this.findCurrentAuthor()
       })
+      console.log('author on deck after mount:', this.state.authorOnDeck)
       return story._id;
     })
     .then(storyID => {
@@ -53,11 +54,15 @@ class Story extends React.Component {
 
   findCurrentAuthor() {
     const { numberOfAuthors, linesPerAuthor } = this.state;
-    const length = this.state.lines.length;
-    if (length > numberOfAuthors) {
+    const length = this.state.lines.length; //2
+    if (length >= numberOfAuthors) {  // 2 > 2
       return this.state.authors[Math.ceil(length / linesPerAuthor) - 1];
     } else {
-      return this.state.authors[length];
+      if (!this.state.authors[length - 1]) {
+        return this.state.authors[0];
+      } else {
+        return this.state.authors[length];
+      }
     }
   }
 
@@ -79,10 +84,14 @@ class Story extends React.Component {
       lines: story.lines,
       authors: story.authors
     })
+    this.updateCurrentAuthor();
+  }
+
+  updateCurrentAuthor() {
     this.setState({
       authorOnDeck: this.findCurrentAuthor()
     })
-    console.log('this.state: ', this.state)
+    console.log('author on deck after update: ', this.state.authorOnDeck)
   }
 
   render () {
@@ -99,17 +108,15 @@ class Story extends React.Component {
           <h2 className="title">{ this.state.title }</h2>
           {
             this.state.lines.map((line, i) => {
-              console.log('line: ', line);
               let author = this.state.authors[authorIdx];
               <Line
-                text={line.text} 
                 lock={true} 
                 key={i} 
                 userId={author.userId} 
                 userphoto={author.userphoto}
                 text={line.text}
               />
-              authorIdx = authorIdx === authors.length - 1 ? 0 : authorIdx += 1;
+              authorIdx = authorIdx === this.state.authors.length - 1 ? 0 : authorIdx += 1;
             })
           }
 
