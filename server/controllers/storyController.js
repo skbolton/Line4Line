@@ -15,7 +15,6 @@ module.exports = {
   // to the authors array in a story, this function is called
   // when a user
   joinStory: (req, res, next) => {
-    console.log('req.user._id: ', req.user._id);
     User.findById(req.user._id)
     .then(user => {
       Story.findById(req.params.id).then(story => {
@@ -24,10 +23,14 @@ module.exports = {
         } else if (story.lines.length === story.length) {
           return res.status(404).send('Sorry mate- this story is already complete');
         } else {
-          story.update({ $push: {authors: user._id} })
-          .then(story => {
-            return next();
-          })
+          if (story.authors.length !== story.numberOfAuthors){
+            story.update({ $push: {authors: user._id} })
+              .then(story => {
+                return next();
+              })
+          } else {
+            return res.status(404).send('This story has enough authors')
+          }
         }
       })
     })
