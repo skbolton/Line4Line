@@ -22,7 +22,7 @@ module.exports.listen = function(http){
       stories.createNewLine(lineData)
       // this story is fully populated!
       .then(story => {
-        io.in(story._id).emit('lineSaved', story);
+        client.in(story._id).emit('lineSaved', story);
       })
     });
   })
