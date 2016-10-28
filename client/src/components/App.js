@@ -3,7 +3,6 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 import Lobby from './Lobby'
 import Profile from './Profile'
 import Story from './Story'
-// import NavButton from './NavButton' <-- doubt we need to import this here
 import CreateStory from './CreateStory'
 import NavBar from './NavBar'
 import Welcome from './Welcome'
@@ -16,10 +15,6 @@ class App extends React.Component {
     this.state = {
       currentUser: false
     }
-    // Bind this to logout so it can be passed down through multiple components
-    // this.logout = this.logout.bind(this)
-    // ^ I don't think we need this any longer, as logout is just a route which
-    //   kills the session
   }
 
   componentDidMount () {

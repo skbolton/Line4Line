@@ -13,7 +13,6 @@ class Line extends React.Component {
     this.props.addLine(lineData);
   }
 
-
   render() {
     return (
       <div className="lineContainer row">

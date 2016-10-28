@@ -3,7 +3,7 @@ import React from 'react'
 const NavButton = (props) => {
   let navButton
     if (!props.currentUser) {
-      navButton = <a href="/auth/facebook" className="btn btn-primary btn-lg">
+      navButton = <a href="/auth" className="btn btn-primary btn-lg">
         <i className="fa fa-facebook-square"></i> Login with Facebook
       </a>
     } else if (props.currentView === 'lobby' || props.currentView === 'welcome' || props.currentView === 'FinishedStories') {

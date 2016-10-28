@@ -1,4 +1,6 @@
-require('dotenv').config({silent: true});
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({silent: true})
+}
 
 const express          = require('express')
 const bodyParser       = require('body-parser')
@@ -17,8 +19,8 @@ const port             = process.env.PORT || 3000
 var http = require('http').Server(app)
 var io = require('./socket.js').listen(http)
 
+
 passport.serializeUser(function (user, done) {
-  console.log(user)
   done(null, user)
 })
 
@@ -29,23 +31,20 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new FacebookStrategy({
     clientID          : '1146101735475048',
     clientSecret      : process.env.FB_SECRET,
-    callbackURL       : "/auth/facebook/return",
+    callbackURL       : `${process.env.HOST}/auth/return`,
     passReqToCallback : true,
 
   },
   function(req, token, refreshToken, profile, done) {
-    console.log('refreshToken:', refreshToken)
     let query = {
       'facebookId': profile.id
     };
 
   User.findOne(query).then(user => {
     if (user) {
-      console.log('User found')
       done(null, user)
 
     } else {
-      console.log('User not found - adding to DB')
       let newUser = {}
       newUser.facebookId = profile.id
       newUser.name = profile.displayName
