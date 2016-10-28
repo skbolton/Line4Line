@@ -47,6 +47,12 @@ module.exports = {
       const { userId, text, story } = lineData;
       return Line.create({ userId, text, story })
       .then(line => {
+        Story.findById(line.story).then(currentStory => {
+          let finished;
+          if (currentStory.length === currentStory.lines + 1) {
+            finished = true;
+          }
+        })
         return Story.findOneAndUpdate(
           {_id: line.story },
           { $push: { lines: line._id } },
@@ -104,6 +110,10 @@ module.exports = {
       console.log('Could not find story with that id')
       return res.status(404).send('Story not found')
     })
+  },
+
+  getFinishedStories: (req, res) => {
+    Story.find({})
   }
 
 };

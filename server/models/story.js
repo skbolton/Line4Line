@@ -14,7 +14,9 @@ const storySchema = new Schema({
 
   linesPerAuthor: Number,
   //list of lines in the story in order
-  lines: [ {type: Schema.Types.ObjectId, ref: 'Line'} ]
+  lines: [ {type: Schema.Types.ObjectId, ref: 'Line'} ],
+
+  finished: {type: Boolean, default: false}
 
 })
 
