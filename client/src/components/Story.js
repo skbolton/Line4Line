@@ -48,6 +48,10 @@ class Story extends React.Component {
       //we're connected, let's get messages from our test room
       this.state.socket.emit('createRoom', `${storyID}`);
     })
+    // listen for more messages
+    this.state.socket.on('lineSaved', story => {
+      this.changeState(story);
+    })
   }
 
   findCurrentAuthor() {
@@ -79,9 +83,6 @@ class Story extends React.Component {
       text: lineData.text
     }
     this.state.socket.emit('sendingLine', lineData);
-    this.state.socket.on('lineSaved', story => {
-      this.changeState(story);
-    })
   }
 
   changeState(story) {
