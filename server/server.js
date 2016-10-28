@@ -29,7 +29,7 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new FacebookStrategy({
     clientID          : '1146101735475048',
     clientSecret      : process.env.FB_SECRET,
-    callbackURL       : "/auth/facebook/return",
+    callbackURL       : `${process.env.HOST}/auth/return`,
     passReqToCallback : true,
 
   },
