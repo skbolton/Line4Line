@@ -16,21 +16,14 @@ module.exports.listen = function(http){
       client.join(roomID);
     });
 
-    // when the client sends a line up the socket
-    // attempt to save it to the story
+    // when the client submits a new line save it to the
+    // database and return the story
     client.on('sendingLine', function(lineData) {
       stories.createNewLine(lineData)
+      // this story is fully populated!
       .then(story => {
-        console.log('final story: ', story);
         io.in(story._id).emit('lineSaved', story);
       })
     });
-
-    client.on('populateLines', function(story) {
-      stories.populateLines(story)
-      .then(result => {
-        io.in(story._id).emit('linesPopulated', result)
-      })
-    })
   })
 }
