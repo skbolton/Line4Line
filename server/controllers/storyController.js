@@ -80,26 +80,11 @@ module.exports = {
     const length = req.body.length;
     const linesPerAuthor = req.body.linesPerAuthor;
 
-<<<<<<< HEAD
     new Story({ title, length, numberOfAuthors, linesPerAuthor }).save()
     .then(story => {
       User.findByIdAndUpdate(req.user._id, { $push: { storiesCreated: story._id} })
       .then(answer => {
         res.json({ 'redirect': `/#/stories/${story._id}` })
-=======
-    User.findById(req.user._id)
-    .then(user => {
-      new Story({ title, length, numberOfAuthors, linesPerAuthor }).save()
-      .then(story => {
-        user.update({ $push: { storiesCreated: story._id } })
-        .then(answer => {
-          console.log(user)
-          res.json({ 'redirect': `/#/stories/${story._id}` })
-        })
-        .catch(err => {
-          return res.status(404).send('User story list not updated')
-        })
->>>>>>> story2
       })
       .catch(err => {
         return res.status(404).send('User story list not updated')
@@ -109,15 +94,9 @@ module.exports = {
       return res.status(404).send('Story already created!')
     })
   },
-<<<<<<< HEAD
-
-  // get one story is a story fetcher that works off url
-  // requests not sockets.
-=======
   // called anytime a component mounts and needs data for a particular story
   // populate the authors and lines to give the component the complete info
   // in the story
->>>>>>> story2
   getOneStory: (req, res) => {
     Story.findById(req.params.id)
       .populate('authors lines')

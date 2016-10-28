@@ -34,10 +34,6 @@ passport.use(new FacebookStrategy({
 
   },
   function(req, token, refreshToken, profile, done) {
-<<<<<<< HEAD
-    console.log('refreshToken:', refreshToken)
-=======
->>>>>>> story2
     let query = {
       'facebookId': profile.id
     };
