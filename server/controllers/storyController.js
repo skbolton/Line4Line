@@ -5,10 +5,18 @@ const User = require('../models/user')
 
 module.exports = {
   getAllStories: (req, res) => {
-    Story.find({})
-    .then(stories => {
-      res.json(stories)
-    })
+    if (req.query.finished === 'true') {
+      Story.find({finished: true})
+      .populate('lines authors')
+      .then(finishedStories => {
+        res.json(finishedStories)
+      })
+    } else {
+      Story.find({})
+      .then(allStories => {
+        res.json(allStories)
+      })
+    }
   },
 
   joinStory: (req, res, next) => {
@@ -110,10 +118,6 @@ module.exports = {
       console.log('Could not find story with that id')
       return res.status(404).send('Story not found')
     })
-  },
-
-  getFinishedStories: (req, res) => {
-    Story.find({})
   }
 
 };

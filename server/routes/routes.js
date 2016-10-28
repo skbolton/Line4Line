@@ -24,10 +24,6 @@ router.route('/user/:id').get(isAuthed, users.userProfile)
 
 router.route('/stories/:id').get(isAuthed, stories.joinStory, stories.getOneStory)
 
-router.route('/stories/finished').get(isAuthed, stories.getFinishedStories)
-
-router.route('/stories/finished/:id').get(isAuthed, stories.getOneStory)
-
 router.route('/stories').post(isAuthed, stories.createStory)
 
 router.route('/stories/:id').put(stories.createNewLine)
