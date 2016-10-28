@@ -28,7 +28,6 @@ class Story extends React.Component {
     //retrieve story data from server
     $.get(`/stories/${this.state.storyId}`)
     .then(story => {
-      console.log('story upon mounting: ', story);
       //set state with this data
       this.setState({
         title: story.title,
@@ -53,11 +52,15 @@ class Story extends React.Component {
 
   findCurrentAuthor() {
     const { numberOfAuthors, linesPerAuthor } = this.state;
-    const length = this.state.lines.length;
-    if (length > numberOfAuthors) {
+    const length = this.state.lines.length; //2
+    if (length >= numberOfAuthors) {  // 2 > 2
       return this.state.authors[Math.ceil(length / linesPerAuthor) - 1];
     } else {
-      return this.state.authors[length];
+      if (!this.state.authors[length - 1]) {
+        return this.state.authors[0];
+      } else {
+        return this.state.authors[length];
+      }
     }
   }
 
@@ -79,42 +82,54 @@ class Story extends React.Component {
       lines: story.lines,
       authors: story.authors
     })
+    this.updateCurrentAuthor();
+  }
+
+  updateCurrentAuthor() {
     this.setState({
       authorOnDeck: this.findCurrentAuthor()
     })
-    console.log('this.state: ', this.state)
   }
 
+  /*
+    This is a meaty render statement!
+    There is a lot of logic going on to make this work
+    1. If the story is complete then iterate over the lines and print them out
+    2. If the authorOnDeck is not defined (this happens when the next author has not yet joined the game) or if the authorOnDeck is not the current user. In this case display a not your turn warning
+    3. Lastly, the authorOnDeck must be the current user and component should render the last line written to the story and have an input to type in the next.
+  */
   render () {
-    //The previous line
-    var prevLine = this.state.lines[this.state.lines.length - 2];
-
-    //If the story is complete
+    // destructing common variables
+    const { loggedInUser, authorOnDeck, authors } = this.state;
+    // if the story is done
     if (this.state.lines.length === this.state.length) {
-      let authorIdx = 0;
+      let authorIdx = -1;
+      const lines = this.state.lines.map((line, idx) => {
+        authorIdx++;
+        if (authorIdx >= this.state.authors.length) {
+          authorIdx = 0
+        }
+        let author = this.state.authors[authorIdx]
+        return (
+          <Line
+            lock={true} 
+            key={idx} 
+            userId={author._id} 
+            userphoto={author.profilePic}
+            text={line.text}
+          />
+        )
+      })
+
       return (
-        <div className="storyContainer row">
-          <div className="col-xs-offset-1 col-xs-10">
-            <h2 className="title">{ this.state.title }</h2>
-          {
-            this.state.lines.map((line, i) => {
-              console.log('line: ', line);
-              let author = authors[authorIdx];
-              <Line
-                line={line}
-                lock={true}
-                key={i}
-                userId={author.userId}
-                userphoto={author.userphoto}
-                text={line.text}
-              />
-              authorIdx = authorIdx === authors.length - 1 ? 0 : authorIdx += 1;
-            })
-          }
-          </div>
+        <div className="storyContainer" >
+          <h2 className="title">{ this.state.title }</h2>
+          { lines }
         </div>
       )
-    } else if (this.state.authorOnDeck !== this.state.loggedInUser.id) {
+      // if the authorOnDeck is not defined or their id doesn't match
+      // the logged in user
+    } else if (!authorOnDeck || authorOnDeck._id !==loggedInUser.id) {
       return (
         <div className="storyContainer row">
           <div className="col-xs-offset-1 col-xs-10">
@@ -124,30 +139,37 @@ class Story extends React.Component {
         </div>
       )
     } else {
+      // the current user is the next up to add to the story, find the prev 
+      // line in the story (it is possible this is an undefined value since
+      // the person creating the story doesn't have a line before them)
+      var prevLine = this.state.lines.length - 1 >= 0 
+        ? this.state.lines[this.state.lines.length - 1]
+        : this.state.lines[0]
       let lines;
+      // if we have a valid previous line show it
       if (prevLine) {
         lines = (
           <div>
-            <Line line={prevLine.text} lock={true}/>
-            <Line
-              lock={false}
-              userId={this.state.loggedInUser}
-              userphoto={this.state.loggedInUser.profileImage}
+            <Line text={prevLine.text} lock={true}/>
+            <Line 
+              lock={false} 
+              userId={loggedInUser.id} 
+              userphoto={loggedInUser.profileImage}
               addLine={this.addLine.bind(this)}
             />
           </div>
         )
       } else {
+        // otherwise just provide an input to start telling the story
         lines = (
-          <Line
-            lock={false}
-            userId={this.state.loggedInUser}
-            userphoto={this.state.loggedInUser.profileImage}
+          <Line 
+            lock={false} 
+            userId={loggedInUser.id} 
+            userphoto={loggedInUser.profileImage}
             addLine={this.addLine.bind(this)}
           />
         )
       }
-
       return (
         <div className="storyContainer row">
           <div className="col-xs-offset-1 col-xs-10">
