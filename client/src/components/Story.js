@@ -188,7 +188,7 @@ class Story extends React.Component {
     }
     //if the user is in the downvoters array
     if (this.state.downvoters.indexOf(this.state.loggedInUser.id) > -1) {
-      downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
+      downButton = <a className="btn btn-danger active" onClick={this.downvote.bind(this)}>You hated this story</a>
       upButton = <a className="btn btn-info" onClick={this.upvote.bind(this)}>Change your mind?</a>
     }
     // destructing common variables 
