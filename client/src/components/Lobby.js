@@ -12,7 +12,8 @@ class Lobby extends React.Component {
       allStories: [],
       openStories: [],
       completeStories: [],
-      displayComplete: false
+      displayComplete: false,
+      loggedInUser: this.props.route.user
     }
   this.toggleDisplay = this.toggleDisplay.bind(this)
   }
@@ -81,7 +82,7 @@ class Lobby extends React.Component {
           :
 
           this.state.openStories.map((story, i) =>
-            <StoryEntry story={story} key={i} />
+            <StoryEntry story={story} key={i} loggedInUser={this.state.loggedInUser} />
           )
 
         }
