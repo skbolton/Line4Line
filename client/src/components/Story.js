@@ -150,12 +150,12 @@ class Story extends React.Component {
       upButton = <a className="btn btn-info" onClick={this.upvote.bind(this)}>I love this story</a>
       downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
     //if the user is in the upvoters array
-    } else if (this.state.upvoters.indexOf(this.state.loggedInUser.id) == -1) {
+    } else if (this.state.upvoters.indexOf(this.state.loggedInUser.id) > -1) {
       upButton = <a className="btn btn-info active">You loved this story</a>
       downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>Change your mind?</a>
     }
     //if the user is in the downvoters array
-    if (this.state.downvoters.indexOf(this.state.loggedInUser.id) == -1) {
+    if (this.state.downvoters.indexOf(this.state.loggedInUser.id) > -1) {
       downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
       upButton = <a className="btn btn-info" onClick={this.upvote.bind(this)}>Change your mind?</a>
     }
