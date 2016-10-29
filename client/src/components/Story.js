@@ -126,6 +126,17 @@ class Story extends React.Component {
     })
   }
 
+  shareOnFB (e) {
+    e.preventDefault();
+    console.log(window.location.href)
+    FB.ui({
+      method: 'share',
+      href: window.location.href,
+      app_id: 1146101735475048,
+      display: 'popup',
+    }, console.log)
+  }
+
   /*
     This is a meaty render statement!
     There is a lot of logic going on to make this work
@@ -134,6 +145,19 @@ class Story extends React.Component {
     3. Lastly, the authorOnDeck must be the current user and component should render the last line written to the story and have an input to type in the next.
   */
   render () {
+    // in order to share a completed story facebook needs some
+    // meta tags imbedded into our page
+    const meta = {
+      title: this.state.title,
+      meta: {
+        charSet: 'utf-8',
+        property: {
+          'og:title': 'This story is awesome.',
+          'og:description': 'Check out this story made on Line After Line.',
+          'og:url': window.location.href
+        }
+      }
+    }
     // destructing common variables
     const { loggedInUser, authorOnDeck, authors } = this.state;
     // if the story is done
@@ -165,7 +189,7 @@ class Story extends React.Component {
               userphoto={author.profilePic}
               text={line.text}
               />
-              <div classname="voteButtons">
+              <div className="voteButtons">
                 <a className="btn btn-info" onClick={this.upvote}>I love this story</a>
                 <a className="btn btn-danger" onClick={this.downvote}>I hate this story</a>
               </div>
@@ -176,13 +200,17 @@ class Story extends React.Component {
           )
         }
       })
-
+      // render out completed stories as well as a button to share story
       return (
         <div className="storyContainer" >
+          <DocumentMeta {...meta} />
           <h2 className="title">{ this.state.title }</h2>
           { lines }
-          <a className="btn btn-primary">
-            <i className="fa fa-facebook-square"></i>
+          <a 
+            onClick={this.shareOnFB.bind(this)}
+            className='btn btn-primary'
+          >
+            <i className="fa fa-facebook-square">&nbsp;</i>
             Share
           </a>
         </div>
