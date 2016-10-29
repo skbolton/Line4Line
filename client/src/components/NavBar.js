@@ -24,7 +24,7 @@ class NavBar extends React.Component {
           <div className="navBarLogo col-sm-offset-1 col-sm-6">
             <a onClick={() => {this.setView('lobby'); window.location = `/#`}}><span className="line1">Line </span>
               <span className="after">After </span>
-              <span className="line2">Line</span>
+              <span className="line2">line</span>
             </a>
           </div>
           <div className="finishedStoryButton col-sm-2">

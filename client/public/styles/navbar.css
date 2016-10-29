@@ -13,18 +13,23 @@
 }
 
 .line2 {
-  font-family: 'Caveat', cursive;
+  font-family: 'Architects Daughter', cursive;
+  letter-spacing: 2px;
+  font-size: 1em;
 }
 
 .after {
   display: inline-block;
-  padding-right: 5px;
+  padding-right: 8px;
   font-family: 'Nothing You Could Do', cursive;
   font-size: 0.8em;
 }
 
 .line1 {
-  font-family: 'Caveat', cursive;
+  font-family: 'Permanent Marker', cursive;
+  display: inline-block;
+  padding-right: 5px;
+  font-size: 0.8em;
 }
 
 .navBarButton {
