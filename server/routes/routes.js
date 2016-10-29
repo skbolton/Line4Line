@@ -18,6 +18,8 @@ router.get('/', (req,res) => {
 //Connect controller methods to their corresponding routes
 router.route('/stories').get(stories.getAllStories)
 
+router.route('/leaderboard').get(users.leaderBoard)
+
 router.route('/user').get(isAuthed, users.get)
 
 router.route('/user/:id').get(isAuthed, users.userProfile)

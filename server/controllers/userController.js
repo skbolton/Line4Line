@@ -19,6 +19,15 @@ module.exports = {
     .catch(err => {
       res.send(`ERROR GETTING USER PROFILE: ${err}`)
     })
+  },
+
+  leaderBoard: (req, res) => {
+    User.find({}).then(allUsers => {
+      allUsers.sort((a, b) => {
+        return (b.score) - (a.score);
+      });
+      res.json(allUsers)
+    })
   }
 
 };
