@@ -1,6 +1,8 @@
 import React from 'react'
 import Line from './Line'
 import io from 'socket.io-client'
+// this is for facebook sharing, meta tags have to be on page
+import DocumentMeta from 'react-document-meta';
 
 const socket = io();
 
@@ -133,6 +135,10 @@ class Story extends React.Component {
         <div className="storyContainer" >
           <h2 className="title">{ this.state.title }</h2>
           { lines }
+          <a className="btn btn-primary">
+            <i className="fa fa-facebook-square"></i>
+            Share
+          </a>
         </div>
       )
       // if the authorOnDeck is not defined or their id doesn't match
