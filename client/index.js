@@ -10,6 +10,7 @@ require('./public/styles/createStory.css')
 require('./public/styles/navbar.css')
 require('./public/styles/profile.css')
 require('./public/styles/finishedStories.css')
+require('./public/styles/welcome.css')
 
 ReactDOM.render(
   <App />,
