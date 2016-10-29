@@ -114,7 +114,9 @@ class Story extends React.Component {
     .then((res) => {
       console.log('res.votes in upvote: ', res.votes)
       this.setState({
-        votes: res.votes
+        votes: res.votes,
+        upvoters: res.upvoters,
+        downvoters: res.downvoters
       })
     })
   }
@@ -126,7 +128,9 @@ class Story extends React.Component {
     })
     .then((res) => {
       this.setState({
-        votes: res.votes
+        votes: res.votes,
+        upvoters: res.upvoters,
+        downvoters: res.downvoters
       })
     })
   }
