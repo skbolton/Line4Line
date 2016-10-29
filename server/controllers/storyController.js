@@ -135,34 +135,45 @@ module.exports = {
   votingFunction: (direction, story, user) => {
     Story.findById(story).then(foundStory => {
       if (direction === 'up') {
-        // if user is found in not found the upvote array, add them and add a vote
-        if (!foundStory.upvoters.includes(user)){
-          foundStory.update({ $push: { upvoters: user} }).then(finished => {
-            let votes = foundStory.votes++
+        if (foundStory.downvoters.includes(user)){
+          // if user is found in downvoters, remove them, add to upvoters, and add two
+          let votes = foundStory.votes += 2
+          foundStory.update({ $push: { upvoters: user}, $pullAll: { downvoters: [user] }, votes }).then(finished => {
+            res.json({votes})
+          })
+        } else if (!foundStory.upvoters.includes(user)){
+          // if user is not found the upvote array, add them and add a vote
+          let votes = foundStory.votes++
+          foundStory.update({ $push: { upvoters: user}, votes }).then(finished => {
             res.json({votes})
           })
         } else {
-        // if they are found in the upvote array, remove them and subtract a vote
-          foundStory.update({ $pullAll: { upvoters: [user] } }).then(finished => {
-            let votes = foundStory.votes--
+          // if they are found in the upvote array, remove them and subtract a vote
+          let votes = foundStory.votes--
+          foundStory.update({ $pullAll: { upvoters: [user] }, votes }).then(finished => {
             res.json({votes})
-        })
-      }
-
+          })
+        }
       } else if (direction === 'down') {
-        // if user is found in not found the upvote array, add them and add a vote
-        if (!foundStory.downvoters.includes(user)){
-          foundStory.update({ $push: { downvoters: user} }).then(finished => {
-            let votes = foundStory.votes--
+        if (foundStory.upvoters.includes(user)){
+          // if user is found in upvoters, remove them, add to downvoters, and subtract two
+          let votes = foundStory.votes -= 2
+          foundStory.update({ $push: { downvoters: user}, $pullAll: { upvoters: [user] }, votes }).then(finished => {
+            res.json({votes})
+          })
+        } else if (!foundStory.downvoters.includes(user)){
+          // if user is not found the downvote array, add them and subtract a vote
+          let votes = foundStory.votes--
+          foundStory.update({ $push: { downvoters: user}, votes }).then(finished => {
             res.json({votes})
           })
         } else {
-        // if they are found in the upvote array, remove them and add a vote
-          foundStory.update({ $pullAll: { downvoters: [user] } }).then(finished => {
-            let votes = foundStory.votes++
+          // if they are found in the downvoters array, remove them and add a vote
+          let votes = foundStory.votes++
+          foundStory.update({ $pullAll: { downvoters: [user] }, votes }).then(finished => {
             res.json({votes})
-        })
-      }
+          })
+        }
 
       } else {
         res.send('You can\'t vote sideways')
