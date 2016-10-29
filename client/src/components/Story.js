@@ -38,7 +38,7 @@ class Story extends React.Component {
         length: story.length,
         //array of line ids
         lines: story.lines,
-        votes: story.votes || 0
+        votes: story.votes || "Placeholder"
       })
       this.setState({
         authorOnDeck: this.findCurrentAuthor()
@@ -119,7 +119,7 @@ class Story extends React.Component {
     })
     .then((res) => {
       this.setState({
-        votes: res.votes,
+        votes: res.votes
       })
     })
   }
@@ -143,7 +143,7 @@ class Story extends React.Component {
           authorIdx = 0
         }
         let author = this.state.authors[authorIdx]
-        if (idx == this.state.lines.length - 1){
+        if (idx !== this.state.lines.length - 1){
           return (
             <Line
               lock={true} 
@@ -164,8 +164,8 @@ class Story extends React.Component {
               text={line.text}
               />
               <div classname="voteButtons">
-                <a className="btn btn-info btn-block" onClick={this.upvote}>I love this story</a>
-                <a className="btn btn-danger btn-block" onClick={this.downvote}>I hate this story</a>
+                <a className="btn btn-info" onClick={this.upvote}>I love this story</a>
+                <a className="btn btn-danger" onClick={this.downvote}>I hate this story</a>
               </div>
               <p>
               Vote Count: {this.state.votes}
