@@ -66,7 +66,7 @@ class Story extends React.Component {
       return this.state.authors[length];
     }
     var prevAuthId = this.state.lines[this.state.lines.length - 1].userId[0]
-    var authIdx; 
+    var authIdx;
     for (var i=0; i<authorLength; i++) {
       if (this.state.authors[i]._id === prevAuthId) {
         authIdx = i;
@@ -147,9 +147,9 @@ class Story extends React.Component {
         if (idx !== this.state.lines.length - 1){
           return (
             <Line
-              lock={true} 
-              key={idx} 
-              userId={author._id} 
+              lock={true}
+              key={idx}
+              userId={author._id}
               userphoto={author.profilePic}
               text={line.text}
             />
@@ -158,20 +158,20 @@ class Story extends React.Component {
           return (
             <div>
               <Line
-              lock={true} 
-              key={idx} 
-              userId={author._id} 
+              lock={true}
+              key={idx}
+              userId={author._id}
               userphoto={author.profilePic}
               text={line.text}
               />
               <div className="voteButtons">
-                <a className="btn btn-info" onClick={this.upvote}>I love this story</a>
-                <a className="btn btn-danger" onClick={this.downvote}>I hate this story</a>
+                <a className="btn btn-info" onClick={this.upvote.bind(this)}>I love this story</a>
+                <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
               </div>
               <p>
               Vote Count: {this.state.votes}
               </p>
-            </div>            
+            </div>
           )
         }
       })
@@ -194,10 +194,10 @@ class Story extends React.Component {
         </div>
       )
     } else {
-      // the current user is the next up to add to the story, find the prev 
+      // the current user is the next up to add to the story, find the prev
       // line in the story (it is possible this is an undefined value since
       // the person creating the story doesn't have a line before them)
-      var prevLine = this.state.lines.length - 1 >= 0 
+      var prevLine = this.state.lines.length - 1 >= 0
         ? this.state.lines[this.state.lines.length - 1]
         : this.state.lines[0]
       let lines;
@@ -206,9 +206,9 @@ class Story extends React.Component {
         lines = (
           <div>
             <Line text={prevLine.text} lock={true}/>
-            <Line 
-              lock={false} 
-              userId={loggedInUser.id} 
+            <Line
+              lock={false}
+              userId={loggedInUser.id}
               userphoto={loggedInUser.profileImage}
               addLine={this.addLine.bind(this)}
             />
@@ -217,9 +217,9 @@ class Story extends React.Component {
       } else {
         // otherwise just provide an input to start telling the story
         lines = (
-          <Line 
-            lock={false} 
-            userId={loggedInUser.id} 
+          <Line
+            lock={false}
+            userId={loggedInUser.id}
             userphoto={loggedInUser.profileImage}
             addLine={this.addLine.bind(this)}
           />
