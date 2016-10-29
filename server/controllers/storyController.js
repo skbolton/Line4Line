@@ -143,7 +143,9 @@ module.exports = {
             let votes = foundStory.votes += 2
             User.update({ _id: { $in: foundStory.authors } },{ $inc: { score : 2 } }, { multi: true }).then(done => {
               foundStory.update({ $push: { upvoters: user}, $pullAll: { downvoters: [user] }, $set: {votes: votes} }).then(finished => {
-                resolve(votes)
+                Story.findById(story).then(final => {
+                  resolve({upvoters: final.upvoters, downvoters: final.downvoters, votes: final.votes})
+                })
               })
             })
           } else if (foundStory.upvoters.indexOf(user) < 0){
@@ -151,7 +153,9 @@ module.exports = {
             let votes = foundStory.votes += 1
             User.update({ _id: { $in: foundStory.authors } },{ $inc: { score : 1 } }, { multi: true }).then(done => {
               foundStory.update({ $push: { upvoters: user}, $set: {votes: votes} }).then(finished => {
-                resolve(votes)
+                Story.findById(story).then(final => {
+                  resolve({upvoters: final.upvoters, downvoters: final.downvoters, votes: final.votes})
+                })
               })
             })
           } else {
@@ -159,7 +163,9 @@ module.exports = {
             let votes = foundStory.votes -= 1
             User.update({ _id: { $in: foundStory.authors } },{ $inc: { score : -1 } }, { multi: true }).then(done => {
               foundStory.update({ $pullAll: { upvoters: [user] }, $set: {votes: votes} }).then(finished => {
-                resolve(votes)
+                Story.findById(story).then(final => {
+                  resolve({upvoters: final.upvoters, downvoters: final.downvoters, votes: final.votes})
+                })
               })
             })
           }
@@ -169,7 +175,9 @@ module.exports = {
             let votes = foundStory.votes -= 2
             User.update({ _id: { $in: foundStory.authors } },{ $inc: { score : -2 } }, { multi: true }).then(done => {
               foundStory.update({ $push: { downvoters: user}, $pullAll: { upvoters: [user] }, $set: {votes: votes} }).then(finished => {
-                resolve(votes)
+                Story.findById(story).then(final => {
+                  resolve({upvoters: final.upvoters, downvoters: final.downvoters, votes: final.votes})
+                })
               })
             })
           } else if (foundStory.downvoters.indexOf(user) < 0){
@@ -177,7 +185,9 @@ module.exports = {
             let votes = foundStory.votes -= 1
             User.update({ _id: { $in: foundStory.authors } },{ $inc: { score : -1 } }, { multi: true }).then(done => {
               foundStory.update({ $push: { downvoters: user}, $set: {votes: votes} }).then(finished => {
-                resolve(votes)
+                Story.findById(story).then(final => {
+                  resolve({upvoters: final.upvoters, downvoters: final.downvoters, votes: final.votes})
+                })
               })
             })
           } else {
@@ -185,7 +195,9 @@ module.exports = {
             let votes = foundStory.votes += 1
             User.update({ _id: { $in: foundStory.authors } },{ $inc: { score : 1 } }, { multi: true }).then(done => {
               foundStory.update({ $pullAll: { downvoters: [user] }, $set: {votes: votes} }).then(finished => {
-                resolve(votes)
+                Story.findById(story).then(final => {
+                  resolve({upvoters: final.upvoters, downvoters: final.downvoters, votes: final.votes})
+                })
               })
             })
           }
