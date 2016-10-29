@@ -132,8 +132,42 @@ module.exports = {
       })
   },
 
-  votingFunction: (direction) => {
+  votingFunction: (direction, story, user) => {
+    Story.findById(story).then(foundStory => {
+      if (direction === 'up') {
+        // if user is found in not found the upvote array, add them and add a vote
+        if (!foundStory.upvoters.includes(user)){
+          foundStory.update({ $push: { upvoters: user} }).then(finished => {
+            let votes = foundStory.votes++
+            res.json({votes})
+          })
+        } else {
+        // if they are found in the upvote array, remove them and subtract a vote
+          foundStory.update({ $pullAll: { upvoters: [user] } }).then(finished => {
+            let votes = foundStory.votes--
+            res.json({votes})
+        })
+      }
 
+      } else if (direction === 'down') {
+        // if user is found in not found the upvote array, add them and add a vote
+        if (!foundStory.downvoters.includes(user)){
+          foundStory.update({ $push: { downvoters: user} }).then(finished => {
+            let votes = foundStory.votes--
+            res.json({votes})
+          })
+        } else {
+        // if they are found in the upvote array, remove them and add a vote
+          foundStory.update({ $pullAll: { downvoters: [user] } }).then(finished => {
+            let votes = foundStory.votes++
+            res.json({votes})
+        })
+      }
+
+      } else {
+        res.send('You can\'t vote sideways')
+      }
+    })
   }
 
 };
