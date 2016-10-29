@@ -138,41 +138,41 @@ module.exports = {
     return new Promise((resolve, reject) => {
       Story.findById(story).then(foundStory => {
         if (direction === 'up') {
-          if (foundStory.downvoters.includes(user)){
+          if (foundStory.downvoters.indexOf(user) > -1){
             // if user is found in downvoters, remove them, add to upvoters, and add two
             let votes = foundStory.votes += 2
             foundStory.update({ $push: { upvoters: user}, $pullAll: { downvoters: [user] }, $set: {votes: votes} }).then(finished => {
               resolve(votes)
             })
-          } else if (!foundStory.upvoters.includes(user)){
+          } else if (foundStory.upvoters.indexOf(user) < 0){
             // if user is not found the upvote array, add them and add a vote
-            let votes = foundStory.votes++
+            let votes = foundStory.votes += 1
             foundStory.update({ $push: { upvoters: user}, $set: {votes: votes} }).then(finished => {
               resolve(votes)
             })
           } else {
             // if they are found in the upvote array, remove them and subtract a vote
-            let votes = foundStory.votes--
+            let votes = foundStory.votes -= 1
             foundStory.update({ $pullAll: { upvoters: [user] }, $set: {votes: votes} }).then(finished => {
               resolve(votes)
             })
           }
         } else if (direction === 'down') {
-          if (foundStory.upvoters.includes(user)){
+          if (foundStory.upvoters.indexOf(user) > -1){
             // if user is found in upvoters, remove them, add to downvoters, and subtract two
             let votes = foundStory.votes -= 2
             foundStory.update({ $push: { downvoters: user}, $pullAll: { upvoters: [user] }, $set: {votes: votes} }).then(finished => {
               resolve(votes)
             })
-          } else if (!foundStory.downvoters.includes(user)){
+          } else if (foundStory.downvoters.indexOf(user) < 0){
             // if user is not found the downvote array, add them and subtract a vote
-            let votes = foundStory.votes--
+            let votes = foundStory.votes -= 1
             foundStory.update({ $push: { downvoters: user}, $set: {votes: votes} }).then(finished => {
               resolve(votes)
             })
           } else {
             // if they are found in the downvoters array, remove them and add a vote
-            let votes = foundStory.votes++
+            let votes = foundStory.votes += 1
             foundStory.update({ $pullAll: { downvoters: [user] }, $set: {votes: votes} }).then(finished => {
               resolve(votes)
             })
