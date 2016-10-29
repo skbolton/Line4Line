@@ -1,26 +1,22 @@
 import React from 'react'
 
-// let ProfileStoryEntry = (props) => (
-//    <div className="storyLists list-group">
-//     <div className="singleStory list-group-item" onClick={() => { window.location = `/#/stories/${props.story.link}` }}>{props.story.title}</div>
-//    </div>
-// );
+let ProfileStoryEntry = (props) => (
+   <div className="storyLists list-group">
+    <div className="singleStory list-group-item" onClick={() => { window.location = `/#/stories/${props.story.link}` }}>{props.story.title}</div>
+   </div>
+);
 
 class FinishedStories extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      title: 'The Greatest Story Every Told',
-      voteCount: 2
+      storyArr: []
     }
   }
 
   componentDidMount () {
-    //get an array of all complete stories. 
-    // wishfully programmed.
-    $.get(`/stories`)
+    $.get(`/stories?finished=true`)
     .then(info => {
-      console.log('Got story info:', info);
       const storyArr = info.map(story => {
         return {
           link: story._id,
@@ -28,9 +24,7 @@ class FinishedStories extends React.Component {
         }
       })
       this.setState({
-        photo: info.profilePic,
-        name: info.name,
-        stories: storyArr
+        storyArr: storyArr
       })
     })
   }
@@ -44,9 +38,9 @@ class FinishedStories extends React.Component {
                 Your stories
               </div>
               <div>
-              {this.state.stories.map((story, i) =>
-                <ProfileStoryEntry story={story} key={i} />
-              )}
+                {this.state.storyArr.map((story, i) =>
+                  <ProfileStoryEntry story={story} key={i} />
+                )}
               </div>
             </div>
           </div>
