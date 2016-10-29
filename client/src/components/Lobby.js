@@ -30,7 +30,6 @@ class Lobby extends React.Component {
         completeStories: completeStories
       })
       socket.on('storyAdded', (stories) => {
-        console.log('got to storyAdded in lobby');
         let completeStories = stories.filter(story => story.finished);
         let openStories = stories.filter(story => story.length > story.lines.length);
         this.setState({
