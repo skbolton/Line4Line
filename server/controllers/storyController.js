@@ -62,7 +62,7 @@ module.exports = {
 
 
   // saves a new line through a socket connection and then returns
-  // a fully populated story so that the socket can update 
+  // a fully populated story so that the socket can update
   // the clients story state
   // called via socket to add a line to a story
 
@@ -130,6 +130,10 @@ module.exports = {
         console.log('Could not find story with that id')
         return res.status(404).send('Story not found')
       })
+  },
+
+  votingFunction: (direction) => {
+
   }
 
 };

@@ -16,7 +16,13 @@ const storySchema = new Schema({
   //list of lines in the story in order
   lines: [ {type: Schema.Types.ObjectId, ref: 'Line'} ],
 
-  finished: {type: Boolean, default: false}
+  finished: {type: Boolean, default: false},
+
+  votes: Number,
+
+  upvoters: [{ type: Schema.ObjectId, ref: 'User' }],
+
+  downvoters: [{ type: Schema.ObjectId, ref: 'User' }]
 
 })
 

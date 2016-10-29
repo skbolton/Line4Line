@@ -26,7 +26,15 @@ router.route('/stories/:id').get(isAuthed, stories.joinStory, stories.getOneStor
 
 router.route('/stories').post(isAuthed, stories.createStory)
 
-router.route('/stories/:id').put(stories.createNewLine)
+router.route('/stories/:id').put((req, res) => {
+  if (req.query.vote === 'up') {
+    stories.votingFunction('up')
+  } else if (req.query.vote === 'down') {
+    stories.votingFunction('down')
+  } else {
+    stories.createNewLine
+  }
+})
 
 router.route('/logout').get((req, res) => {
   req.logout()
