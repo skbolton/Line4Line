@@ -21,16 +21,11 @@ class NavBar extends React.Component {
     return (
       <div className="navbarWrap container-fluid">
         <div className="row">
-          <div className="navBarLogo col-sm-offset-1 col-sm-6">
+          <div className="navBarLogo col-sm-offset-1 col-sm-8">
             <a onClick={() => {this.setView('lobby'); window.location = `/#`}}><span className="line1">Line </span>
               <span className="after">After </span>
               <span className="line2">Line</span>
             </a>
-          </div>
-          <div className="finishedStoryButton col-sm-2">
-            <FinishedStoriesButton
-              currentUser={this.props.currentUser} setView={this.setView.bind(this)} 
-            />
           </div>
           <div className="navBarButton col-sm-2">
             <NavButton
