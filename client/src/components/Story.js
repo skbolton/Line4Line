@@ -38,6 +38,7 @@ class Story extends React.Component {
         length: story.length,
         //array of line ids
         lines: story.lines,
+        votes: story.votes || 0
       })
       this.setState({
         authorOnDeck: this.findCurrentAuthor()
@@ -99,6 +100,30 @@ class Story extends React.Component {
     })
   }
 
+  upvote() {
+    $.ajax({
+      url: '/stories/:id?vote=up',
+      type: 'PUT'
+    })
+    .then((res) => {
+      this.setState({
+        votes: res.votes
+      })
+    })
+  }
+
+  downvote() {
+    $.ajax({
+      url: '/stories/:id?vote=down',
+      type: 'PUT'
+    })
+    .then((res) => {
+      this.setState({
+        votes: res.votes,
+      })
+    })
+  }
+
   /*
     This is a meaty render statement!
     There is a lot of logic going on to make this work
@@ -118,15 +143,36 @@ class Story extends React.Component {
           authorIdx = 0
         }
         let author = this.state.authors[authorIdx]
-        return (
-          <Line
-            lock={true} 
-            key={idx} 
-            userId={author._id} 
-            userphoto={author.profilePic}
-            text={line.text}
-          />
-        )
+        if (idx == this.state.lines.length - 1){
+          return (
+            <Line
+              lock={true} 
+              key={idx} 
+              userId={author._id} 
+              userphoto={author.profilePic}
+              text={line.text}
+            />
+          )
+        } else {
+          return (
+            <div>
+              <Line
+              lock={true} 
+              key={idx} 
+              userId={author._id} 
+              userphoto={author.profilePic}
+              text={line.text}
+              />
+              <div classname="voteButtons">
+                <a className="btn btn-info btn-block" onClick={this.upvote}>I love this story</a>
+                <a className="btn btn-danger btn-block" onClick={this.downvote}>I hate this story</a>
+              </div>
+              <p>
+              Vote Count: {this.state.votes}
+              </p>
+            </div>            
+          )
+        }
       })
 
       return (
