@@ -18,7 +18,7 @@ const storySchema = new Schema({
 
   finished: {type: Boolean, default: false},
 
-  votes: Number,
+  votes: {type: Number, default: 0},
 
   upvoters: [{ type: Schema.ObjectId, ref: 'User' }],
 
