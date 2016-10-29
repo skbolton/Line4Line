@@ -138,11 +138,6 @@ module.exports = {
     return new Promise((resolve, reject) => {
       Story.findById(story).then(foundStory => {
         if (direction === 'up') {
-          console.log(foundStory.authors)
-          console.log(foundStory.authors)
-          console.log(foundStory.authors)
-          console.log(foundStory.authors)
-          console.log(foundStory.authors)
           if (foundStory.downvoters.indexOf(user) > -1){
             // if user is found in downvoters, remove them, add to upvoters, and add two
             let votes = foundStory.votes += 2
