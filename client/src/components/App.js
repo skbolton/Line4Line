@@ -45,7 +45,6 @@ class App extends React.Component {
           <Route path='/' component={Lobby} user={this.state.currentUser} />
           <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
           <Route path='/user/:id' component={Profile} />
-          <Route path='/stories' component={FinishedStories} />
         </Router>
         :
         <Welcome />
