@@ -1,4 +1,7 @@
 import React from 'react'
+import io from 'socket.io-client'
+
+const socket = io();
 
 const CreateStory = (props) => {
 
@@ -15,7 +18,8 @@ const CreateStory = (props) => {
       data: newStory,
       dataType: 'json',
       success: function(res){
-        window.location = res.redirect
+        window.location = res.redirect;
+        socket.emit('storyCreated', newStory);
       }
     })
   }

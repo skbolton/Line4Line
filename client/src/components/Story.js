@@ -48,6 +48,9 @@ class Story extends React.Component {
       //we're connected, let's get messages from our test room
       this.state.socket.emit('createRoom', `${storyID}`);
     })
+    this.state.socket.on('lineSaved', story => {
+      this.changeState(story);
+    })
   }
 
   findCurrentAuthor() {
@@ -59,7 +62,6 @@ class Story extends React.Component {
       return this.state.authors[length];
     }
     var prevAuthId = this.state.lines[this.state.lines.length - 1].userId[0]
-    console.log('prevAuthId: ', prevAuthId);
     var authIdx; 
     for (var i=0; i<authorLength; i++) {
       if (this.state.authors[i]._id === prevAuthId) {
@@ -79,9 +81,6 @@ class Story extends React.Component {
       text: lineData.text
     }
     this.state.socket.emit('sendingLine', lineData);
-    this.state.socket.on('lineSaved', story => {
-      this.changeState(story);
-    })
   }
 
   changeState(story) {

@@ -7,10 +7,6 @@ module.exports.listen = function(http){
   io.on('connection', function(client){
     console.log("socket running")
 
-    client.on('salty slug',function() {
-      console.log('~~~~~~~~~~~~~Chuck is a salty slug~~~~~~~~~~~')
-    })
-
     //here's how we create a new room
     client.on('createRoom', function(roomID) {
       client.join(roomID);
@@ -22,7 +18,7 @@ module.exports.listen = function(http){
       stories.createNewLine(lineData)
       // this story is fully populated!
       .then(story => {
-        client.in(story._id).emit('lineSaved', story);
+        io.in(story._id).emit('lineSaved', story);
       })
     });
   })
