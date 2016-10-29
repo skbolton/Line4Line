@@ -12,22 +12,17 @@ const StoryEntryButton = (props) => {
       window.location = `/#${storyURL}`
     })
   }
-  // let entryButton
-  // if (props.props.story.authors.includes)
-    // if (!props.currentUser) {
-    //   navButton = <a href="/auth" className="btn btn-primary btn-lg">
-    //     <i className="fa fa-facebook-square"></i> Login with Facebook
-    //   </a>
-    // } else if (props.currentView === 'lobby' || props.currentView === 'welcome' || props.currentView === 'FinishedStories') {
-    //   navButton = <a onClick={() => {props.setView('profile'); window.location = `/#/user/${props.currentUser.id}`}} className="btn btn-info btn-lg">
-    //     <span className="glyphicon glyphicon-user"></span> Profile
-    //   </a>
-    // } else if (props.currentView === 'profile') {
-    //   navButton = <a onClick={() => {props.setView('lobby'); window.location = `/#`}} className="btn btn-info btn-lg">
-    //     <span className="glyphicon glyphicon-home"></span> Lobby
-    //   </a>
-
-    let entryButton = <a className="btn btn-info btn-block" onClick={joinStory}>Join</a>
+  let entryButton
+  if (props.props.story.authors.includes(props.props.loggedInUser.id)) {
+    // if currentUser is in the array of story authors, display return
+    entryButton = <a className="btn btn-info btn-block" onClick={joinStory}>Return</a>
+  } else if (!props.props.story.authors.includes(props.props.loggedInUser.id) && props.props.story.authors.length === props.props.story.numberOfAuthors) {
+    // elseif currentUser isn't in the array of story authors and it's full, display FULL
+    entryButton = <a className="btn btn-info btn-block disabled">FULL</a>
+  } else {
+    // else display join
+    entryButton = <a className="btn btn-info btn-block" onClick={joinStory}>Join</a>
+  }
 
   return (
     <div>
