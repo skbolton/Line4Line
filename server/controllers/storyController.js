@@ -103,8 +103,9 @@ module.exports = {
     // of users multiplied by number of lines
     const length = req.body.length;
     const linesPerAuthor = req.body.linesPerAuthor;
+    const pirate = req.body.pirate;
 
-    new Story({ title, length, numberOfAuthors, linesPerAuthor }).save()
+    new Story({ title, length, numberOfAuthors, linesPerAuthor, pirate }).save()
     .then(story => {
       User.findByIdAndUpdate(req.user._id, { $push: { storiesCreated: story._id} })
       .then(answer => {

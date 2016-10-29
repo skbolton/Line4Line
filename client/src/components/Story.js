@@ -3,6 +3,7 @@ import Line from './Line'
 import io from 'socket.io-client'
 // this is for facebook sharing, meta tags have to be on page
 import DocumentMeta from 'react-document-meta';
+import pirate from 'talk-like-a-pirate';
 
 const socket = io();
 
@@ -24,6 +25,7 @@ class Story extends React.Component {
       votes: 0,
       upvoters: [],
       downvoters: [],
+      pirate: false
       socket: socket
     }
   }
@@ -45,7 +47,8 @@ class Story extends React.Component {
         lines: story.lines,
         votes: story.votes,
         upvoters: story.upvoters,
-        downvoters: story.downvoters
+        downvoters: story.downvoters,
+        pirate: story.pirate
       })
       this.setState({
         authorOnDeck: this.findCurrentAuthor()
@@ -85,6 +88,9 @@ class Story extends React.Component {
 
   addLine(lineData) {
     event.preventDefault();
+    if (this.state.pirate) {
+      lineData.text = pirate(lineData.text);
+    }
     var lineData = {
       userId: this.state.loggedInUser.id,
       story: this.state.storyId,
