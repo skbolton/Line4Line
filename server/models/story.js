@@ -22,7 +22,9 @@ const storySchema = new Schema({
 
   upvoters: [{ type: Schema.ObjectId, ref: 'User' }],
 
-  downvoters: [{ type: Schema.ObjectId, ref: 'User' }]
+  downvoters: [{ type: Schema.ObjectId, ref: 'User' }],
+
+  pirate: { type: Boolean, default: false }
 
 })
 

@@ -1,6 +1,9 @@
 import React from 'react'
 import Line from './Line'
 import io from 'socket.io-client'
+// this is for facebook sharing, meta tags have to be on page
+import DocumentMeta from 'react-document-meta';
+import pirate from 'talk-like-a-pirate';
 
 const socket = io();
 
@@ -22,6 +25,7 @@ class Story extends React.Component {
       votes: 0,
       upvoters: [],
       downvoters: [],
+      pirate: false
       socket: socket
     }
   }
@@ -43,7 +47,8 @@ class Story extends React.Component {
         lines: story.lines,
         votes: story.votes,
         upvoters: story.upvoters,
-        downvoters: story.downvoters
+        downvoters: story.downvoters,
+        pirate: story.pirate
       })
       this.setState({
         authorOnDeck: this.findCurrentAuthor()
@@ -83,6 +88,9 @@ class Story extends React.Component {
 
   addLine(lineData) {
     event.preventDefault();
+    if (this.state.pirate) {
+      lineData.text = pirate(lineData.text);
+    }
     var lineData = {
       userId: this.state.loggedInUser.id,
       story: this.state.storyId,
@@ -135,6 +143,17 @@ class Story extends React.Component {
     })
   }
 
+  shareOnFB (e) {
+    e.preventDefault();
+    console.log(window.location.href)
+    FB.ui({
+      method: 'share',
+      href: window.location.href,
+      app_id: 1146101735475048,
+      display: 'popup',
+    }, console.log)
+  }
+
   /*
     This is a meaty render statement!
     There is a lot of logic going on to make this work
@@ -143,6 +162,19 @@ class Story extends React.Component {
     3. Lastly, the authorOnDeck must be the current user and component should render the last line written to the story and have an input to type in the next.
   */
   render () {
+    // in order to share a completed story facebook needs some
+    // meta tags imbedded into our page
+    const meta = {
+      title: this.state.title,
+      meta: {
+        charSet: 'utf-8',
+        property: {
+          'og:title': 'This story is awesome.',
+          'og:description': 'Check out this story made on Line After Line.',
+          'og:url': window.location.href
+        }
+      }
+    }
     //determine how the upvote and downvote buttons should be rendered
     let upButton, downButton;
     //if the user is not in the upvoters array or downvoters array
@@ -192,10 +224,11 @@ class Story extends React.Component {
           )
         }
       })
-
+      // render out completed stories as well as a button to share story
       return (
         <div>
           <div className="storyContainer" >
+          <DocumentMeta {...meta} />
             <h2 className="title">{ this.state.title }</h2>
             { lines }
           </div>
@@ -206,6 +239,13 @@ class Story extends React.Component {
           <p>
           Vote Count: {this.state.votes}
           </p> 
+           <a 
+            onClick={this.shareOnFB.bind(this)}
+            className='btn btn-primary'
+          >
+            <i className="fa fa-facebook-square">&nbsp;</i>
+            Share
+          </a>
         </div>       
       )
       // if the authorOnDeck is not defined or their id doesn't match
