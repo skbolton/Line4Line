@@ -4,7 +4,7 @@ const FinishedStoriesButton = (props) =>  {
   let FinishedStoriesButton
   if(props.currentUser) {
       FinishedStoriesButton = <a onClick={() => {props.setView('FinishedStories');
-      window.location = `/#/stories/finished`}} className = "btn btn-info btn-lg">
+      window.location = `/#/stories`}} className = "btn btn-info btn-lg">
         Complete stories
       </a>
   }

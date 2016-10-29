@@ -23,7 +23,6 @@ class Profile extends React.Component {
     //get an array of all user info
     $.get(`/user/${this.props.params.id}`)
     .then(info => {
-      console.log('Got profile info:', info);
       const storyArr = info.storiesCreated.map(story => {
         return {
           link: story._id,
