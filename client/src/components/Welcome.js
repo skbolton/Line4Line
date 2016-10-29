@@ -14,7 +14,7 @@ const Welcome = (props) => {
           Once completed, the story will be
           displayed for all players to see.
           </p>
-          <img src="/LineafterLineintro.png" className="introPhoto img-responsive"/>
+          <img src="/storyFromDevTeam.png" className="introPhoto img-responsive"/>
           <p className="welcomeParagraph">
           You can even upvote and share popular stories 
           with your friends on Facebook. Join a story and let hilarity ensue!
