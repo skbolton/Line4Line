@@ -20,6 +20,8 @@ class Story extends React.Component {
       loggedInUser: this.props.route.user,
       authorOnDeck: undefined,
       votes: 0,
+      upvoters: [],
+      downvoters: [],
       socket: socket
     }
   }
@@ -39,7 +41,9 @@ class Story extends React.Component {
         length: story.length,
         //array of line ids
         lines: story.lines,
-        votes: story.votes
+        votes: story.votes,
+        upvoters: story.upvoters,
+        downvoters: story.downvoters
       })
       this.setState({
         authorOnDeck: this.findCurrentAuthor()
@@ -102,13 +106,17 @@ class Story extends React.Component {
   }
 
   upvote() {
+    console.log('this in upvote:', this)
     $.ajax({
       url: `/stories/${this.state.storyId}?vote=up`,
       type: 'PUT'
     })
     .then((res) => {
+      console.log('res.votes in upvote: ', res.votes)
       this.setState({
-        votes: res.votes
+        votes: res.votes,
+        upvoters: res.upvoters,
+        downvoters: res.downvoters
       })
     })
   }
@@ -120,7 +128,9 @@ class Story extends React.Component {
     })
     .then((res) => {
       this.setState({
-        votes: res.votes
+        votes: res.votes,
+        upvoters: res.upvoters,
+        downvoters: res.downvoters
       })
     })
   }
@@ -155,6 +165,17 @@ class Story extends React.Component {
             />
           )
         } else {
+          let upButton, downButton;
+          if (this.state.upvoters.indexOf(this.state.loggedInUser.id) == -1) {
+            upButton = <a className="btn btn-info" onClick={this.upvote.bind(this)}>I love this story</a>
+          } else {
+            upButton = <a className="btn btn-info active">You loved this story</a>
+          }
+          if (this.state.downvoters.indexOf(this.state.loggedInUser.id) == -1) {
+            downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
+          } else {
+            downButton = <a className="btn btn-danger active">You hated this story</a>
+          }
           return (
             <div>
               <Line
@@ -165,8 +186,8 @@ class Story extends React.Component {
               text={line.text}
               />
               <div className="voteButtons">
-                <a className="btn btn-info" onClick={this.upvote.bind(this)}>I love this story</a>
-                <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
+                {upButton}
+                {downButton}
               </div>
               <p>
               Vote Count: {this.state.votes}
