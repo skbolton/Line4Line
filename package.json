@@ -35,6 +35,7 @@
     "socket.io": "^1.5.0",
     "socket.io-client": "^1.5.0",
     "style-loader": "^0.13.1",
+    "talk-like-a-pirate": "^2.0.0",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2",
     "webpack-merge": "^0.15.0"
