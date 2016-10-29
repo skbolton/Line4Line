@@ -35,7 +35,9 @@ module.exports = {
         if (story.authors.indexOf(user._id) !== -1) {
           return next();
         } else if (story.lines.length === story.length) {
-          return res.status(404).send('Sorry mate- this story is already complete');
+          // the story is complete so we don't want to add
+          // this viewer to the authors array
+          next();
         } else {
           if (story.authors.length !== story.numberOfAuthors) {
             story.update({ $push: {authors: user._id} })
