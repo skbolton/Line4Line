@@ -143,7 +143,23 @@ class Story extends React.Component {
     3. Lastly, the authorOnDeck must be the current user and component should render the last line written to the story and have an input to type in the next.
   */
   render () {
-    // destructing common variables
+    //determine how the upvote and downvote buttons should be rendered
+    let upButton, downButton;
+    //if the user is not in the upvoters array or downvoters array
+    if (this.state.upvoters.indexOf(this.state.loggedInUser.id) == -1 && this.state.downvoters.indexOf(this.state.loggedInUser.id) == -1) {
+      upButton = <a className="btn btn-info" onClick={this.upvote.bind(this)}>I love this story</a>
+      downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
+    //if the user is in the upvoters array
+    } else if (this.state.upvoters.indexOf(this.state.loggedInUser.id) > -1) {
+      upButton = <a className="btn btn-info active">You loved this story</a>
+      downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>Change your mind?</a>
+    }
+    //if the user is in the downvoters array
+    if (this.state.downvoters.indexOf(this.state.loggedInUser.id) > -1) {
+      downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
+      upButton = <a className="btn btn-info" onClick={this.upvote.bind(this)}>Change your mind?</a>
+    }
+    // destructing common variables 
     const { loggedInUser, authorOnDeck, authors } = this.state;
     // if the story is done
     if (this.state.lines.length === this.state.length) {
@@ -165,43 +181,32 @@ class Story extends React.Component {
             />
           )
         } else {
-          let upButton, downButton;
-          if (this.state.upvoters.indexOf(this.state.loggedInUser.id) == -1) {
-            upButton = <a className="btn btn-info" onClick={this.upvote.bind(this)}>I love this story</a>
-          } else {
-            upButton = <a className="btn btn-info active">You loved this story</a>
-          }
-          if (this.state.downvoters.indexOf(this.state.loggedInUser.id) == -1) {
-            downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
-          } else {
-            downButton = <a className="btn btn-danger active">You hated this story</a>
-          }
           return (
-            <div>
-              <Line
-              lock={true}
-              key={idx}
-              userId={author._id}
-              userphoto={author.profilePic}
-              text={line.text}
-              />
-              <div className="voteButtons">
-                {upButton}
-                {downButton}
-              </div>
-              <p>
-              Vote Count: {this.state.votes}
-              </p>
-            </div>
+            <Line
+            lock={true}
+            key={idx}
+            userId={author._id}
+            userphoto={author.profilePic}
+            text={line.text}
+            />
           )
         }
       })
 
       return (
-        <div className="storyContainer" >
-          <h2 className="title">{ this.state.title }</h2>
-          { lines }
-        </div>
+        <div>
+          <div className="storyContainer" >
+            <h2 className="title">{ this.state.title }</h2>
+            { lines }
+          </div>
+          <div className="voteButtons">
+            {upButton}
+            {downButton}
+          </div>
+          <p>
+          Vote Count: {this.state.votes}
+          </p> 
+        </div>       
       )
       // if the authorOnDeck is not defined or their id doesn't match
       // the logged in user
