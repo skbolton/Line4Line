@@ -12,6 +12,21 @@
   padding-top: 5px;
 }
 
+.line2 {
+  font-family: 'Caveat', cursive;
+}
+
+.after {
+  display: inline-block;
+  padding-right: 5px;
+  font-family: 'Nothing You Could Do', cursive;
+  font-size: 0.8em;
+}
+
+.line1 {
+  font-family: 'Caveat', cursive;
+}
+
 .navBarButton {
   padding-top: 18px;
   text-align: right;
