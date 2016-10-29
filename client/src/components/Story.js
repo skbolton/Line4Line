@@ -166,12 +166,12 @@ class Story extends React.Component {
           )
         } else {
           let upButton, downButton;
-          if (this.state.upvoters.indexOf(this.state.loggedInUser) === -1) {
+          if (this.state.upvoters.indexOf(this.state.loggedInUser.id) == -1) {
             upButton = <a className="btn btn-info" onClick={this.upvote.bind(this)}>I love this story</a>
           } else {
             upButton = <a className="btn btn-info active">You loved this story</a>
           }
-          if (this.state.downvoters.indexOf(this.state.loggedInUser) === -1) {
+          if (this.state.downvoters.indexOf(this.state.loggedInUser.id) == -1) {
             downButton = <a className="btn btn-danger" onClick={this.downvote.bind(this)}>I hate this story</a>
           } else {
             downButton = <a className="btn btn-danger active">You hated this story</a>
