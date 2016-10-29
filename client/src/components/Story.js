@@ -102,11 +102,13 @@ class Story extends React.Component {
   }
 
   upvote() {
+    console.log('this in upvote:', this)
     $.ajax({
       url: `/stories/${this.state.storyId}?vote=up`,
       type: 'PUT'
     })
     .then((res) => {
+      console.log('res.votes in upvote: ', res.votes)
       this.setState({
         votes: res.votes
       })
