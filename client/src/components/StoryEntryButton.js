@@ -13,7 +13,9 @@ const StoryEntryButton = (props) => {
     })
   }
   let entryButton
-  if (props.props.story.authors.includes(props.props.loggedInUser.id)) {
+  if (props.props.story.finished) {
+    entryButton = <a className="btn btn-info btn-block" onClick={joinStory}> View</a>
+  } else if (props.props.story.authors.includes(props.props.loggedInUser.id)) {
     // if currentUser is in the array of story authors, display return
     entryButton = <a className="btn btn-info btn-block" onClick={joinStory}>Return</a>
   } else if (!props.props.story.authors.includes(props.props.loggedInUser.id) && props.props.story.authors.length === props.props.story.numberOfAuthors) {
