@@ -56,20 +56,20 @@ const devConfig = {
 
 const prodConfig = {
   devtool: 'source-maps',
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      comments: false,
-      compress: {
-        warnings: false,
-      },
-      mangle: {
-        except: ['$'],
-        screw_ie8: true,
-        keep_fnames: true
-      }
-    })
-  ]
+  // plugins: [
+  //   new webpack.optimize.UglifyJsPlugin({
+  //     beautify: false,
+  //     comments: false,
+  //     compress: {
+  //       warnings: false,
+  //     },
+  //     mangle: {
+  //       except: ['$'],
+  //       screw_ie8: true,
+  //       keep_fnames: true
+  //     }
+  //   })
+  // ]
 };
 
 // export config for prod or dev based on npm 

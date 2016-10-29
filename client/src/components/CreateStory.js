@@ -12,6 +12,7 @@ const CreateStory = (props) => {
     newStory.numberOfAuthors = document.getElementById('createNUsers').value;
     newStory.linesPerAuthor = document.getElementById('linesPerUser').value;
     newStory.length = document.getElementById('linesPerUser').value * document.getElementById('createNUsers').value;
+    newStory.pirate = document.getElementById('pirate').checked
     $.ajax({
       type: 'POST',
       url:'/stories',

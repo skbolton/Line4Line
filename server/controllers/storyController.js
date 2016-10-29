@@ -104,6 +104,7 @@ module.exports = {
     const length = req.body.length;
     const linesPerAuthor = req.body.linesPerAuthor;
     const pirate = req.body.pirate;
+    console.log(' TALKKKK', pirate)
 
     new Story({ title, length, numberOfAuthors, linesPerAuthor, pirate }).save()
     .then(story => {

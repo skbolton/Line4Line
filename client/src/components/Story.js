@@ -25,7 +25,7 @@ class Story extends React.Component {
       votes: 0,
       upvoters: [],
       downvoters: [],
-      pirate: false
+      pirate: false,
       socket: socket
     }
   }
