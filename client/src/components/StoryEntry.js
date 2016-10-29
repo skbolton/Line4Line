@@ -27,7 +27,7 @@ class StoryEntry extends React.Component {
           </div>
         </div>
         <div className="col-sm-3 storyEntryJoin">
-          <StoryEntryButton props={this.props} currentView={this.state} />
+          <StoryEntryButton props={this.props} />
         </div>
       </div>
     )

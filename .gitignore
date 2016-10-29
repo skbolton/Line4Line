@@ -7,4 +7,4 @@ client/src/dummyData.js
 *.log
 *.map
 server/public/*.css
-server/public/bundle.js
+bundle.js
