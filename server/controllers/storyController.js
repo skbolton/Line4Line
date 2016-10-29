@@ -5,10 +5,22 @@ const User = require('../models/user')
 
 module.exports = {
   getAllStories: (req, res) => {
-    Story.find({})
-    .then(stories => {
-      res.json(stories)
-    })
+    if (req.query.finished === 'true') {
+      Story.find({finished: true})
+      .populate('lines authors')
+      .then(finishedStories => {
+        res.json(finishedStories)
+      })
+    } else {
+      Story.find({})
+      .then(allStories => {
+        res.json(allStories)
+      })
+    }
+  },
+
+  getAllStoriesForSocket() {
+    return Story.find({})
   },
 
   // this function is a middleware to make sure user is added
@@ -48,24 +60,34 @@ module.exports = {
     })
   },
 
+
   // saves a new line through a socket connection and then returns
   // a fully populated story so that the socket can update 
   // the clients story state
+  // called via socket to add a line to a story
+
   createNewLine: (lineData) => {
     return new Promise ((resolve, reject) => {
       // make a new line with user info
       const { userId, text, story } = lineData;
-      return Line.create({ userId, text, story })
+      Line.create({ userId, text, story })
       .then(line => {
-        return Story.findOneAndUpdate(
-          {_id: line.story },
-          { $push: { lines: line._id } },
-          { new: true }
-        )
-        .populate('authors lines')
-      })
-      .then(story => {
-        resolve(story);
+        Story.findById(line.story).then(currentStory => {
+          let finished = false;
+          if (currentStory.length <= currentStory.lines.length + 1) {
+            finished = true;
+          }
+          Story.findByIdAndUpdate(
+            currentStory._id,
+            { $push: { lines: line._id }, finished },
+            { new: true }
+          )
+          .populate('authors lines')
+          .then(response => {
+            console.log(`\n\nStory resolved from createNewLine:\n${response}\n\n`);
+            resolve(response);
+          })
+        })
       })
     })
   },

@@ -21,5 +21,12 @@ module.exports.listen = function(http){
         io.in(story._id).emit('lineSaved', story);
       })
     });
+
+    client.on('storyCreated', (newStory) => {
+      stories.getAllStoriesForSocket()
+        .then(allStories => {
+          client.emit('storyAdded', allStories);
+        })
+    })
   })
 }
