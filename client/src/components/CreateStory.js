@@ -19,7 +19,7 @@ const CreateStory = (props) => {
       dataType: 'json',
       success: function(res){
         window.location = res.redirect;
-        socket.emit('storyCreated', newStory);
+        socket.emit('storyCreated');
       }
     })
   }

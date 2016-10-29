@@ -22,10 +22,12 @@ module.exports.listen = function(http){
       })
     });
 
-    client.on('storyCreated', (newStory) => {
+    client.on('storyCreated', () => {
+      console.log('we got into storyCreated')
       stories.getAllStoriesForSocket()
         .then(allStories => {
-          client.emit('storyAdded', allStories);
+          console.log('allStories in storyCreated:', allStories);
+          io.emit('storyAdded', allStories);
         })
     })
   })
