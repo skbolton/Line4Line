@@ -7,7 +7,10 @@ class LeaderboardEntry extends React.Component {
     return (
       <div className="user">
         <img className="userPic" src={this.props.profilePic} />
+        <br/>
         {this.props.name}
+        <br/>
+        Score:
         {this.props.score}
       </div>
     )
