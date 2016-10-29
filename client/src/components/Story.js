@@ -19,6 +19,7 @@ class Story extends React.Component {
       linesPerAuthor: 0,
       loggedInUser: this.props.route.user,
       authorOnDeck: undefined,
+      votes: 0,
       socket: socket
     }
   }
@@ -38,7 +39,7 @@ class Story extends React.Component {
         length: story.length,
         //array of line ids
         lines: story.lines,
-        votes: story.votes || "Placeholder"
+        votes: story.votes
       })
       this.setState({
         authorOnDeck: this.findCurrentAuthor()
@@ -102,7 +103,7 @@ class Story extends React.Component {
 
   upvote() {
     $.ajax({
-      url: '/stories/:id?vote=up',
+      url: `/stories/${this.state.storyId}?vote=up`,
       type: 'PUT'
     })
     .then((res) => {
@@ -114,7 +115,7 @@ class Story extends React.Component {
 
   downvote() {
     $.ajax({
-      url: '/stories/:id?vote=down',
+      url: `/stories/${this.state.storyId}?vote=down`,
       type: 'PUT'
     })
     .then((res) => {
@@ -163,7 +164,7 @@ class Story extends React.Component {
               userphoto={author.profilePic}
               text={line.text}
               />
-              <div classname="voteButtons">
+              <div className="voteButtons">
                 <a className="btn btn-info" onClick={this.upvote}>I love this story</a>
                 <a className="btn btn-danger" onClick={this.downvote}>I hate this story</a>
               </div>
