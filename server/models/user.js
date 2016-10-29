@@ -16,7 +16,7 @@ const userSchema = new Schema({
 
   storiesContributedTo: [{type: Schema.ObjectId, ref: 'Story'}],
 
-  score: Number
+  score: {type: Number, default: 0}
 
 })
 
