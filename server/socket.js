@@ -7,10 +7,6 @@ module.exports.listen = function(http){
   io.on('connection', function(client){
     console.log("socket running")
 
-    client.on('salty slug',function() {
-      console.log('~~~~~~~~~~~~~Chuck is a salty slug~~~~~~~~~~~')
-    })
-
     //here's how we create a new room
     client.on('createRoom', function(roomID) {
       client.join(roomID);
@@ -25,5 +21,14 @@ module.exports.listen = function(http){
         io.in(story._id).emit('lineSaved', story);
       })
     });
+
+    client.on('storyCreated', () => {
+      console.log('we got into storyCreated')
+      stories.getAllStoriesForSocket()
+        .then(allStories => {
+          console.log('allStories in storyCreated:', allStories);
+          io.emit('storyAdded', allStories);
+        })
+    })
   })
 }

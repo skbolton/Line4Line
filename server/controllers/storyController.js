@@ -19,6 +19,10 @@ module.exports = {
     }
   },
 
+  getAllStoriesForSocket() {
+    return Story.find({})
+  },
+
   // this function is a middleware to make sure user is added
   // to the authors array in a story, this function is called
   // when a user

@@ -1,6 +1,9 @@
 import React from 'react'
 import StoryEntry from './StoryEntry'
 import CreateStory from './CreateStory'
+import io from 'socket.io-client'
+
+const socket = io();
 
 class Lobby extends React.Component {
   constructor (props) {
@@ -25,6 +28,16 @@ class Lobby extends React.Component {
         openStories: openStories,
         completeStories: completeStories
       })
+      socket.on('storyAdded', (stories) => {
+        console.log('got to storyAdded in lobby');
+        let completeStories = stories.filter(story => story.complete);
+        let openStories = stories.filter(story => story.length > story.lines.length);
+        this.setState({
+          allStories: stories,
+          openStories: openStories,
+          completeStories: completeStories
+        })
+      });
     })
   }
 
