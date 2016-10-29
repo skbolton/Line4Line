@@ -48,7 +48,7 @@ passport.use(new FacebookStrategy({
       let newUser = {}
       newUser.facebookId = profile.id
       newUser.name = profile.displayName
-      newUser.profilePic = `http://graph.facebook.com/${profile.id}/picture?width=400&height=400`
+      newUser.profilePic = `https://graph.facebook.com/${profile.id}/picture?width=400&height=400`
       newUser.token = token
       new User(newUser).save((err,user) => {
         if(err){
