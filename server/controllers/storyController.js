@@ -19,6 +19,10 @@ module.exports = {
     }
   },
 
+  getAllStoriesForSocket() {
+    return Story.find({})
+  },
+
   // this function is a middleware to make sure user is added
   // to the authors array in a story, this function is called
   // when a user
@@ -78,7 +82,7 @@ module.exports = {
             { $push: { lines: line._id }, finished },
             { new: true }
           )
-          .populate('authors')
+          .populate('authors lines')
           .then(response => {
             console.log(`\n\nStory resolved from createNewLine:\n${response}\n\n`);
             resolve(response);

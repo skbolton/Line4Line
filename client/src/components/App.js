@@ -31,12 +31,6 @@ class App extends React.Component {
     })
   }
 
-  // changeView(view) {
-  //   this.setState({
-  //     currentView: view
-  //   })
-  // }
-
   render () {
     return (
       <div className="">
@@ -47,8 +41,8 @@ class App extends React.Component {
         //if there is a current user, render the lobby/story with react router
         //else tell the user to login
         this.state.currentUser ?
-        <Router history={hashHistory}>
-          <Route path='/' component={Lobby} />
+        <Router history={hashHistory} >
+          <Route path='/' component={Lobby} user={this.state.currentUser} />
           <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
           <Route path='/user/:id' component={Profile} />
           <Route path='/stories' component={FinishedStories} />
