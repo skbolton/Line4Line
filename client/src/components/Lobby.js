@@ -22,7 +22,7 @@ class Lobby extends React.Component {
     //get an array of all the stories from the db that need more users
     $.get('/stories')
     .then(stories => {
-      let completeStories = stories.filter(story => story.complete)
+      let completeStories = stories.filter(story => story.finished)
       let openStories = stories.filter(story => story.length > story.lines.length)
       this.setState({
         allStories: stories,
@@ -31,7 +31,7 @@ class Lobby extends React.Component {
       })
       socket.on('storyAdded', (stories) => {
         console.log('got to storyAdded in lobby');
-        let completeStories = stories.filter(story => story.complete);
+        let completeStories = stories.filter(story => story.finished);
         let openStories = stories.filter(story => story.length > story.lines.length);
         this.setState({
           allStories: stories,
