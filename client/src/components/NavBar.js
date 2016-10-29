@@ -27,7 +27,7 @@ class NavBar extends React.Component {
               <span className="line2">Line</span>
             </a>
           </div>
-          <div className="navBarButton col-sm-2">
+          <div className="leadersButton navBarButton col-sm-2">
             <LeadersButton
               currentUser={this.props.currentUser}
             />
