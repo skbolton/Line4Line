@@ -27,9 +27,11 @@ router.route('/stories/:id').get(isAuthed, stories.joinStory, stories.getOneStor
 router.route('/stories').post(isAuthed, stories.createStory)
 
 router.route('/stories/:id').put((req, res) => {
-
   if (req.query.vote) {
-    stories.votingFunction(req.query.vote, req.params.id, req.session.passport.user._id)
+    stories.votingFunction(req.query.vote, req.params.id, req.session.passport.user._id).then(voteInfo => {
+      console.log('vote info: ', voteInfo)
+      res.json({votes: voteInfo.votes, upvoters: voteInfo.upvoters, downvoters: voteInfo.downvoters})
+    })
   } else {
     // this is never actually called as it's being called on the socket
     stories.createNewLine

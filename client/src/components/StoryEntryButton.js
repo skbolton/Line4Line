@@ -1,7 +1,6 @@
 import React from 'react'
 
 const StoryEntryButton = (props) => {
-  console.log('propz', props)
   const storyURL = `/stories/${props.props.story._id}`
   const joinStory = () => {
     $.ajax({
